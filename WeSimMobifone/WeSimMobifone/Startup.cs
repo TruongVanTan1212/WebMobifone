@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WeSimMobifone.Data;
+using WeSimMobifone.Models;
 
 namespace WeSimMobifone
 {
@@ -33,7 +34,14 @@ namespace WeSimMobifone
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSingleton<IPasswordHasher<Khachhang>, PasswordHasher<Khachhang>>();
             services.AddRazorPages();
+            services.AddSession(Options =>
+            {
+                Options.Cookie.Name = "Mobifone";
+                Options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +65,7 @@ namespace WeSimMobifone
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

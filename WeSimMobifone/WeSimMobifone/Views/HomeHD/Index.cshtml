@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Huongdan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <div class="container-xxl py-5  hero-header mb-5" style="background-color: #007AFE;">
+        <div class="container my-5 py-5 px-lg-5">
+            <div class="row g-5 py-5">
+                <div class="col-12 text-center">
+                    <h1 class="text-white animated zoomIn">Hướng Dẫn</h1>
+                    <hr class="bg-white mx-auto mt-0" style="width: 90px;">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="#">Hướng Dẫn</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page" >Câu hỏi thường gặp</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar & Hero End -->
+<!-- Full Screen Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(29, 29, 39, 0.7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" class="form-control bg-transparent border-light p-3" placeholder="Type search keyword">
+                        <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Full Screen Search End -->
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CauHoi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TraLoi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayDang)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CauHoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraLoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDang)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaHdan">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaHdan">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaHdan">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

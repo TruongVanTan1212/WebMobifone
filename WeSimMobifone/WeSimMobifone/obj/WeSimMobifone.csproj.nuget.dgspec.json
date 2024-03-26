@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\báo Cáo thực tập\\code\\code\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {}
+    "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {}
   },
   "projects": {
-    "D:\\báo Cáo thực tập\\code\\code\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {
+    "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\báo Cáo thực tập\\code\\code\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
+        "projectUniqueName": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
         "projectName": "WeSimMobifone",
-        "projectPath": "D:\\báo Cáo thực tập\\code\\code\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
+        "projectPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\báo Cáo thực tập\\code\\code\\WeSimMobifone\\WeSimMobifone\\obj\\",
+        "outputPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,13 +57,33 @@
               "target": "Package",
               "version": "[3.1.32, )"
             },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[3.1.32, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[3.1.32, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
