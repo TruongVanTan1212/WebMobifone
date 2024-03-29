@@ -22,11 +22,12 @@ namespace WeSimMobifone.Controllers
             _context = context;
             _pwHear = passwordHasher;
         }
-
+        // lấy dữ liệu bảng
         void GetInfo()
         {
             ViewBag.tintuc = _context.Tintuc.ToList();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
+            ViewBag.thuebao = _context.Thuebao.ToList();
             if (HttpContext.Session.GetString("khachhang") != "")
             {
                 ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("khachhang"));
@@ -44,30 +45,13 @@ namespace WeSimMobifone.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Home/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var thuebao = await _context.Thuebao
-                .Include(t => t.MaDmNavigation)
-                .Include(t => t.MaLtbNavigation)
-                .FirstOrDefaultAsync(m => m.MaTb == id);
-            if (thuebao == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(thuebao);
-        }
+        // đăng nhập
         public IActionResult Login()
         {
             GetInfo();
             return View();
         }
+        // đăng nhập thất bại
         public IActionResult LoginInAgain()
         {
             GetInfo();
@@ -83,7 +67,7 @@ namespace WeSimMobifone.Controllers
             if (kh != null && _pwHear.VerifyHashedPassword(kh, kh.MatKhau, matkhau) == PasswordVerificationResult.Success)
             {
                 HttpContext.Session.SetString("khachhang", kh.Email);
-                return RedirectToAction(nameof(Customer));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -96,26 +80,28 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(LoginInAgain));
 
         }
-        public IActionResult Customer()
-        {
-            GetInfo();
-            return View();
-        }
+        // đăng ký
         public IActionResult Register()
         {
-
             GetInfo();
             return View();
-
         }
-
+        // tài khoản đã tồn tại
+        public IActionResult AccountAlreadyExists()
+        {
+            GetInfo();
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Register(string email, string matkhau, string hoten, string dienthoai)
         {
             // kiểm tra email đã tồn tại 
-
-
+            var taikhoan = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null);
+            if(taikhoan != null)
+            {
+                return RedirectToAction(nameof(AccountAlreadyExists));
+            }
             // thêm khach hàng vào db
             var kh = new Khachhang();
             kh.Email = email;
@@ -125,16 +111,26 @@ namespace WeSimMobifone.Controllers
             _context.Add(kh);
             _context.SaveChanges();
 
-
             return RedirectToAction(nameof(Login));
         }
-
+        // đăng xuất
         public IActionResult Signout()
         {
             HttpContext.Session.SetString("khachhang", "");
             HttpContext.Session.SetString("Nhanvien", "");
             GetInfo();
             return RedirectToAction(nameof(Index));
+        }
+        // thông tin khách hàng
+        public IActionResult Customer()
+        {
+            GetInfo();
+            return View();
+        }
+
+        public Task<IActionResult> CreateBill()
+        {
+
         }
 
     }

@@ -12,7 +12,8 @@ CREATE TABLE CUAHANG(
 	MaCH int primary key identity(1,1),
 	Ten nvarchar(100) not null,
 	DienThoai varchar(20),
-	DiaChi nvarchar(100)
+	DiaChi nvarchar(100),
+	Email varchar(50)
 ) 
 GO
 
@@ -105,14 +106,15 @@ CREATE TABLE HUONGDAN(
 	NgayDang  datetime default getdate(),
 ) 
 GO
-
-
+INSERT INTO CUAHANG(Ten,DienThoai,DiaChi,Email) VALUES(N'Mobifone An Giang',N'077 924 9999',N'93, Trần Hưng Đạo, Mỹ Quý Long Xuyên, An Giang',N'mobifoneaglx@gmail.com');
+GO
 
 -- dữ liệu danh mục
 INSERT INTO DANHMUC(TenDM) VALUES(N'Sim Thường');
 INSERT INTO DANHMUC(TenDM) VALUES(N'Sim Phong Thuỷ');
 INSERT INTO DANHMUC(TenDM) VALUES(N'Sim Số Đẹp');
 GO
+
 -- dữ liệu loại thuê bao
 INSERT INTO LOAITB(TenL) VALUES(N'Số Thường');
 INSERT INTO LOAITB(TenL) VALUES(N'Số lặp(ABAB)(A>B)');
@@ -122,6 +124,7 @@ INSERT INTO LOAITB(TenL) VALUES(N'Số Năm Sinh 198X');
 INSERT INTO LOAITB(TenL) VALUES(N'Số Năm Sinh 199X');
 INSERT INTO LOAITB(TenL) VALUES(N'Số Năm Sinh 200X');
 GO
+
 -- dữ liệu Thuê Bao
 INSERT INTO THUEBAO(SoThueBao,PhiHoaMang,MaDM,MaLTB,LoaiSo,DiaDiemHM,TrangThai) VALUES(N'0788234213',60000,1,1,N'Trả Trước',N'Toàn Quốc',0);
 INSERT INTO THUEBAO(SoThueBao,PhiHoaMang,MaDM,MaLTB,LoaiSo,DiaDiemHM,TrangThai) VALUES(N'0788234214',60000,1,1,N'Trả Trước',N'Toàn Quốc',0);

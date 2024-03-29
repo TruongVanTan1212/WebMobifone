@@ -9,15 +9,13 @@
 <br />
 <div class="container-xxl py-5">
     <div class="container px-lg-5">
-        <br />
-        <h1 class="text-primary text-center"> Đăng Nhập </h1>
-        <br />
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4 card h-100 border-primary">
+            <div class="col-md-4 card h-100 border-primary shadow">
+                <h3 class="text-primary text-center m-3"> Đăng Nhập </h3>
                 <form asp-action="Login">
                     <div class="my-3">
-                        <p class="text-danger text-center"> Email hoặc mật khẩu không đúng !</p>
+                        <p class="text-danger text-center"> Email hoặc mật khẩu không đúng vui lòng nhập lại!</p>
                     </div>
                     <div class="my-3 text-primary">
                         <label> Email</label>
@@ -33,7 +31,7 @@
                     <div class="my-3">
                     </div>
                 </form>
-                <p> Chưa có tài khoản? <a asp-action="Register"> Đăng Ký </a></p>
+                <p text-center> Chưa có tài khoản? <a asp-action="Register"> Đăng Ký </a></p>
                 <div class="col-md-4"></div>
             </div>
         </div>

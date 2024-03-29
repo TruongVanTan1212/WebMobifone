@@ -257,6 +257,13 @@ h6,
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
     transition: .5s;
 }
+.service-item1 {
+    position: relative;
+    height: 350px;
+    padding: 30px 25px;
+    
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+}
 
 .service-item:hover {
     background: var(--primary);
@@ -281,6 +288,10 @@ h6,
 
 .service-item h5,
 .service-item p {
+    transition: .5s;
+}
+service-item1 h5,
+.service-item1 p {
     transition: .5s;
 }
 
@@ -526,3 +537,148 @@ h6,
 }
 
 /*--------------------*/
+
+/* 
+---------------------------------------------
+The Clients
+---------------------------------------------
+*/
+
+.the-clients {
+    margin-top: 130px;
+}
+
+    .the-clients .section-heading {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+        .the-clients .section-heading p {
+            margin-top: 10px;
+            margin-left: 18%;
+            margin-right: 18%;
+        }
+
+    .the-clients .naccs {
+        position: relative;
+    }
+
+.menu .thumb h4 {
+    margin-bottom: 0px;
+    font-size: 20px;
+    color: #2a2a2a;
+}
+
+.menu .thumb span.date {
+    display: inline-block;
+    margin-top: 0px;
+    color: #afafaf;
+}
+
+.menu .thumb span.category,
+.menu .thumb span.rating {
+    font-weight: 700;
+    color: #afafaf;
+}
+
+.menu .thumb i {
+    color: #afafaf;
+}
+
+.the-clients .naccs .menu div {
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: left;
+    padding: 0px 15px;
+    cursor: pointer;
+    position: relative;
+    transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+    .the-clients .naccs .menu div.active h4,
+    .the-clients .naccs .menu div.active i,
+    .the-clients .naccs .menu div.active span.rating,
+    .the-clients .naccs .menu div.active .thumb {
+        color: #4b8ef1;
+    }
+
+.the-clients ul.nacc {
+    position: relative;
+    min-height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+    .the-clients ul.nacc li {
+        opacity: 0;
+        transform: translateX(-50px);
+        position: absolute;
+        list-style: none;
+        transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+        .the-clients ul.nacc li.active {
+            transition-delay: 0.3s;
+            position: relative;
+            z-index: 2;
+            opacity: 1;
+            transform: translateX(0px);
+        }
+
+    .the-clients ul.nacc li {
+        width: 100%;
+    }
+
+.the-clients .nacc .thumb .client-content img {
+    width: 76px;
+    height: 62px;
+}
+
+.the-clients .nacc .thumb .client-content {
+    padding: 60px 30px;
+    background-image: url(../img/client-bg.png);
+    background-size: cover;
+    border-radius: 50px;
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+}
+
+    .the-clients .nacc .thumb .client-content p {
+        color: #fff;
+        font-weight: 500;
+        font-size: 16px;
+        font-style: italic;
+        margin-top: 30px;
+    }
+
+.the-clients .nacc .thumb .down-content {
+    margin-top: 30px;
+}
+
+    .the-clients .nacc .thumb .down-content img {
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        display: inline;
+    }
+
+    .the-clients .nacc .thumb .down-content .right-content {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+        .the-clients .nacc .thumb .down-content .right-content h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .the-clients .nacc .thumb .down-content .right-content span {
+            color: #2a2a2a;
+        }
+

@@ -324,3 +324,10 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Details.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Index.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Create.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Delete.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Details.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Edit.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Index.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\AccountAlreadyExists.cshtml.g.cs
