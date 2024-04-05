@@ -22,6 +22,8 @@ namespace WeSimMobifone.Models
         public int? TongTien { get; set; }
         [Column("MaKH")]
         public int MaKh { get; set; }
+        [Column("MaDc")]
+        public int MaDc { get; set; }
         public int? TrangThai { get; set; }
 
         [ForeignKey(nameof(MaKh))]
@@ -30,5 +32,6 @@ namespace WeSimMobifone.Models
         [ForeignKey(nameof(MaTb))]
         [InverseProperty(nameof(Thuebao.Hoadon))]
         public virtual Thuebao MaTbNavigation { get; set; }
+
     }
 }

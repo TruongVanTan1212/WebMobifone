@@ -47,6 +47,7 @@ namespace WeSimMobifone.Controllers
             var hoadon = await _context.Hoadon
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
+               // .Include(h => h.MaDcNavigation)
                 .FirstOrDefaultAsync(m => m.MaHd == id);
             if (hoadon == null)
             {
@@ -71,6 +72,7 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", hoadon.MaKh);
             ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", hoadon.MaTb);
+           // ViewData["MaDc"] = new SelectList(_context.Diachi, "MaDc", "DiaChi", hoadon.MaDc);
             GetInfo();
             return View(hoadon);
         }
@@ -109,6 +111,7 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", hoadon.MaKh);
             ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", hoadon.MaTb);
+           // ViewData["MaDc"] = new SelectList(_context.Diachi, "MaDc", "DiaChi", hoadon.MaDc);
             GetInfo();
             return View(hoadon);
         }
@@ -124,6 +127,7 @@ namespace WeSimMobifone.Controllers
             var hoadon = await _context.Hoadon
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
+              //  .Include(h => h.MaDcNavigation)
                 .FirstOrDefaultAsync(m => m.MaHd == id);
             if (hoadon == null)
             {

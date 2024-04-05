@@ -19,6 +19,7 @@ namespace WeSimMobifone.Controllers
             _context = context;
         }
 
+
         // GET: Thuebaos
         public async Task<IActionResult> Index()
         {

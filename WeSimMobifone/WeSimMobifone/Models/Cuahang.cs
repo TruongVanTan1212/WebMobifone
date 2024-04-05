@@ -21,6 +21,8 @@ namespace WeSimMobifone.Models
         [StringLength(20)]
         public string DienThoai { get; set; }
         [StringLength(100)]
+        public string Email { get; set; }
+        [StringLength(100)]
         public string DiaChi { get; set; }
     }
 }

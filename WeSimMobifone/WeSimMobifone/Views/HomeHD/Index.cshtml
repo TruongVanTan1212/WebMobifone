@@ -13,7 +13,7 @@
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
                             <li class="breadcrumb-item"><a class="text-white" href="#">Hướng Dẫn</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page" >Câu hỏi thường gặp</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Câu hỏi thường gặp</li>
                         </ol>
                     </nav>
                 </div>
@@ -27,7 +27,7 @@
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(29, 29, 39, 0.7);">
                 <div class="modal-header border-0">
-                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <a type="button" class="btn text-primary ms-3" asp-action="ViewCart"><i class="bi bi-cart-check-fill"></i><span class="badge bg-danger text-white ms-1 rounded-pill">@ViewData["solg"]</span></a>
                 </div>
                 <div class="modal-body d-flex align-items-center justify-content-center">
                     <div class="input-group" style="max-width: 600px;">
@@ -39,7 +39,7 @@
         </div>
     </div>
 <!-- Full Screen Search End -->
-<!--
+
 
 <table class="table">
     <thead>
@@ -77,4 +77,3 @@
 }
     </tbody>
 </table>
--->

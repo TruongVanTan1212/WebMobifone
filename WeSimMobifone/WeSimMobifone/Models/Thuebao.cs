@@ -23,7 +23,7 @@ namespace WeSimMobifone.Models
         [Required]
         [StringLength(10)]
         public string SoThueBao { get; set; }
-        public int? PhiHoaMang { get; set; }
+        public int PhiHoaMang { get; set; }
         [Column("MaDM")]
         public int MaDm { get; set; }
         [Column("MaLTB")]

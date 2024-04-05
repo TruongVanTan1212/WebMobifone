@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WeSimMobifone.Data;
 using WeSimMobifone.Models;
 
@@ -25,9 +26,17 @@ namespace WeSimMobifone.Controllers
         // lấy dữ liệu bảng
         void GetInfo()
         {
+            // lấy dữ liệu bảng danh mục
+            ViewBag.danhmuc = _context.Danhmuc.ToList();
+            // lấy dữ liệu của hàng
+            ViewBag.cuahang = _context.Cuahang.ToList();
+            // lấy dữ liệu bảng tin tức
             ViewBag.tintuc = _context.Tintuc.ToList();
-            //  ViewBag.tintuc = _context.Danhmuc.ToList();
-            ViewBag.thuebao = _context.Thuebao.ToList();
+            // số lượng mặt hàng có trong giỏ   
+            ViewData["solg"] = GetCartItems().Count();
+           
+            // ViewBag.thuebao = _context.Thuebao.FirstOrDefault(k => k.TrangThai == int.Parse(HttpContext.Session.GetString("Thuebao")));
+
             if (HttpContext.Session.GetString("khachhang") != "")
             {
                 ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("khachhang"));
@@ -37,12 +46,38 @@ namespace WeSimMobifone.Controllers
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
         }
-        // GET: Home
+        // GET: Home // hiển thị danh sách sp
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation);
+            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(h =>h.TrangThai==0);
             return View(await applicationDbContext.ToListAsync());
+        }
+        // danh mục thuê bao
+        public async Task<IActionResult> DanhMucSP(int id)
+        {
+            GetInfo();
+            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(h => h.TrangThai == 0 && h.MaDm == id);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        // GET: Thuebaos/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var thuebao = await _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .FirstOrDefaultAsync(m => m.MaTb == id);
+            if (thuebao == null)
+            {
+                return NotFound();
+            }
+
+            return View(thuebao);
         }
 
         // đăng nhập
@@ -128,9 +163,98 @@ namespace WeSimMobifone.Controllers
             return View();
         }
 
-        public Task<IActionResult> CreateBill()
+       // gửi số khi khách hàng chọn thuê bao
+        public async Task<IActionResult> Update(int id)
         {
+            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
+            sp.TrangThai = 1;
+            _context.Update(sp);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
+
+        //------------giỏ hàng--------------------------------
+        // thêm thuê bao vào giỏ hàng
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
+            sp.TrangThai = 1;
+            _context.Update(sp);
+            await _context.SaveChangesAsync();
+
+            var thuebao = await _context.Thuebao.FirstOrDefaultAsync(m => m.MaTb == id);
+            if (thuebao == null)
+            {
+                return NotFound("Sản phẩm không tồn tại");
+            }
+            var cart = GetCartItems();
+            var item = cart.Find(p => p.Thuebao.MaTb == id);
+            if (item != null)
+            {
+                item.SoLuong++;
+            }
+            else
+            {
+                cart.Add(new CartItem() { Thuebao = thuebao, SoLuong = 1 });
+            }
+            SaveCartSession(cart);
+            return RedirectToAction(nameof(ViewCart));
+        }
+        // chuyển đến view giỏ hàng
+        public IActionResult ViewCart()
+        {
+            GetInfo();
+            return View(GetCartItems());
+        }
+        // lấy t
+        //đọc danh sách
+        List<CartItem> GetCartItems()
+        {
+            var session = HttpContext.Session;
+            string jsoncart = session.GetString("Mobifone");
+            if (jsoncart != null)
+            {
+                return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+            }
+            return new List<CartItem>();
+        }
+        // Lưu danh sách CartItem trong giỏ hàng vào session
+        void SaveCartSession(List<CartItem> list)
+        {
+            var session = HttpContext.Session;
+            string jsoncart = JsonConvert.SerializeObject(list);
+            session.SetString("Mobifone", jsoncart);
+        }
+        // Xóa session giỏ hàng
+        void ClearCart()
+        {
+            var session = HttpContext.Session;
+            session.Remove("Mobifone");
+        }
+        public async Task<IActionResult> RemoveItem(int id)
+        {
+            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
+            sp.TrangThai = 0;
+            _context.Update(sp);
+            await _context.SaveChangesAsync();
+
+            var cart = GetCartItems();
+            var item = cart.Find(p => p.Thuebao.MaTb == id);
+            if (item != null)
+            {
+                cart.Remove(item);
+            }
+            SaveCartSession(cart);
+            return RedirectToAction(nameof(ViewCart));
+        }
+
+        // Chuyển đến view thanh toán
+        public IActionResult CheckOut()
+        {
+            GetInfo();
+            return View(GetCartItems());
         }
 
     }

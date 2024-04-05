@@ -12,6 +12,8 @@ namespace WeSimMobifone.Models
     [Table("DIACHI")]
     public partial class Diachi
     {
+      //  internal const object Hoadon;
+
         [Key]
         [Column("MaDC")]
         public int MaDc { get; set; }
