@@ -23,24 +23,9 @@
 </div>
 <!-- Navbar & Hero End -->
 <!-- Full Screen Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(29, 29, 39, 0.7);">
-                <div class="modal-header border-0">
-                <a type="button" class="btn text-primary ms-3" asp-action="ViewCart"><i class="bi bi-cart-check-fill"></i><span class="badge bg-danger text-white ms-1 rounded-pill">@ViewData["solg"]</span></a>
-                </div>
-                <div class="modal-body d-flex align-items-center justify-content-center">
-                    <div class="input-group" style="max-width: 600px;">
-                        <input type="text" class="form-control bg-transparent border-light p-3" placeholder="Type search keyword">
-                        <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <!-- Full Screen Search End -->
 
-
+<!--
 <table class="table">
     <thead>
         <tr>
@@ -77,3 +62,29 @@
 }
     </tbody>
 </table>
+-->
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+            <div class="col-12">
+               <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                                <a class="btn" data-bs-toggle="collapse" href="#so">
+                                @Html.DisplayFor(modelItem => item.CauHoi)
+                             </a>
+                        </div>
+                            <div id="so" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                @Html.DisplayFor(modelItem => item.TraLoi)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            }
+        </div>
+    </div>
+</div>

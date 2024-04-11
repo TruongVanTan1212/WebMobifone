@@ -29,6 +29,14 @@ namespace WeSimMobifone.Controllers
             // đếm số lượng sp trong giỏ hàng
             ViewData["solg"] = GetCartItems().Count();
 
+            if (HttpContext.Session.GetString("khachhang") != "")
+            {
+                ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("khachhang"));
+            }
+            if (HttpContext.Session.GetString("Nhanvien") != "")
+            {
+                ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
+            }
         }
         List<CartItem> GetCartItems()
         {

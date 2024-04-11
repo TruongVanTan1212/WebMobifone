@@ -23,7 +23,7 @@ namespace WeSimMobifone.Models
         [Required]
         [StringLength(100)]
         public string Ten { get; set; }
-        public double? HeSo { get; set; }
+        public double HeSo { get; set; }
 
         [InverseProperty("MaCvNavigation")]
         public virtual ICollection<Nhanvien> Nhanvien { get; set; }

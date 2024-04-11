@@ -163,5 +163,12 @@ namespace WeSimMobifone.Controllers
         {
             return _context.Khachhang.Any(e => e.MaKh == id);
         }
+
+        public async Task<IActionResult> SearchKH(string searchKhachHang)
+        {
+            var lstKhachHang = await _context.Khachhang.Where(k => k.Ten.Contains(searchKhachHang)).ToListAsync();
+            GetInfo();
+            return View(lstKhachHang);
+        }
     }
 }

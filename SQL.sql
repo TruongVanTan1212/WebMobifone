@@ -1,12 +1,12 @@
 ﻿Use Master
 GO
-    IF exists(Select name From sys.databases Where name='WebSimbMobifone')
-    DROP Database WebSimbMobifone;
+    IF exists(Select name From sys.databases Where name='WebSIMbMobifone')
+    DROP Database WebSIMbMobifone;
 GO
-    Create Database WebSimbMobifone;
+    Create Database WebSIMbMobifone;
 GO
 
-USE WebSimbMobifone;
+USE WebSIMbMobifone;
 
 CREATE TABLE CUAHANG(
 	MaCH int primary key identity(1,1),
@@ -72,10 +72,10 @@ GO
 CREATE TABLE DIACHI(	
 	MaDC int primary key identity(1,1),
 	MaKH int not null foreign key(MaKH) references KHACHHANG(MaKH),
-	DiaChi nvarchar(100) not null,
-	PhuongXa varchar(20),
-	QuanHuyen varchar(50) ,
-	TinhThanh varchar(50),
+	DiaChi nvarchar(100),
+	PhuongXa nvarchar(20),
+	QuanHuyen nvarchar(50) ,
+	TinhThanh nvarchar(50),
 	MacDinh int default 1	
 ) 
 GO
@@ -86,6 +86,7 @@ CREATE TABLE HOADON(
 	Ngay datetime default getdate(),
 	TongTien int default 0,
 	MaKH int not null foreign key(MaKH) references KHACHHANG(MaKH),
+	MaDC int not null foreign key(MaDC) references DIACHI(MaDC),
 	TrangThai int default 0 -- duyệt -> gửi sp 
 ) 
 GO
@@ -178,8 +179,10 @@ GO
 -- dữ liệu Khách hàng
 INSERT INTO KHACHHANG(Ten,DienThoai,Email,MatKhau,CCCD,SLThueB) VALUES(N'NGuyễn Thị Như Huỳnh','0382180991',N'Huynh@gmail.com','9d63dd2cae6e90dfbcf017e962e5a032','085643245600',2);
 GO
+INSERT INTO DIACHI(MaKH,DiaChi,PhuongXa,QuanHuyen,TinhThanh,MacDinh) VALUES(1,N'Ấp Long Thuận 2',N'Long Điền A',N'Chợ Mới',N'An Giang',1)
+GO
 -- dữ liệu Hoá Đơn
-INSERT INTO HOADON(MaTB,Ngay,TongTien,MaKH,TrangThai) VALUES(1,N'3/12/2024',60000,1,0);
+INSERT INTO HOADON(MaTB,Ngay,TongTien,MaKH,MaDC,TrangThai) VALUES(1,N'3/12/2024',60000,1,1,0);
 GO
 
 
@@ -194,6 +197,3 @@ SELECT * FROM TINTUC;
 SELECT * FROM DIACHI;
 SELECT * FROM KHACHHANG;
 SELECT * FROM HUONGDAN;
-
-delete from KHACHHANG
-where MaKH=2;

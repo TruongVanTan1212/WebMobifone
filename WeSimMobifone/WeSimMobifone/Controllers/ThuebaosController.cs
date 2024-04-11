@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,20 @@ namespace WeSimMobifone.Controllers
         {
             _context = context;
         }
+        void GetInfo()
+        {
 
+            //  ViewBag.tintuc = _context.Danhmuc.ToList();
+            if (HttpContext.Session.GetString("Nhanvien") != "")
+            {
+                ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
+            }
+        }
 
         // GET: Thuebaos
         public async Task<IActionResult> Index()
         {
+            GetInfo();
             var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -43,13 +53,14 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(thuebao);
         }
 
         // GET: Thuebaos/Create
         public IActionResult Create()
         {
+            GetInfo();
             ViewData["MaDm"] = new SelectList(_context.Danhmuc, "MaDm", "TenDm");
             ViewData["MaLtb"] = new SelectList(_context.Loaitb, "MaLtb", "TenL");
             return View();
@@ -68,6 +79,7 @@ namespace WeSimMobifone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            GetInfo();
             ViewData["MaDm"] = new SelectList(_context.Danhmuc, "MaDm", "TenDm", thuebao.MaDm);
             ViewData["MaLtb"] = new SelectList(_context.Loaitb, "MaLtb", "TenL", thuebao.MaLtb);
             return View(thuebao);
@@ -86,6 +98,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+            GetInfo();
             ViewData["MaDm"] = new SelectList(_context.Danhmuc, "MaDm", "TenDm", thuebao.MaDm);
             ViewData["MaLtb"] = new SelectList(_context.Loaitb, "MaLtb", "TenL", thuebao.MaLtb);
             return View(thuebao);
@@ -144,7 +157,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(thuebao);
         }
 
@@ -162,6 +175,14 @@ namespace WeSimMobifone.Controllers
         private bool ThuebaoExists(int id)
         {
             return _context.Thuebao.Any(e => e.MaTb == id);
+        }
+
+        public async Task<IActionResult> SearchThueBao(string searchThueBao)
+        {
+            var lstThueBao = await _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation)
+                            .Where(k => k.SoThueBao.Contains(searchThueBao)).ToListAsync();
+            GetInfo();
+            return View(lstThueBao);
         }
     }
 }

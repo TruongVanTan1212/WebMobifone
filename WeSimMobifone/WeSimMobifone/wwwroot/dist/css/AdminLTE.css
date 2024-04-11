@@ -1171,21 +1171,7 @@ a:focus {
 .box.box-primary {
   border-top-color: #3c8dbc;
 }
-.box.box-info {
-  border-top-color: #00c0ef;
-}
-.box.box-danger {
-  border-top-color: #dd4b39;
-}
-.box.box-warning {
-  border-top-color: #f39c12;
-}
-.box.box-success {
-  border-top-color: #00a65a;
-}
-.box.box-default {
-  border-top-color: #d2d6de;
-}
+
 .box.collapsed-box .box-body,
 .box.collapsed-box .box-footer {
   display: none;
@@ -1241,54 +1227,7 @@ a:focus {
 .box.box-solid.box-primary > .box-header .btn {
   color: #ffffff;
 }
-.box.box-solid.box-info {
-  border: 1px solid #00c0ef;
-}
-.box.box-solid.box-info > .box-header {
-  color: #ffffff;
-  background: #00c0ef;
-  background-color: #00c0ef;
-}
-.box.box-solid.box-info > .box-header a,
-.box.box-solid.box-info > .box-header .btn {
-  color: #ffffff;
-}
-.box.box-solid.box-danger {
-  border: 1px solid #dd4b39;
-}
-.box.box-solid.box-danger > .box-header {
-  color: #ffffff;
-  background: #dd4b39;
-  background-color: #dd4b39;
-}
-.box.box-solid.box-danger > .box-header a,
-.box.box-solid.box-danger > .box-header .btn {
-  color: #ffffff;
-}
-.box.box-solid.box-warning {
-  border: 1px solid #f39c12;
-}
-.box.box-solid.box-warning > .box-header {
-  color: #ffffff;
-  background: #f39c12;
-  background-color: #f39c12;
-}
-.box.box-solid.box-warning > .box-header a,
-.box.box-solid.box-warning > .box-header .btn {
-  color: #ffffff;
-}
-.box.box-solid.box-success {
-  border: 1px solid #00a65a;
-}
-.box.box-solid.box-success > .box-header {
-  color: #ffffff;
-  background: #00a65a;
-  background-color: #00a65a;
-}
-.box.box-solid.box-success > .box-header a,
-.box.box-solid.box-success > .box-header .btn {
-  color: #ffffff;
-}
+
 .box.box-solid > .box-header > .box-tools .btn {
   border: 0;
   box-shadow: none;
@@ -1303,8 +1242,9 @@ a:focus {
   text-align: center;
   color: #333;
   font-weight: 100;
-  font-size: 12px;
+  font-size: 16px;
   margin-bottom: 0.3em;
+  margin-left: 40px;
 }
 .box > .overlay,
 .box > .loading-img {
@@ -1355,10 +1295,11 @@ a:focus {
 .box-header > .glyphicon,
 .box-header > .ion,
 .box-header .box-title {
-  display: inline-block;
-  font-size: 18px;
-  margin: 0;
-  line-height: 1;
+    display: inline-block;
+    font-size: 18px;
+    margin: 0;
+    line-height: 1;
+
 }
 .box-header > .fa,
 .box-header > .glyphicon,

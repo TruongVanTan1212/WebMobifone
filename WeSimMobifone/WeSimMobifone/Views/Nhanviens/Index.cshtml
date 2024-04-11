@@ -1,59 +1,73 @@
 ﻿@model IEnumerable<WeSimMobifone.Models.Nhanvien>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Nhân Viên";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ten)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaCvNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaCvNavigation.Ten)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaNv">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaNv">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaNv">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Nhân Viên</h3>
+                <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Add User</a>
+            </div><!-- /.box-header -->
+            <div class="box-tools">
+                <div class="input-group">
+                    <form asp-controller="Nhanviens" asp-action="SearchNV">
+                    <input type="text" name="searchNhanVien" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ten)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DienThoai)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaCvNavigation)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ten)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DienThoai)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaCvNavigation.Ten)
+                                </td>
+                                <td>
+                                    <div class="tools ">
+                                        <a asp-action="Details" asp-route-id="@item.MaNv"><i class="fa fa-eye"></i></a>
+                                        <a asp-action="Edit" asp-route-id="@item.MaNv"><i class="fa fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.MaNv"><i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.row -->
+</section><!-- /.box -->

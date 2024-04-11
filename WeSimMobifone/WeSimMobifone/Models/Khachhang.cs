@@ -38,7 +38,7 @@ namespace WeSimMobifone.Models
         [StringLength(255)]
         public string HinhS { get; set; }
         [Column("SLThueB")]
-        public int? SlthueB { get; set; }
+        public int SlthueB { get; set; }
 
         [InverseProperty("MaKhNavigation")]
         public virtual ICollection<Diachi> Diachi { get; set; }

@@ -71,6 +71,7 @@ namespace WeSimMobifone.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 tintuc.HinhAnh = Upload(file);
                 _context.Add(tintuc);
                 await _context.SaveChangesAsync();
@@ -183,6 +184,13 @@ namespace WeSimMobifone.Controllers
                 }
             }
             return uploadFileName;
+        }
+
+        public async Task<IActionResult> SearchTT(string searchTinTuc)
+        {
+            var lstTinTuc = await _context.Tintuc.Where(k => k.TieuDe.Contains(searchTinTuc)).ToListAsync();
+            GetInfo();
+            return View(lstTinTuc);
         }
     }
 }

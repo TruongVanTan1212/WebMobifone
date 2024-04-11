@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Huongdan>
+
+@{
+    ViewData["Title"] = "Hướng Dẫn";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Nhân Viên</h3>
+                <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Add instruct</a>
+            </div><!-- /.box-header -->
+            <div class="box-tools">
+                <div class="input-group">
+                    <form asp-controller="Huongdans" asp-action="SearchHDan">
+                        <input type="text" name="searchHuongDan" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CauHoi)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TraLoi)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NgayDang)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CauHoi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TraLoi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayDang)
+                                </td>
+                                <td>
+                                    <div class="tools ">
+                                        <a asp-action="Details" asp-route-id="@item.MaHdan"><i class="fa fa-eye"></i></a>
+                                        <a asp-action="Edit" asp-route-id="@item.MaHdan"><i class="fa fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.MaHdan"><i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.row -->
+</section><!-- /.box -->
+

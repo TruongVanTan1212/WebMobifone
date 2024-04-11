@@ -29,9 +29,14 @@ namespace WeSimMobifone.Models
         [ForeignKey(nameof(MaKh))]
         [InverseProperty(nameof(Khachhang.Hoadon))]
         public virtual Khachhang MaKhNavigation { get; set; }
+
         [ForeignKey(nameof(MaTb))]
         [InverseProperty(nameof(Thuebao.Hoadon))]
         public virtual Thuebao MaTbNavigation { get; set; }
+
+        [ForeignKey(nameof(MaDc))]
+        [InverseProperty(nameof(Diachi.Hoadon))]
+        public virtual Diachi MaDcNavigation { get; set; }
 
     }
 }

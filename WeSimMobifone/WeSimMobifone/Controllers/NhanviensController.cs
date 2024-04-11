@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,19 @@ namespace WeSimMobifone.Controllers
             _context = context;
         }
 
+        void GetInfo()
+        {
+
+            //  ViewBag.tintuc = _context.Danhmuc.ToList();
+            if (HttpContext.Session.GetString("Nhanvien") != "")
+            {
+                ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
+            }
+        }
         // GET: Nhanviens
         public async Task<IActionResult> Index()
         {
+            GetInfo();
             var applicationDbContext = _context.Nhanvien.Include(n => n.MaCvNavigation);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -41,13 +52,14 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(nhanvien);
         }
 
         // GET: Nhanviens/Create
         public IActionResult Create()
         {
+            GetInfo();
             ViewData["MaCv"] = new SelectList(_context.Chucvu, "MaCv", "Ten");
             return View();
         }
@@ -65,6 +77,7 @@ namespace WeSimMobifone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            GetInfo();
             ViewData["MaCv"] = new SelectList(_context.Chucvu, "MaCv", "Ten", nhanvien.MaCv);
             return View(nhanvien);
         }
@@ -82,6 +95,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+            GetInfo();
             ViewData["MaCv"] = new SelectList(_context.Chucvu, "MaCv", "Ten", nhanvien.MaCv);
             return View(nhanvien);
         }
@@ -118,6 +132,7 @@ namespace WeSimMobifone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            GetInfo();
             ViewData["MaCv"] = new SelectList(_context.Chucvu, "MaCv", "Ten", nhanvien.MaCv);
             return View(nhanvien);
         }
@@ -137,7 +152,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(nhanvien);
         }
 
@@ -155,6 +170,13 @@ namespace WeSimMobifone.Controllers
         private bool NhanvienExists(int id)
         {
             return _context.Nhanvien.Any(e => e.MaNv == id);
+        }
+
+        public async Task<IActionResult> SearchNV(string searchNhanVien)
+        {
+            var lstNhanVien = await _context.Nhanvien.Include(n => n.MaCvNavigation).Where(k => k.Ten.Contains(searchNhanVien)).ToListAsync();
+            GetInfo();
+            return View(lstNhanVien);
         }
     }
 }

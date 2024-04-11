@@ -1,0 +1,114 @@
+﻿@model List<WeSimMobifone.Models.CartItem>
+@{
+    ViewData["Title"] = "Đăng Ký Thuê Bao";
+}
+
+    <div class="container-xxl py-5  hero-header mb-5" style="background-color: #007AFE;">
+        <div class="container my-5 py-5 px-lg-5">
+            <div class="row g-5 py-5">
+                <div class="col-12 text-center m-4">
+                    <h1 class="text-white animated zoomIn">Thanh Toán</h1>
+                    <hr class="bg-white mx-auto mt-0" style="width: 90px;">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Thanh Toán</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar & Hero End-->
+
+
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="position-relative d-inline text-primary ps-4">Đăng ký thuê bao</h6>
+            <h2 class="mt-2"> Thông tin đăng ký thuê bao </h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h3>Thông tin khách hàng</h3>
+
+                @if (ViewBag.khachhang != null)
+                {
+                    <form asp-action="CreateBill" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="@ViewBag.khachhang.MaKh" />
+                        <div class="my-3">
+                            <label>Họ tên</label>
+                            <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
+                        </div>
+                        <div class="my-3">
+                            <label>Email</label>
+                            <input type="email" disabled value="@ViewBag.khachhang.Email" name="email" class="form-control" />
+                        </div>
+                        <div class="my-3">
+                            <label>Điện thoại</label>
+                            <input type="text" disabled value="@ViewBag.khachhang.DienThoai" name="dienthoai" class="form-control" />
+                        </div>
+                        <div class="my-3">
+                            <label>Căn cước công dân</label>
+                            @if (@ViewBag.khachhang.Cccd == null)
+                            {
+                                <input type="text"  value="@ViewBag.khachhang.Cccd" name="cccd" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" disabled value="@ViewBag.khachhang.Cccd" name="cccd" class="form-control" />
+                            }
+                        </div>
+                        <div class="my-3">
+                            <label>Ảnh căn cước công dân mặt trước</label>
+                            @if (@ViewBag.khachhang.HinhT == null)
+                            {
+                                <input type="file" name="hinht" class="form-control" />
+                            }
+                            else
+                            {
+                                <img src="~/img/@ViewBag.khachhang.HinhT" width="50px" height="80px" />
+                            }
+                        </div>
+                        <div class="my-3">
+                            <label>Ảnh căn cước công dân mặt sau</label>
+                            @if (@ViewBag.khachhang.HinhS == null)
+                            {
+                                <input type="file" name="hinhs" class="form-control" />
+                            }
+                            else
+                            {
+                                <img src="~/img/@ViewBag.khachhang.HinhS" width="50px" height="80px" />
+                            }
+                        </div>
+                        <div class="my-3">
+                            <label>Địa chỉ 1</label> <br />
+                            @foreach (Diachi dc in ViewBag.diachi)
+                               {
+                                    string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
+                                    if (dc.MacDinh == 1)
+                                    {
+                                        <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="True">
+                                        <label for="@dc.MaDc">@tmp (Mặc định)</label>
+                                        <br>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
+                                        <label for="@dc.MaDc">@tmp</label>
+                                        <br>
+                                    }
+                               }
+                        </div>
+                        }
+                        <div class="my-3">
+                            <input type="submit" value="Xác nhận đặt hàng" class="btn btn-success" />
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

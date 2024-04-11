@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Diachi>;
+
+@{
+    ViewData["Title"] = "Thông tin tài khoản";
+}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3>Thông tin khách hàng</h3>
+                    </div><!-- /.box-header -->
+                    <form role="form" asp-action="EditAccount">
+                        <div class="box-body" style="padding-left: 30px; font-size: 14px;">
+                            <div class="form-group">
+                                <label>Họ và Tên: </label> @ViewBag.khachhang.Ten
+                            </div>
+                            <div class="form-group">
+                                <label>Email: </label> @ViewBag.khachhang.Email
+                            </div>
+                            <div class="form-group">
+                                <label>Điện Thoại: </label> @ViewBag.khachhang.DienThoai
+                            </div>
+                            <div class="form-group">
+                                 <label>Mật Khẩu: </label> @ViewBag.khachhang.MatKhau
+                            </div>
+                            <div class="form-group">
+                                <label >CCCD: </label> @ViewBag.khachhang.Cccd
+                            </div>
+                            <div class="form-group">
+                                
+                                <label> Hình Căn Cước : </label><img src="~/img/@ViewBag.khachhang.HinhT" style="width:200px; height: 150px; margin: 0px 30px 0px 20px" /> <img src="~/img/@ViewBag.khachhang.HinhS" style="width:200px; height: 150px"; />
+                            </div>
+                            <div class="form-group">
+                                @if (@ViewBag.khachhang.SlthueB > 3)
+                                {
+                                    <label>Số Lượng Thuê Bao:</label> <p class="text-danger"> Đã đủ </p>
+                                }
+                                else
+                                {
+                                    <label >Số Lượng Thuê Bao Đã Đăng Ký: </label> @ViewBag.khachhang.SlthueB
+                                }
+                            </div>
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Sửa Thông Tin</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </section>

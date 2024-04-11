@@ -33,7 +33,7 @@ namespace WeSimMobifone.Models
         [Column("DiaDiemHM")]
         [StringLength(100)]
         public string DiaDiemHm { get; set; }
-        public int? TrangThai { get; set; }
+        public int TrangThai { get; set; }
 
         [ForeignKey(nameof(MaDm))]
         [InverseProperty(nameof(Danhmuc.Thuebao))]

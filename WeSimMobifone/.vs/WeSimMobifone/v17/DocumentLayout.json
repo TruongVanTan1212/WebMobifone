@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\views\\home\\viewcart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\views\\home\\viewcart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\controllers\\thuebaoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\controllers\\thuebaoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\views\\homehd\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\views\\homehd\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ThuebaosController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\ThuebaosController.cs",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Controllers\\ThuebaosController.cs",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\ThuebaosController.cs",
-              "RelativeToolTip": "WeSimMobifone\\Controllers\\ThuebaosController.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABUAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "WeSimMobifone\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "WeSimMobifone\\Controllers\\AdminController.cs",
+              "ViewState": "AQIAAMAAAAAAAAAAAAAiwMwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-05T16:33:17.388Z",
+              "WhenOpened": "2024-04-11T08:39:52.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ViewCart.cshtml",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\ViewCart.cshtml",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Views\\Home\\ViewCart.cshtml",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\ViewCart.cshtml",
-              "RelativeToolTip": "WeSimMobifone\\Views\\Home\\ViewCart.cshtml",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\HomeHD\\Index.cshtml",
+              "RelativeDocumentMoniker": "WeSimMobifone\\Views\\HomeHD\\Index.cshtml",
+              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\HomeHD\\Index.cshtml",
+              "RelativeToolTip": "WeSimMobifone\\Views\\HomeHD\\Index.cshtml",
+              "ViewState": "AQIAADwAAAAAAAAAAAAAAEUAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-05T16:32:17.433Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "WeSimMobifone\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAMkAAAAAAAAAAAAuwNIAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-05T16:29:16.303Z",
+              "WhenOpened": "2024-04-11T08:38:40.863Z",
               "EditorCaption": ""
             }
           ]

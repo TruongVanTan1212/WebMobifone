@@ -12,7 +12,9 @@ namespace WeSimMobifone.Models
     [Table("DIACHI")]
     public partial class Diachi
     {
-      //  internal const object Hoadon;
+        public Diachi() {
+            Hoadon = new HashSet<Hoadon>();
+        }
 
         [Key]
         [Column("MaDC")]
@@ -34,5 +36,8 @@ namespace WeSimMobifone.Models
         [ForeignKey(nameof(MaKh))]
         [InverseProperty(nameof(Khachhang.Diachi))]
         public virtual Khachhang MaKhNavigation { get; set; }
+
+        [InverseProperty("MaDcNavigation")]
+        public virtual ICollection<Hoadon> Hoadon { get; set; }
     }
 }
