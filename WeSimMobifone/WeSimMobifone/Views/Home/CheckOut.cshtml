@@ -1,4 +1,4 @@
-﻿@model List<WeSimMobifone.Models.CartItem>
+﻿@model List<WeSimMobifone.Models.Thuebao>
 @{
     ViewData["Title"] = "Đăng Ký Thuê Bao";
 }
@@ -36,8 +36,8 @@
 
                 @if (ViewBag.khachhang != null)
                 {
-                    <form asp-action="CreateBill" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="@ViewBag.khachhang.MaKh" />
+                    <form asp-action="CreateBill">
+
                         <div class="my-3">
                             <label>Họ tên</label>
                             <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />

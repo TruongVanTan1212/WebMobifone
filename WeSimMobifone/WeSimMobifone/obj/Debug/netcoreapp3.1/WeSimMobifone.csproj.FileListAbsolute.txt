@@ -355,3 +355,6 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\CheckOut.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Customer.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditAccount.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Address.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AddAddress.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\CreateBill.cshtml.g.cs

@@ -33,7 +33,6 @@ namespace WeSimMobifone.Controllers
             // lấy dữ liệu bảng tin tức
             ViewBag.tintuc = _context.Tintuc.ToList();
             // số lượng mặt hàng có trong giỏ   
-            ViewData["solg"] = GetCartItems().Count();
            
             // ViewBag.thuebao = _context.Thuebao.FirstOrDefault(k => k.TrangThai == int.Parse(HttpContext.Session.GetString("Thuebao")));
 
@@ -80,6 +79,10 @@ namespace WeSimMobifone.Controllers
                 return NotFound();
             }
 
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh).ToList();
+            ViewBag.diachi = lstDiaChi;
+            GetInfo();
             return View(thuebao);
         }
 
@@ -187,7 +190,7 @@ namespace WeSimMobifone.Controllers
         }
 
 
-        //------------giỏ hàng--------------------------------
+      /*  //------------giỏ hàng--------------------------------
         // thêm thuê bao vào giỏ hàng
         public async Task<IActionResult> AddToCart(int id)
         {
@@ -261,7 +264,7 @@ namespace WeSimMobifone.Controllers
             }
             SaveCartSession(cart);
             return RedirectToAction(nameof(ViewCart));
-        }
+        }*/
 
         // Chuyển đến view thanh toán
         public IActionResult CheckOut()
@@ -270,89 +273,43 @@ namespace WeSimMobifone.Controllers
                 List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh).ToList();
                 ViewBag.diachi = lstDiaChi;
                 GetInfo();
-                return View(GetCartItems());
+                return View();
         }
-
-        public async Task<IActionResult> CreateBill(int id,string hoten,string email,string dienthoai, string cccd,string hinht, string hinhs, string diachicuthe, string phuongxa, string quanhuyen, string tinhthanh, int madiachi)
+      
+        public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang)
         {
             Khachhang kh;
             Diachi dc;
 
-            var cc = _context.Khachhang.FirstOrDefault(k => k.Cccd == cccd);
-            var ht = _context.Khachhang.FirstOrDefault(k => k.HinhT == hinht);
-            var hs = _context.Khachhang.FirstOrDefault(k => k.HinhS == hinhs);
-            var ktdc = _context.Diachi.FirstOrDefault(k => k.MaDc == madiachi);
-
-            // chưa cập nhật hình căn cước và Cccd
-            if (cc == null ||ht == null || hs == null) 
-            {
-
-                kh = _context.Khachhang.FirstOrDefault(d => d.MaKh == id);
-                kh.HinhT = hinht;
-                kh.HinhS = hinhs;
-                kh.Cccd = cccd;
-                _context.Update(kh);
-                await _context.SaveChangesAsync();
-            }
-
-            // khách hàng nhập đầy đủ thông tin
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-
+            dc = _context.Diachi.FirstOrDefault(d => d.MaDc == madiachi);
             // khách hàng mua hàng lần đầu cập nhật số lượng thuê bao 1
-            if(kh.SlthueB == null)
+            if (kh.SlthueB == 0)
             {
-                kh = new Khachhang();
+                kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
                 kh.SlthueB = 1;
-                _context.Add(kh);
+                _context.Update(kh);
                 await _context.SaveChangesAsync();
             }
             else
             {
                 // khách hàng đã mua hàng cập nhật số lượng thuê bao tăng thêm 1
-                kh = new Khachhang();
+                kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
                 kh.SlthueB = kh.SlthueB + 1;
-                _context.Add(kh);
+                _context.Update(kh);
                 await _context.SaveChangesAsync();
             }
-            
-            // khách hàng chưa nhập địa chỉ
-            if (ktdc == null) 
-             {
-                dc = new Diachi();
-                kh = new Khachhang();
-                dc.DiaChi1 = diachicuthe;
-                dc.PhuongXa = phuongxa;
-                dc.QuanHuyen = quanhuyen;
-                dc.TinhThanh = tinhthanh;
-                dc.MaKh = kh.MaKh;
-                dc.MacDinh = 1;
-                 _context.Add(dc);
-                 await _context.SaveChangesAsync();
-             }
-            else
-            {  
-                // khách hàng đã nhập địa chỉ
-                dc = _context.Diachi.FirstOrDefault(d => d.MaDc == madiachi);
-            }
-            
             // Mua trong giỏ hàng
-            Hoadon hd = new Hoadon();
-            var cart = GetCartItems();
-            foreach (CartItem i in cart)
-            {
-               hd.MaTb = i.Thuebao.MaTb;
-               hd.MaKh = kh.MaKh;
-               hd.Ngay = DateTime.Now;
-               hd.MaDc = dc.MaDc;
-               hd.TongTien = i.Thuebao.PhiHoaMang;
-               hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+               Hoadon hd = new Hoadon();
+                hd.MaTb = id;
+                hd.MaKh = kh.MaKh;
+                hd.Ngay = DateTime.Now;
+                hd.MaDc = dc.MaDc;
+                hd.TongTien = phihoamang;
+                hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
                 _context.Add(hd);
                 await _context.SaveChangesAsync();
-            }
-
-            // xóa giỏ hàng
-            ClearCart();
 
             GetInfo();
             return View(hd);

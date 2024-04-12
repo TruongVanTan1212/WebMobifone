@@ -1,0 +1,113 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Diachi>;
+@{
+    ViewData["Title"] = "Thông tin tài khoản";
+}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3>Địa Chỉ khách hàng</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">
+                                    Stt
+                                </th>
+                                <th style="width:40%;">
+                                    Địa chỉ cụ thể
+                                </th>
+                                <th style="width:10%;">
+                                   Xã / Phường
+                                </th>
+                                <th style="width:10%;">
+                                    Quận / Huyện
+                                </th>
+                                <th style="width:10%;">
+                                    Tỉnh thành
+                                </th>
+                                <th style="width:5%;"></th>
+                                <th style="width:10%;"></th>
+                                <th style="width:10%;"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int stt = 1;
+                                @foreach (Diachi i in Model)
+                                {
+                                    @if(i.MacDinh == 1)
+                                    {
+                                        <tr class="table-success">
+                                            <td>
+                                               @(stt)
+                                            </td>
+                                            <td>
+                                                @i.DiaChi1
+                                            </td>
+                                            <td>
+                                                @i.PhuongXa
+                                            </td>
+                                            <td>
+                                                @i.QuanHuyen
+                                            </td>
+                                            <td>
+                                                @i.TinhThanh
+                                            </td>
+                                            <td>
+                                                <div class="tools">
+                                                    <span class="label label-success">mặc định</span>
+                                                </div>
+                                            </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr >
+                                            <td>
+                                                @(stt)
+                                            </td>
+                                            <td>
+                                                @i.DiaChi1
+                                            </td>
+                                            <td>
+                                                @i.PhuongXa
+                                            </td>
+                                            <td>
+                                                @i.QuanHuyen
+                                            </td>
+                                            <td>
+                                                @i.TinhThanh
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div class="tools">
+                                                    <a class="btn btn-block btn-success" asp-action="SetDefaultAddress" asp-route-id="@i.MaDc">Mặc định</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-block btn-danger" asp-action="DeleteAddress" asp-route-id="@i.MaDc">Xoá</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    stt++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-success" asp-action="AddAddress">Thêm địa chỉ </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</section>

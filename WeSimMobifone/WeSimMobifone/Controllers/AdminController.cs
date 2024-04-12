@@ -17,12 +17,11 @@ namespace WeSimMobifone.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<Khachhang> _passwordHasher;
-        //private readonly IPasswordHasher<Nhanvien> _nvpasswordHasher;
+        
         public AdminController(ApplicationDbContext context, IPasswordHasher<Khachhang> passwordHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            //_nvpasswordHasher = nvpasswordHasher;
         }
         void GetInfo()
         {
@@ -163,7 +162,7 @@ namespace WeSimMobifone.Controllers
             return _context.Hoadon.Any(e => e.MaHd == id);
         }
 
-        //------------------------------------------------------
+        //--------------------------------------------------------------------------------------------
         // tra cứu hoá đơn
         public async Task<IActionResult> SearchHD(string searchHoaDon)
         {
@@ -172,14 +171,12 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(lstHoaDon);
         }
-
+        //------------------------------------------Khách hàng--------------------------------------------------
         // Xuất thông tin khách hàng
         public IActionResult Customer()
         {
-            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh);
             GetInfo();
-            return View(lstDiaChi);
+            return View();
         }
 
         // sửa thông tin khách hàng
@@ -191,23 +188,22 @@ namespace WeSimMobifone.Controllers
 
         // POST
         [HttpPost]
-        public async Task<IActionResult> EditAccount(int id,string email, string matkhau, string ten, string dienthoai,string cccd,string hinht, string hinhs , IFormFile file)
+        public async Task<IActionResult> EditAccount(string email, string matkhau, string ten, string dienthoai,string cccd,string hinht, string hinhs , IFormFile file)
         {
             // kiểm tra email đã đk tài khoản chưa && không phải khách hàng hiện tại && mật khẩu không bỏ trống
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
 
             Khachhang khCheck = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != matkhau && k.MatKhau != null);
            
-            if (khCheck != null)
+            if (khCheck == null)
             {
                 GetInfo();
                 return RedirectToAction(nameof(EditAccount));
-
             }
 
             Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
             kh.Email = email;
-            //kh.Ten = ten;
+            kh.Ten = ten;
             kh.DienThoai = dienthoai;
             kh.Cccd = cccd;
             hinhs = Upload(file);
@@ -224,7 +220,70 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return RedirectToAction(nameof(Customer));
         }
+        // xuất địa chỉ
+        public IActionResult Address()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh);
+            GetInfo();
+            return View(lstDiaChi);
+        }
 
+        // thêm địa chỉ
+        public IActionResult AddAddress()
+        {
+            GetInfo();
+            return View();
+        }
+        // thêm địa chỉ
+        [HttpPost]
+        public async Task<IActionResult> AddAddress(string diachicuthe, string phuongxa, string quanhuyen, string tinhthanh)
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Diachi dc = new Diachi();
+            dc.MaKh = makh;
+            dc.DiaChi1 = diachicuthe;
+            dc.PhuongXa = phuongxa;
+            dc.QuanHuyen = quanhuyen;
+            dc.TinhThanh = tinhthanh;
+            var kt = _context.Diachi.FirstOrDefault(d => d.MaKh == makh);
+            if(kt != null)
+            {
+                dc.MacDinh = 0;
+            }
+            else
+            {
+                dc.MacDinh = 1;
+            }
+            _context.Add(dc);
+            await _context.SaveChangesAsync();
+            GetInfo();
+            return RedirectToAction(nameof(Address));
+        }
+
+        // đặt địa chỉ làm mặc định
+        public async Task<IActionResult> SetDefaultAddress(int id)
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Diachi dc1 = _context.Diachi.FirstOrDefault(d => d.MaKh == makh && d.MacDinh == 1);
+            dc1.MacDinh = 0;
+            _context.Update(dc1);
+
+            Diachi dc2 = _context.Diachi.FirstOrDefault(d => d.MaDc == id);
+            dc2.MacDinh = 1;
+            _context.Update(dc2);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Address));
+        }
+
+        public async Task<IActionResult> DeleteAddress(int id)
+        {
+            Diachi dc = _context.Diachi.FirstOrDefault(d => d.MaDc == id);
+            _context.Diachi.Remove(dc);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Address));
+        }
         // upload file
         public string Upload(IFormFile file)
         {

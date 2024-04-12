@@ -1,6 +1,4 @@
-﻿@model IEnumerable<WeSimMobifone.Models.Diachi>;
-
-@{
+﻿@{
     ViewData["Title"] = "Thông tin tài khoản";
 }
 
@@ -14,7 +12,7 @@
                     <div class="box-header">
                         <h3>Thông tin khách hàng</h3>
                     </div><!-- /.box-header -->
-                    <form role="form" asp-action="EditAccount">
+                    <form role="form" >
                         <div class="box-body" style="padding-left: 30px; font-size: 14px;">
                             <div class="form-group">
                                 <label>Họ và Tên: </label> @ViewBag.khachhang.Ten
@@ -46,7 +44,7 @@
                                 }
                             </div>
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Sửa Thông Tin</button>
+                            <a class="btn btn-primary" asp-action="EditAccount" >Sửa Thông Tin</a>
                             </div>
                         </div>
                     </form>
