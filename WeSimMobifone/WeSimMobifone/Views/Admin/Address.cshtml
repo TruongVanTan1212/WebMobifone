@@ -41,7 +41,8 @@
                                 int stt = 1;
                                 @foreach (Diachi i in Model)
                                 {
-                                    @if(i.MacDinh == 1)
+                                    
+                                    @if(i.MacDinh == 1 && i.Daxoa == 0)
                                     {
                                         <tr class="table-success">
                                             <td>
@@ -69,33 +70,36 @@
                                         </tr>
                                     }
                                     else
-                                    {
-                                        <tr >
-                                            <td>
-                                                @(stt)
-                                            </td>
-                                            <td>
-                                                @i.DiaChi1
-                                            </td>
-                                            <td>
-                                                @i.PhuongXa
-                                            </td>
-                                            <td>
-                                                @i.QuanHuyen
-                                            </td>
-                                            <td>
-                                                @i.TinhThanh
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <div class="tools">
-                                                    <a class="btn btn-block btn-success" asp-action="SetDefaultAddress" asp-route-id="@i.MaDc">Mặc định</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-block btn-danger" asp-action="DeleteAddress" asp-route-id="@i.MaDc">Xoá</a>
-                                            </td>
-                                        </tr>
+                                    { 
+                                        if(i.MacDinh == 2 && i.Daxoa == 0)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @(stt)
+                                                </td>
+                                                <td>
+                                                    @i.DiaChi1
+                                                </td>
+                                                <td>
+                                                    @i.PhuongXa
+                                                </td>
+                                                <td>
+                                                    @i.QuanHuyen
+                                                </td>
+                                                <td>
+                                                    @i.TinhThanh
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div class="tools">
+                                                        <a class="btn btn-block btn-success" asp-action="SetDefaultAddress" asp-route-id="@i.MaDc">Mặc định</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-block btn-danger" asp-action="DeleteAddress" asp-route-id="@i.MaDc">Xoá</a>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
                                     stt++;
                                 }

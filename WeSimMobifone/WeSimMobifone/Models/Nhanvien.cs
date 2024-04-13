@@ -26,6 +26,7 @@ namespace WeSimMobifone.Models
         public string Email { get; set; }
         [StringLength(255)]
         public string MatKhau { get; set; }
+        public int Daxoa { get; set; }
 
         [ForeignKey(nameof(MaCv))]
         [InverseProperty(nameof(Chucvu.Nhanvien))]

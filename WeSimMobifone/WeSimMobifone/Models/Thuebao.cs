@@ -15,6 +15,7 @@ namespace WeSimMobifone.Models
         public Thuebao()
         {
             Hoadon = new HashSet<Hoadon>();
+            Qlthuebao = new HashSet<Qlthuebao>();
         }
 
         [Key]
@@ -35,6 +36,8 @@ namespace WeSimMobifone.Models
         public string DiaDiemHm { get; set; }
         public int TrangThai { get; set; }
 
+        public int Daxoa { get; set; }
+
         [ForeignKey(nameof(MaDm))]
         [InverseProperty(nameof(Danhmuc.Thuebao))]
         public virtual Danhmuc MaDmNavigation { get; set; }
@@ -43,5 +46,8 @@ namespace WeSimMobifone.Models
         public virtual Loaitb MaLtbNavigation { get; set; }
         [InverseProperty("MaTbNavigation")]
         public virtual ICollection<Hoadon> Hoadon { get; set; }
+
+        [InverseProperty("MaTbNavigation")]
+        public virtual ICollection<Qlthuebao> Qlthuebao { get; set; }
     }
 }

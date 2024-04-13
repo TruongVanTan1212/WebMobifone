@@ -1,0 +1,126 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Hoadon>
+
+@{
+    ViewData["Title"] = "Hoá Đơn";
+}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="col-lg-7">
+                        <h3>Lịch sử đơn hàng</h3>
+                    </div>
+                    <div class="row col-lg-5 " style="flex-direction: row-reverse;">
+                        <a class="btn btn-info" asp-action="DonDaDuyet">Đơn đã duyệt</a>
+                        <a class="btn btn-danger" asp-action="DonDaHuy">Đơn đã huỷ </a>
+                        <a class="btn btn-success" asp-action="DonDaNhan">Đơn đã nhận </a>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">
+                                    Stt
+                                </th>
+                                <th style="width:15%;">
+                                    Số thuê bao
+                                </th>
+                                <th style="width:10%;">
+                                    Ngày đặt
+                                </th>
+                                <th style="width:40%;">
+                                    Địa Chỉ
+                                </th>
+                                <th style="width:10%;">
+                                    Tổng tiền
+                                </th>
+                                <th style="width:10%;">
+                                    Trạng thái
+                                </th>
+                               
+                                <th style="width:10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int stt = 1;
+                                @foreach (Hoadon i in Model)
+                                {
+                                        <tr class="table-success">
+                                            <td>
+                                                @(stt)
+                                            </td>
+                                            <td>
+                                                @i.MaTbNavigation.SoThueBao
+                                            </td>
+                                            <td>
+                                                @i.Ngay
+                                            </td>
+                                            <td>
+                                                @i.MaDcNavigation.DiaChi1,@i.MaDcNavigation.PhuongXa,@i.MaDcNavigation.QuanHuyen,@i.MaDcNavigation.TinhThanh
+                                            </td>
+                                            <td>
+                                                @i.TongTien VNĐ
+                                            </td>
+                                           
+                                            <td>
+                                                @if (i.TrangThai == 0 && i.Daxoa == 0)
+                                                {
+                                                    <span class="label label-warning">Đang duyệt</span>
+                                                }
+                                                else
+                                                {
+                                                    if (i.TrangThai == 1 && i.Daxoa == 0)
+                                                    {
+                                                        <span class="label label-info">Đang vận chuyển</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        if(i.TrangThai == 2 && i.Daxoa == 0)
+                                                        {
+                                                            <span class="label label-success">Đã nhận được hàng</span>
+                                                        }
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if(i.TrangThai == 0 && i.Daxoa == 0)
+                                                {
+                                                    <a class="btn btn-block btn-danger" asp-action="HuyDon" asp-route-id="@i.MaHd">Huỷ</a>
+                                                }
+                                                else
+                                                {
+                                                    @if (i.TrangThai == 1 && i.Daxoa == 0)
+                                                    {
+                                                        <a class="btn btn-block btn-success" asp-action="DaNhan" asp-route-id="@i.MaHd">Đã nhận</a>
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i.TrangThai == 2 && i.Daxoa == 0)
+                                                        {
+                                                            <a class="btn btn-block btn-primary" asp-action="" asp-route-id="@i.MaKh">Kích hoạt</a>
+                                                        }
+                                                    }
+                                                }
+
+                                            </td>
+                                        </tr>  
+                                        stt++;
+                                }
+                         } 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer">
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</section>

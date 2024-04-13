@@ -1,0 +1,48 @@
+﻿@model WeSimMobifone.Models.Qlthuebao
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Qlthuebao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayKichHoat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayKichHoat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Daxoa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Daxoa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaKhNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaKhNavigation.Ten)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaTbNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaTbNavigation.SoThueBao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MaQl">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

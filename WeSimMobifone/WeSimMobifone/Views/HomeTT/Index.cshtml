@@ -42,7 +42,7 @@
                 <h5 class="mb-3">@Html.DisplayFor(modelItem => item.TieuDe)</h5>
                 <p>@Html.DisplayFor(modelItem => item.TomTat)</p>
                 <p>Ngày Đăng: @Html.DisplayFor(modelItem => item.NgayDang)</p>
-                <a class="btn px-3 mt-auto mx-auto" href="">Chi tiết</a>
+                <a class="btn px-3 mt-auto mx-auto" asp-action="Details" asp-route-id="@item.MaTin">Chi tiết</a>
             </div>
             </div>
         }

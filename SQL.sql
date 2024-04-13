@@ -35,7 +35,8 @@ CREATE TABLE THUEBAO(
 	MaLTB int not null foreign key(MaLTB) references LOAITB(MaLTB),
 	LoaiSo nvarchar(50),
 	DiaDiemHM nvarchar(100),
-	TrangThai int -- 0:trống, 1:được mua, 2: đã kích hoạt
+	TrangThai int default 0, -- 0:trống, 1:được mua, 2: đã kích hoạt
+	Daxoa int default 0 -- 0: bth , 1: đã xoá ----
 ) 
 GO
 
@@ -52,7 +53,8 @@ CREATE TABLE NHANVIEN(
 	MaCV int not null foreign key(MaCV) references CHUCVU(MaCV),
 	DienThoai varchar(20),
 	Email varchar(50),
-	MatKhau varchar(255)	
+	MatKhau varchar(255),	
+	Daxoa int default 0 ------------
 ) 
 GO
 
@@ -60,12 +62,13 @@ CREATE TABLE KHACHHANG(
 	MaKH int primary key identity(1,1),
 	Ten nvarchar(100) not null,
 	DienThoai varchar(10),
-	Email varchar(100),
+	Email varchar(100)  ,
 	MatKhau varchar(255),
 	CCCD varchar(12),
 	HinhT varchar(255),
 	HinhS varchar(255),
-	SLThueB int default 0  -- tăng theo SL Thuê Bao
+	SLThueB int default 0, -- tăng theo SL Thuê Bao
+	Daxoa int default 0 -- 0: bth , 1: khoá , 2: xoá --------------
 ) 
 GO
 
@@ -76,10 +79,19 @@ CREATE TABLE DIACHI(
 	PhuongXa nvarchar(20),
 	QuanHuyen nvarchar(50) ,
 	TinhThanh nvarchar(50),
-	MacDinh int default 1	
+	MacDinh int default 1,
+	Daxoa int default 0 ------------
 ) 
 GO
-
+CREATE TABLE QLTHUEBAO(
+	MaQL int primary key identity(1,1),
+	MaTB int not null foreign key(MaTB) references THUEBAO(MaTB),
+	MaKH int not null foreign key(MaKH) references KHACHHANG(MaKH),
+	NgayKichHoat datetime default getdate(),
+	TrangThai int default 0, -- 0:trống, 1:được mua, 2: đã kích hoạt -----------
+	Daxoa int default 0 ----------------
+) 
+GO
 CREATE TABLE HOADON(
 	MaHD int primary key identity(1,1),
 	MaTB int not null foreign key(MaTB) references THUEBAO(MaTB),
@@ -87,7 +99,8 @@ CREATE TABLE HOADON(
 	TongTien int default 0,
 	MaKH int not null foreign key(MaKH) references KHACHHANG(MaKH),
 	MaDC int not null foreign key(MaDC) references DIACHI(MaDC),
-	TrangThai int default 0 -- duyệt -> gửi sp 
+	TrangThai int default 0, -- duyệt -> gửi sp 
+	Daxoa int default 0 ---------------------------------
 ) 
 GO
 
@@ -107,6 +120,7 @@ CREATE TABLE HUONGDAN(
 	NgayDang  datetime default getdate(),
 ) 
 GO
+
 INSERT INTO CUAHANG(Ten,DienThoai,DiaChi,Email) VALUES(N'Mobifone An Giang',N'077 924 9999',N'93, Trần Hưng Đạo, Mỹ Quý Long Xuyên, An Giang',N'mobifoneaglx@gmail.com');
 GO
 
@@ -173,11 +187,11 @@ INSERT INTO CHUCVU(Ten) VALUES(N'Admin');
 INSERT INTO CHUCVU(Ten) VALUES(N'Nhân Viên');
 GO
 -- dữ liệu Nhân Viên
-INSERT INTO NHANVIEN(Ten,MaCV,DienThoai,Email,MatKhau) VALUES(N'Admin',1,'0789845633',N'Admin@gmail.com','123Admin');
-INSERT INTO NHANVIEN(Ten,MaCV,DienThoai,Email,MatKhau) VALUES(N'Trương Văn Tân',2,'0789845632',N'Tan@gmail.com','123Tan');
+INSERT INTO NHANVIEN(Ten,MaCV,DienThoai,Email,MatKhau) VALUES(N'Admin',1,'0789845633',N'Admin@gmail.com','AQAAAAEAACcQAAAAEBO/yZP9lqYHO4BYQbIUxbclNnXTB0C4ljyB2VCqxBwT0krD4w3IBjfgx5QBcRQrQQ=='); -- 123Admin
+INSERT INTO NHANVIEN(Ten,MaCV,DienThoai,Email,MatKhau) VALUES(N'Trương Văn Tân',2,'0789845632',N'Tan@gmail.com','AQAAAAEAACcQAAAAEDBPezsoNDRV7Jw82ZAjonXUNV+xenpO7pPkQpuICGk/MQwsDchGrPNjMq5eh+6R2w==');-- 123Tan
 GO
 -- dữ liệu Khách hàng
-INSERT INTO KHACHHANG(Ten,DienThoai,Email,MatKhau,CCCD,SLThueB) VALUES(N'NGuyễn Thị Như Huỳnh','0382180991',N'Huynh@gmail.com','9d63dd2cae6e90dfbcf017e962e5a032','085643245600',2);
+INSERT INTO KHACHHANG(Ten,DienThoai,Email,MatKhau,CCCD,SLThueB) VALUES(N'NGuyễn Thị Như Huỳnh','0382180991',N'Huynh@gmail.com','AQAAAAEAACcQAAAAEHMY7fkbGxZx8LESboxUQ2C24Bu9Yi5SLDC6ZOsxie6Xyq/y+pHFJoBGOktwQTfqsw==','085643245600',0); -- mk: 123Huynh
 GO
 INSERT INTO DIACHI(MaKH,DiaChi,PhuongXa,QuanHuyen,TinhThanh,MacDinh) VALUES(1,N'Ấp Long Thuận 2',N'Long Điền A',N'Chợ Mới',N'An Giang',1)
 GO
@@ -197,3 +211,4 @@ SELECT * FROM TINTUC;
 SELECT * FROM DIACHI;
 SELECT * FROM KHACHHANG;
 SELECT * FROM HUONGDAN;
+SELECT * FROM QLTHUEBAO;

@@ -1,8 +1,29 @@
-﻿
-@{
-    ViewData["Title"] = "Đặt hàng thành công";
+﻿@{
+    ViewData["Title"] = "Đơn hàng";
 }
-<div class="container px-4 px-lg-5 mt-1">
-    <h3>Đặt hàng thành công</h3>
-    <p>Đơn hàng mã số @Model.MaHd trị giá @(((int)Model.TongTien).ToString("n0"))đ đã được hệ thống ghi nhận. Chúng tôi sẽ sớm liên hệ bạn để xác nhận...</p>
+
+
+    <div class="container-xxl py-5  hero-header mb-5" style="background-color: #007AFE;">
+        <div class="container my-5 py-5 px-lg-5">
+             <div class="row g-5 py-5">
+                  <div class="col-12 text-center m-4">
+                       <h1 class="text-white animated zoomIn">Đơn hàng đã đặt</h1>
+                       <hr class="bg-white mx-auto mt-0" style="width: 90px;">
+                       <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                               <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
+                               <li class="breadcrumb-item text-white active"><a aria-current="page" asp-controller="Admin" asp-action="DonHang">đơn hàng</a></li>
+                            </ol>
+                       </nav>
+                  </div>
+             </div>
+        </div>
+     </div>
+</div>
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="col-lg-12 text-center">
+            <h3 class="text-dark ">Đơn hàng đã được đặt thành công, đang chờ được duyệt</h3>
+        </div>
+    </div>
 </div>

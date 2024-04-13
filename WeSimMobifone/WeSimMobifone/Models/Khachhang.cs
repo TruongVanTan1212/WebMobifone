@@ -16,6 +16,7 @@ namespace WeSimMobifone.Models
         {
             Diachi = new HashSet<Diachi>();
             Hoadon = new HashSet<Hoadon>();
+            Qlthuebao = new HashSet<Qlthuebao>();
         }
 
         [Key]
@@ -40,9 +41,15 @@ namespace WeSimMobifone.Models
         [Column("SLThueB")]
         public int SlthueB { get; set; }
 
+        public int Daxoa { get; set; }
+
         [InverseProperty("MaKhNavigation")]
         public virtual ICollection<Diachi> Diachi { get; set; }
+
         [InverseProperty("MaKhNavigation")]
         public virtual ICollection<Hoadon> Hoadon { get; set; }
+
+        [InverseProperty("MaKhNavigation")]
+        public virtual ICollection<Qlthuebao> Qlthuebao { get; set; }
     }
 }

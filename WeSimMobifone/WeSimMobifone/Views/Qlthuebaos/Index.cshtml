@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Qlthuebao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayKichHoat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrangThai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Daxoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaKhNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaTbNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKichHoat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Daxoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaTbNavigation.SoThueBao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaQl">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaQl">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaQl">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

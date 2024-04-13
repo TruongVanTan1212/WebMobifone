@@ -314,7 +314,6 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Details.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Tintucs\Index.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Create.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Delete.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Thuebaos\Details.cshtml.g.cs
@@ -328,15 +327,8 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Nhanviens\Details.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Nhanviens\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Nhanviens\Index.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\Create.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\Delete.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\Details.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\Index.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\Create.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\Delete.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\Details.cshtml.g.cs
-C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\Edit.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\Index.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeHD\_ViewStart.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\HomeTT\_ViewStart.cshtml.g.cs
@@ -358,3 +350,12 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Address.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AddAddress.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\CreateBill.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Qlthuebaos\Create.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Qlthuebaos\Delete.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Qlthuebaos\Details.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Qlthuebaos\Edit.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Qlthuebaos\Index.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonHang.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaDuyet.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaHuy.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaNhan.cshtml.g.cs

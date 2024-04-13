@@ -36,6 +36,7 @@ namespace WeSimMobifone
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
             services.AddSingleton<IPasswordHasher<Khachhang>, PasswordHasher<Khachhang>>();
+            services.AddSingleton<IPasswordHasher<Nhanvien>, PasswordHasher<Nhanvien>>();
             services.AddRazorPages();
             services.AddSession(Options =>
             {

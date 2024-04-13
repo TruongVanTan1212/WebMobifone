@@ -27,7 +27,7 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double?>("HeSo")
+                    b.Property<double>("HeSo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
                         .HasDefaultValueSql("((1.0))");
@@ -103,6 +103,9 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
+
                     b.Property<string>("DiaChi1")
                         .IsRequired()
                         .HasColumnName("DiaChi")
@@ -113,7 +116,7 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnName("MaKH")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MacDinh")
+                    b.Property<int>("MacDinh")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValueSql("((1))");
@@ -149,6 +152,9 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaDc")
                         .HasColumnName("MaDc")
                         .HasColumnType("int");
@@ -171,7 +177,7 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("((0))");
 
-                    b.Property<int?>("TrangThai")
+                    b.Property<int>("TrangThai")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValueSql("((0))");
@@ -228,6 +234,9 @@ namespace WeSimMobifone.Data.Migrations
                         .HasMaxLength(12)
                         .IsUnicode(false);
 
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
+
                     b.Property<string>("DienThoai")
                         .HasColumnType("varchar(10)")
                         .HasMaxLength(10)
@@ -253,7 +262,7 @@ namespace WeSimMobifone.Data.Migrations
                         .HasMaxLength(255)
                         .IsUnicode(false);
 
-                    b.Property<int?>("SlthueB")
+                    b.Property<int>("SlthueB")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SLThueB")
                         .HasColumnType("int")
@@ -297,6 +306,9 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
+
                     b.Property<string>("DienThoai")
                         .HasColumnType("varchar(20)")
                         .HasMaxLength(20)
@@ -329,6 +341,40 @@ namespace WeSimMobifone.Data.Migrations
                     b.ToTable("NHANVIEN");
                 });
 
+            modelBuilder.Entity("WeSimMobifone.Models.Qlthuebao", b =>
+                {
+                    b.Property<int>("MaQl")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("MaQL")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaKh")
+                        .HasColumnName("MaKH")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaTb")
+                        .HasColumnName("MaTB")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("NgayKichHoat")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
+
+                    b.HasKey("MaQl");
+
+                    b.HasIndex("MaKh");
+
+                    b.HasIndex("MaTb");
+
+                    b.ToTable("QLTHUEBAO");
+                });
+
             modelBuilder.Entity("WeSimMobifone.Models.Thuebao", b =>
                 {
                     b.Property<int>("MaTb")
@@ -336,6 +382,9 @@ namespace WeSimMobifone.Data.Migrations
                         .HasColumnName("MaTB")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Daxoa")
+                        .HasColumnType("int");
 
                     b.Property<string>("DiaDiemHm")
                         .HasColumnName("DiaDiemHM")
@@ -365,7 +414,7 @@ namespace WeSimMobifone.Data.Migrations
                         .HasMaxLength(10)
                         .IsUnicode(false);
 
-                    b.Property<int?>("TrangThai")
+                    b.Property<int>("TrangThai")
                         .HasColumnType("int");
 
                     b.HasKey("MaTb")
@@ -446,6 +495,21 @@ namespace WeSimMobifone.Data.Migrations
                         .WithMany("Nhanvien")
                         .HasForeignKey("MaCv")
                         .HasConstraintName("FK__NHANVIEN__MaCV__44FF419A")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WeSimMobifone.Models.Qlthuebao", b =>
+                {
+                    b.HasOne("WeSimMobifone.Models.Khachhang", "MaKhNavigation")
+                        .WithMany("Qlthuebao")
+                        .HasForeignKey("MaKh")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WeSimMobifone.Models.Thuebao", "MaTbNavigation")
+                        .WithMany("Qlthuebao")
+                        .HasForeignKey("MaTb")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

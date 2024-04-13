@@ -197,5 +197,7 @@ namespace WeSimMobifone.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<WeSimMobifone.Models.Qlthuebao> Qlthuebao { get; set; }
     }
 }

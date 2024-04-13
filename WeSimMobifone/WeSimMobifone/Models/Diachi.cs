@@ -31,7 +31,9 @@ namespace WeSimMobifone.Models
         public string QuanHuyen { get; set; }
         [StringLength(50)]
         public string TinhThanh { get; set; }
-        public int? MacDinh { get; set; }
+        public int MacDinh { get; set; }
+
+        public int Daxoa { get; set; }
 
         [ForeignKey(nameof(MaKh))]
         [InverseProperty(nameof(Khachhang.Diachi))]
@@ -39,5 +41,6 @@ namespace WeSimMobifone.Models
 
         [InverseProperty("MaDcNavigation")]
         public virtual ICollection<Hoadon> Hoadon { get; set; }
+
     }
 }

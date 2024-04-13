@@ -24,7 +24,8 @@ namespace WeSimMobifone.Models
         public int MaKh { get; set; }
         [Column("MaDc")]
         public int MaDc { get; set; }
-        public int? TrangThai { get; set; }
+        public int TrangThai { get; set; }
+        public int Daxoa { get; set; }
 
         [ForeignKey(nameof(MaKh))]
         [InverseProperty(nameof(Khachhang.Hoadon))]
