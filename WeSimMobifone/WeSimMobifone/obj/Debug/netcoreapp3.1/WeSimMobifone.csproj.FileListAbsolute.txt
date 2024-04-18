@@ -359,3 +359,12 @@ C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaDuyet.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaHuy.cshtml.g.cs
 C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DonDaNhan.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Home\KiemTraSL.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDM.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutGT.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutHD.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutTT.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DaHuy.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DaVanChuyen.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DaDuyetDon.cshtml.g.cs
+C:\Users\DELL\OneDrive\Desktop\WebMobifone\WeSimMobifone\WeSimMobifone\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DaNhanDon.cshtml.g.cs

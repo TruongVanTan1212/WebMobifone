@@ -60,6 +60,15 @@
                         <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang Chủ</a>
                         <a asp-controller="HomeTT" asp-action="Index" class="nav-item nav-link">Tin Tức</a>
                         <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Danh Mục</a>
+                            <div class="dropdown-menu m-0">
+                                @foreach (var i in (List<Danhmuc>)ViewBag.danhmuc)
+                                {
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="DanhMucSP" asp-route-id="@i.MaDm">@i.TenDm</a>
+                                }
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
                             <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hướng Dẫn</a>
                             <div class="dropdown-menu m-0">
                                 <a asp-controller="HomeHD" asp-action="Kichhoat" class="dropdown-item">Kích Hoạt Sim</a>
@@ -67,15 +76,7 @@
                             </div>
                         </div>
                         <a asp-controller="Home" asp-action="GioiThieu" class="nav-item nav-link">Giới Thiệu</a>
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Danh Mục</a>
-                            <div class="dropdown-menu m-0">
-                                @foreach (var i in (List <Danhmuc>)ViewBag.danhmuc)
-                                {
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="DanhMucSP" asp-route-id="@i.MaDm">@i.TenDm</a>
-                                }
-                            </div>
-                        </div>
+                        
                     </div>
                    
                     <a type="button" class="btn text-primary ms-3" asp-controller="Home" asp-action="ViewCart"><i class="bi bi-cart-check-fill"></i><span class="badge bg-danger text-white ms-1 rounded-pill">@ViewData["solg"]</span></a>

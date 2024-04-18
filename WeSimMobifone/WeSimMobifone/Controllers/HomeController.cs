@@ -27,6 +27,7 @@ namespace WeSimMobifone.Controllers
         // lấy dữ liệu bảng
         void GetInfo()
         {
+            
             // lấy dữ liệu bảng danh mục
             ViewBag.danhmuc = _context.Danhmuc.ToList();
             // lấy dữ liệu của hàng
@@ -261,10 +262,12 @@ namespace WeSimMobifone.Controllers
             {
                 return RedirectToAction(nameof(Login));
             }
-                if (id == null)
+
+            if (id == null)
             {
                 return NotFound();
             }
+         
 
             var thuebao = await _context.Thuebao
                 .Include(t => t.MaDmNavigation)
@@ -274,8 +277,12 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
+            if (kh.SlthueB == 3) 
+            {
+                return RedirectToAction(nameof(KiemTraSL));
+            }
             List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
             ViewBag.diachi = lstDiaChi;
             Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
@@ -285,7 +292,11 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(thuebao);
         }
-
+        public IActionResult KiemTraSL()
+        {
+            GetInfo();
+            return View();
+        }
         // đăng ký thuê bao
         public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang)
         {

@@ -23,9 +23,27 @@ namespace WeSimMobifone.Controllers
             _context = context;
             _passwordHasher = passwordHasher;
         }
+       
+      
+
+        //-------------------------------------Hoá đơn-------------------------------------------------------
+        // tra cứu hoá đơn
+        public async Task<IActionResult> SearchHD(string searchHoaDon)
+        {
+            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDon) && k.Daxoa == 0).ToListAsync();
+            GetInfo();
+            return View(lstHoaDon);
+        }
+        // lấy thông tin hoá đơn
         void GetInfo()
         {
-            
+
+            ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
+            ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
+            ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
+            ViewData["SLDaNhan"] = _context.Hoadon.Where(k => k.TrangThai == 3 && k.Daxoa == 0).Count();  // 3 đã nhận
+            ViewData["SLDaHuy"] = _context.Hoadon.Where(k => k.TrangThai == 3 && k.Daxoa == 0).Count();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -37,15 +55,43 @@ namespace WeSimMobifone.Controllers
 
             }
         }
-        // GET: Admin
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() // chưa duyệt
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation);
+            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                .Where(k => k.TrangThai == 0 && k.Daxoa == 0);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> DaDuyetDon()  // đã duyệt
+        {
+            GetInfo();
+            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                .Where(k => k.TrangThai == 1 && k.Daxoa == 0);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> DaVanChuyen() // đã vận chuyển
+        {
+            GetInfo();
+            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                .Where(k => k.TrangThai == 2 && k.Daxoa == 0);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> DaNhanDon() //đã nhận đơn
+        {
+            GetInfo();
+            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                .Where(k => k.TrangThai == 3 && k.Daxoa == 0);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> DaHuy() //đã huỷ
+        {
+            GetInfo();
+            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                .Where(k => k.TrangThai == 4 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Admin/Details/5
+        // chi tiết hoá đơn
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,112 +111,16 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(hoadon);
         }
-
-        // GET: Admin/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> DuyetHoaDon(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hoadon = await _context.Hoadon.FindAsync(id);
-            if (hoadon == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", hoadon.MaKh);
-            ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", hoadon.MaTb);
-            ViewData["MaDc"] = new SelectList(_context.Diachi, "MaDc", "DiaChi", hoadon.MaDc);
-            GetInfo();
-            return View(hoadon);
-        }
-
-        // POST: Admin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaHd,MaTb,Ngay,TongTien,MaKh,MaDc,TrangThai")] Hoadon hoadon)
-        {
-            if (id != hoadon.MaHd)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(hoadon);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HoadonExists(hoadon.MaHd))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", hoadon.MaKh);
-            ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", hoadon.MaTb);
-            ViewData["MaDc"] = new SelectList(_context.Diachi, "MaDc", "DiaChi", hoadon.MaDc);
-            GetInfo();
-            return View(hoadon);
-        }
-
-        // GET: Admin/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hoadon = await _context.Hoadon
-                .Include(h => h.MaKhNavigation)
-                .Include(h => h.MaTbNavigation)
-                .Include(h => h.MaDcNavigation)
-                .FirstOrDefaultAsync(m => m.MaHd == id);
-            if (hoadon == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(hoadon);
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var hoadon = await _context.Hoadon.FindAsync(id);
-            _context.Hoadon.Remove(hoadon);
+            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
+            hd.TrangThai = 1; // đã nhận
+            _context.Update(hd);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(DaDuyetDon));
         }
 
-        private bool HoadonExists(int id)
-        {
-            return _context.Hoadon.Any(e => e.MaHd == id);
-        }
-
-        //--------------------------------------------------------------------------------------------
-        // tra cứu hoá đơn
-        public async Task<IActionResult> SearchHD(string searchHoaDon)
-        {
-            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
-                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDon) && k.Daxoa == 0).ToListAsync();
-            GetInfo();
-            return View(lstHoaDon);
-        }
         //------------------------------------------Khách hàng--------------------------------------------------
         // Xuất thông tin khách hàng
         public IActionResult Customer()
@@ -188,7 +138,7 @@ namespace WeSimMobifone.Controllers
 
         // POST
         [HttpPost]
-        public async Task<IActionResult> EditAccount(string email, string matkhau, string ten, string dienthoai,string cccd,string hinht, string hinhs , IFormFile file)
+        public async Task<IActionResult> EditAccount(string email, string matkhau, string ten, string dienthoai,string cccd,IFormFile hinht, IFormFile hinhs)
         {
             // kiểm tra email đã đk tài khoản chưa && không phải khách hàng hiện tại && mật khẩu không bỏ trống
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
@@ -206,10 +156,14 @@ namespace WeSimMobifone.Controllers
             kh.Ten = ten;
             kh.DienThoai = dienthoai;
             kh.Cccd = cccd;
-            hinhs = Upload(file);
-            kh.HinhT = hinhs;
-            hinht = Upload(file);
-            kh.HinhS = hinht;
+            if(hinht != null)
+            {
+                kh.HinhT = Upload(hinht);
+            }
+            if(hinhs != null)
+            {
+                kh.HinhS = Upload1(hinhs);
+            }
             if (kh.MatKhau != matkhau )
             {
                 kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
@@ -287,16 +241,30 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(Address));
         }
         // upload file
-        public string Upload(IFormFile file)
+        public string Upload(IFormFile hinht)
         {
             string uploadFileName = null;
-            if (file != null)
+            if (hinht != null)
             {
-                uploadFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinht.FileName;
                 var path = $"wwwroot\\img\\{uploadFileName}";
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    file.CopyTo(stream);
+                    hinht.CopyTo(stream);
+                }
+            }
+            return uploadFileName;
+        }
+        public string Upload1(IFormFile hinhs)
+        {
+            string uploadFileName = null;
+            if (hinhs != null)
+            {
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinhs.FileName;
+                var path = $"wwwroot\\img\\{uploadFileName}";
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    hinhs.CopyTo(stream);
                 }
             }
             return uploadFileName;
@@ -358,5 +326,24 @@ namespace WeSimMobifone.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(DonDaNhan));
         }
+
+        public async Task<IActionResult> KichHoat(int id)
+        {
+            Khachhang kh;
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
+
+            Qlthuebao tb = new Qlthuebao();
+            tb.MaKh = makh;
+            tb.MaTb = id; // mã thuê bao
+            tb.NgayKichHoat = DateTime.Now;
+            tb.TrangThai = 0;
+            tb.Daxoa = 0;
+            _context.Add(tb);
+            await _context.SaveChangesAsync();
+            GetInfo();
+            return RedirectToAction(nameof(DonHang));
+        }
+
     }
 }

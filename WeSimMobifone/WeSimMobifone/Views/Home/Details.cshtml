@@ -32,7 +32,7 @@
         <div class="row ">
             <div class="col-md-7">
                 <div class="card">
-                    <div class="card-header text-center text-light border-info"><h2 class="mt-2"> Thông tin khách hàng </h2></div>
+                    <div class="card-header text-center text-light border-info" style="background-color: #007AFE;"><h2 class="mt-2"> Thông tin khách hàng </h2></div>
                     <div class="card-body  m-2">
                         @if (ViewBag.khachhang != null)
                         {
@@ -41,6 +41,7 @@
                                 <div class="my-3">
                                     <label>Họ tên</label>
                                     <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
+
                                 </div>
                                 <div class="my-3">
                                     <label>Email</label>
@@ -62,25 +63,15 @@
                                     }
                                 </div>
                                 <div class="my-3">
-                                    <label>Ảnh căn cước công dân mặt trước</label>
-                                    @if (@ViewBag.khachhang.HinhT == null)
+                                    <label>Ảnh căn cước công dân</label>
+                                    @if (@ViewBag.khachhang.HinhT == null && @ViewBag.khachhang.HinhS == null)
                                     {
                                         <input type="file" name="hinht" class="form-control" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/img/@ViewBag.khachhang.HinhT" width="50px" height="80px" />
-                                    }
-                                </div>
-                                <div class="my-3">
-                                    <label>Ảnh căn cước công dân mặt sau</label>
-                                    @if (@ViewBag.khachhang.HinhS == null)
-                                    {
                                         <input type="file" name="hinhs" class="form-control" />
                                     }
                                     else
                                     {
-                                        <img src="~/img/@ViewBag.khachhang.HinhS" width="50px" height="80px" />
+                                        <img src="~/img/@ViewBag.khachhang.HinhT" width="100px" height="80px" style="margin: 0 20px 0 20px"/>  <img src="~/img/@ViewBag.khachhang.HinhS" width="100px" height="80px" />
                                     }
                                 </div>
                                 <div class="my-3">
@@ -90,25 +81,20 @@
                                                 string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
                                                 if (dc.MacDinh == 1)
                                                 {
-                                                    
                                                         <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="true">
                                                         <label for="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill"></i></label><br>
-                                                   
                                                 }
                                                 else
                                                 {
-                                                  
                                                     <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
                                                     <label for="@dc.MaDc">@tmp</label><br>
-                                                   
                                                 }
                                             }
                                 </div>
-                                   
                                 <div class="my-2">
-                                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-danger m-3" />
-                                    <a class="btn btn-block btn-success" style="margin: 0 20px 0 20px;" asp-controller="Admin" asp-action="AddAddress">Thêm địa Chỉ</a>
-                                    <a class="btn btn-block btn-info" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
+                                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary text-light rounded-pill py-2 px-4 ms-3" />
+                                    <a class="btn btn-success text-light rounded-pill py-2 px-4 ms-3" style="margin: 0 20px 0 20px;" asp-controller="Admin" asp-action="AddAddress">Thêm địa Chỉ</a>
+                                    <a class="btn btn-danger text-light rounded-pill py-2 px-4 ms-3" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
                                 </div>
                             </form>
                         }
@@ -161,7 +147,8 @@
                     </div>
                     <div class="card-footer">
                         <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> Mỗi CMND/Thẻ căn cước/Hộ chiếu không được hòa mạng quá 3 thuê bao MobiFone.</label>
-                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> Số CMND/CCCD/Hộ chiếu được sử dụng để đăng ký thông tin thuê bao, quý khách vui lòng nhập chính xác. CMND/CCCD/Hộ chiếu phải còn hạn sử dụng, nguyên vẹn, không rách rời chắp vá, không bị mờ. </label>
+                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> Số CMND/CCCD/Hộ chiếu được sử dụng để đăng ký thông tin thuê bao, quý khách vui lòng nhập chính xác.</label>
+                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> CMND/CCCD/Hộ chiếu phải còn hạn sử dụng, nguyên vẹn, không rách rời chắp vá, không bị mờ. </label>
                     </div>
                 </div>
                 

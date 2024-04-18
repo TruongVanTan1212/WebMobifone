@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,20 @@ namespace WeSimMobifone.Controllers
             _context = context;
         }
 
+        void GetInfo()
+        {
+
+            //  ViewBag.tintuc = _context.Danhmuc.ToList();
+            if (HttpContext.Session.GetString("Nhanvien") != "")
+            {
+                ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
+            }
+        }
+
         // GET: Qlthuebaos
         public async Task<IActionResult> Index()
         {
+            GetInfo();
             var applicationDbContext = _context.Qlthuebao.Include(q => q.MaKhNavigation).Include(q => q.MaTbNavigation);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -42,7 +54,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(qlthuebao);
         }
 
@@ -51,6 +63,7 @@ namespace WeSimMobifone.Controllers
         {
             ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten");
             ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao");
+            GetInfo();
             return View();
         }
 
@@ -69,6 +82,7 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", qlthuebao.MaKh);
             ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", qlthuebao.MaTb);
+            GetInfo();
             return View(qlthuebao);
         }
 
@@ -87,6 +101,7 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["MaKh"] = new SelectList(_context.Khachhang, "MaKh", "Ten", qlthuebao.MaKh);
             ViewData["MaTb"] = new SelectList(_context.Thuebao, "MaTb", "SoThueBao", qlthuebao.MaTb);
+            GetInfo();
             return View(qlthuebao);
         }
 
@@ -143,7 +158,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-
+            GetInfo();
             return View(qlthuebao);
         }
 

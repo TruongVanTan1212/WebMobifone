@@ -6,54 +6,76 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
     <ol class="breadcrumb">
-        <li><a asp-controller="Hoadons" asp-action="Index"><i class="fa fa-home"></i> Home</a></li>
+        <li><a asp-controller="Admin" asp-action="Index"><i class="fa fa-home"></i> Home</a></li>
         <li class="active">Hoá Đơn</li>
     </ol>
 </section>
 <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>150</h3>
-                    <p>SIM</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a asp-area="" asp-controller="Thuebaos" asp-action="Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Tin Tức</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a asp-area="" asp-controller="Tintucs" asp-action="Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-2 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>44</h3>
-                    <p>Hướng Dẫn</p>
+                <h3>@ViewData["SLChuaDuyet"]<sup style="font-size: 20px"></sup></h3>
+                    <p>Hoá đơn chưa duyệt</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a asp-area="" asp-controller="Huongdans" asp-action="Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a asp-controller="Admin" asp-action="Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-2 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                <h3>@ViewData["SLDaDuyet"]<sup style="font-size: 20px"></sup></h3>
+                    <p>Hoá đơn đã duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            <a asp-area="" asp-controller="Admin" asp-action="DaDuyetDon" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-2 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-teal">
+                    <div class="inner">
+                    <h3>@ViewData["SLDaVanChuyen"]<sup style="font-size: 20px"></sup></h3>
+                        <p>Hoá đơn vận chuyển</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+            <a asp-area="" asp-controller="Admin" asp-action="DaVanChuyen" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-2 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                <h3>@ViewData["SLDaNhan"]<sup style="font-size: 20px"></sup></h3>
+                    <p>Hoá đơn đã nhận</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            <a asp-area="" asp-controller="Admin" asp-action="DaNhanDon" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-2 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                <h3>@ViewData["SLDaHuy"]</h3>
+                    <p>Hoá đơn đã huỷ</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            <a asp-area="" asp-controller="Admin" asp-action="DaHuy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div><!-- ./col -->
     </div><!-- /.row -->
@@ -62,7 +84,7 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Đơn Hàng</h3>
+                <h3 class="box-title">Đơn Hàng Chưa Duyệt</h3>
             </div><!-- /.box-header -->
             <div class="box-tools">
                 <div class="input-group">
@@ -135,13 +157,20 @@
                                         {
                                             if (item.TrangThai == 2)
                                             {
-                                                <span class="label label-success">Giao Dịch Thành Công</span>
+                                                <span class="label label-success">đang vận chuyển</span>
                                             }
                                             else
                                             {
                                                 if (item.TrangThai == 3)
                                                 {
-                                                    <span class="label label-danger">Đã huỷ</span>
+                                                    <span class="label label-primary">hàng đã nhận</span>
+                                                }
+                                                else
+                                                {
+                                                    if (item.TrangThai == 4)
+                                                    {
+                                                        <span class="label label-danger">Đã huỷ</span>
+                                                    }
                                                 }
                                             }
 

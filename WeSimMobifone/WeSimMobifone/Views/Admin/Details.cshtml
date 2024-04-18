@@ -4,45 +4,87 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Hoadon</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Ngay)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Ngay)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TongTien)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TongTien)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TrangThai)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MaKhNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MaKhNavigation.Ten)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MaTbNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MaTbNavigation.SoThueBao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaHd">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="box">
+             <div class="box box-warning">
+                <div class="box-header">
+                    <i class="fa fa-envelope"></i>
+                    <h3 class="box-title">Thông tin chi tiết hoá đơn</h3>
+                    <!-- tools box -->
+                </div>
+                  <div class="box-body">
+                      <table class="table " style="font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaHd)</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaHd)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaTbNavigation.SoThueBao)</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaTbNavigation.SoThueBao)</td>
+                                    <td style="width: 10%" ></td>
+                                </tr>
+                                <tr>
+                                    <td style ="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.Ten):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Ten)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.DienThoai):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.DienThoai)</td>
+                                    <td style="width: 10% "></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.Email):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Email)</td>
+                                    <td style="width: 10%" ></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaKhNavigation.Cccd):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Cccd)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> Ảnh Căn Cước công dân:</td>
+                                    <td style="text-align: right;">
+                                        <a class="btn btn-light" href="/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" data-lightbox="portfolio"><i class="fa fa-plus fa-2x text-primary"></i></a>
+                                        <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" style="width:150px; height: 100px; margin: 0px 10px 0px 10px" /> <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhS)" style="width:150px; height: 100px" ; />
+                                    </td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaDcNavigation.DiaChi1):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaDcNavigation.DiaChi1), @Html.DisplayFor(model => model.MaDcNavigation.PhuongXa), @Html.DisplayFor(model => model.MaDcNavigation.QuanHuyen), @Html.DisplayFor(model => model.MaDcNavigation.TinhThanh)</td>
+                                    <td style="width: 10%" ></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.TongTien):</td>
+                                    <td style="font-weight: bold; text-align: right;">@Html.DisplayFor(model => model.TongTien) VNĐ</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                            </tbody>
+                       </table>
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                            <a class="btn btn-block btn-info" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd">Duyệt đơn</a>  
+                            <a class="btn btn-block btn-danger" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd">Huỷ đơn</a>
+                    </div>
+                </div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
