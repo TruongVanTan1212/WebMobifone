@@ -240,6 +240,11 @@
                             </a>
                         </li>
                         <li>
+                            <a asp-controller="Thuebaos" asp-action="DanhSachTB">
+                                <i class="fa fa-home"></i> <span>Đăng Ký thuê bao</span>
+                            </a>
+                        </li>
+                        <li>
                             <a asp-controller="Nhanviens" asp-action="Index">
                                 <i class="fa fa-female"></i> <span>Nhân Viên</span>
                             </a>
@@ -273,6 +278,18 @@
                                 <a asp-controller="Admin" asp-action="Address">
                                     <i class="fa fa-female"></i> <span>Địa Chỉ</span>
                                 </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-files-o"></i>
+                                    <span>Lịch sử đơn hàng</span>
+                                    <span class="label label-primary pull-right">4</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a asp-action="DonHang"><i class="fa fa-circle-o"></i> Đơn hàng</a></li>
+                                    <li><a asp-action="DonDaNhan"><i class="fa fa-circle-o"></i> Đơn hàng đã nhận</a></li>
+                                    <li><a asp-action="DonDaHuy"><i class="fa fa-circle-o"></i> Đơn hàng đã huỷ</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a asp-controller="Admin" asp-action="Donhang">

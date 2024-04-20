@@ -267,8 +267,6 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
-         
-
             var thuebao = await _context.Thuebao
                 .Include(t => t.MaDmNavigation)
                 .Include(t => t.MaLtbNavigation)
@@ -292,6 +290,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(thuebao);
         }
+        // thông báo lỗi khi thuê bao đã đủ
         public IActionResult KiemTraSL()
         {
             GetInfo();

@@ -1,7 +1,7 @@
 ﻿@model WeSimMobifone.Models.Hoadon
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "thông tin chi tiết hoá đơn";
 }
 
 
@@ -59,7 +59,6 @@
                                 <tr>
                                     <td style="font-weight: bold; width: 20%"> Ảnh Căn Cước công dân:</td>
                                     <td style="text-align: right;">
-                                        <a class="btn btn-light" href="/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" data-lightbox="portfolio"><i class="fa fa-plus fa-2x text-primary"></i></a>
                                         <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" style="width:150px; height: 100px; margin: 0px 10px 0px 10px" /> <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhS)" style="width:150px; height: 100px" ; />
                                     </td>
                                     <td style="width: 10%"></td>
@@ -78,8 +77,15 @@
                        </table>
                     </div>
                     <div class="box-footer clearfix no-border">
-                            <a class="btn btn-block btn-info" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd">Duyệt đơn</a>  
-                            <a class="btn btn-block btn-danger" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd">Huỷ đơn</a>
+                        @if(@Model.TrangThai == 0)
+                        {
+                            <a class="btn btn-block btn-info" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd" asp-route-matb="@Model.MaTb" asp-route-makh="@Model.MaKh">Duyệt đơn</a>
+                            <a class="btn btn-block btn-danger" style="width: 150px; " asp-action="HuyHoaDon" asp-route-id="@Model.MaHd">Huỷ đơn</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-block btn-success" style="width: 150px; " asp-action="KhachDaNhanDon" asp-route-id="@Model.MaHd">Đã Nhận</a>
+                        }
                     </div>
                 </div>
           </div>
@@ -87,4 +93,3 @@
         <div class="col-md-3"></div>
     </div>
 </section>
-

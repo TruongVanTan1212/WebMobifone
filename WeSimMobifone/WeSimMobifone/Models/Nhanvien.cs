@@ -15,15 +15,19 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaNV")]
         public int MaNv { get; set; }
-        [Required]
+        [Required(ErrorMessage = "vui lòng nhập tên nhân viên")]
+        [Display(Name = "Tên nhân viên")]
         [StringLength(100)]
         public string Ten { get; set; }
         [Column("MaCV")]
         public int MaCv { get; set; }
+        [Display(Name = "Điện thoại")]
         [StringLength(20)]
         public string DienThoai { get; set; }
+        [Display(Name = "Email")]
         [StringLength(50)]
         public string Email { get; set; }
+        [Display(Name = "Mật khẩu")]
         [StringLength(255)]
         public string MatKhau { get; set; }
         public int Daxoa { get; set; }

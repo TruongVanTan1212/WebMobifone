@@ -38,12 +38,12 @@ namespace WeSimMobifone.Controllers
         // lấy thông tin hoá đơn
         void GetInfo()
         {
-
+            ViewBag.cuahang = _context.Cuahang.ToList();
             ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
             ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
             ViewData["SLDaNhan"] = _context.Hoadon.Where(k => k.TrangThai == 3 && k.Daxoa == 0).Count();  // 3 đã nhận
-            ViewData["SLDaHuy"] = _context.Hoadon.Where(k => k.TrangThai == 3 && k.Daxoa == 0).Count();
+            ViewData["SLDaHuy"] = _context.Hoadon.Where(k => k.TrangThai == 4 && k.Daxoa == 0).Count();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -55,42 +55,42 @@ namespace WeSimMobifone.Controllers
 
             }
         }
-        public async Task<IActionResult> Index() // chưa duyệt
+        // show hoá đơn
+        public async Task<IActionResult> Index() // chưa duyệt 0
         {
             GetInfo();
             var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 0 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
-        public async Task<IActionResult> DaDuyetDon()  // đã duyệt
+        public async Task<IActionResult> DaDuyetDon()  // đã duyệt 1
         {
             GetInfo();
             var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 1 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
-        public async Task<IActionResult> DaVanChuyen() // đã vận chuyển
+        public async Task<IActionResult> DaVanChuyen() // đã vận chuyển 2
         {
             GetInfo();
             var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 2 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
-        public async Task<IActionResult> DaNhanDon() //đã nhận đơn
+        public async Task<IActionResult> DaNhanDon() //đã nhận đơn 3
         {
             GetInfo();
             var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 3 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
-        public async Task<IActionResult> DaHuy() //đã huỷ
+        public async Task<IActionResult> DaHuy() //đã huỷ 4
         {
             GetInfo();
             var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 4 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
-
         // chi tiết hoá đơn
         public async Task<IActionResult> Details(int? id)
         {
@@ -111,15 +111,86 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(hoadon);
         }
-        public async Task<IActionResult> DuyetHoaDon(int? id)
+        // cập nhật trạng thái đơn hàng
+        public async Task<IActionResult> DuyetHoaDon(int? id,int matb, int makh) // duyệt đơn hàng 1
         {
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
+            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id );
             hd.TrangThai = 1; // đã nhận
             _context.Update(hd);
             await _context.SaveChangesAsync();
+
+            Qlthuebao tb = new Qlthuebao();
+            tb.MaKh = makh;
+            tb.MaTb = matb; // mã thuê bao
+            tb.NgayKichHoat = DateTime.Now;
+            tb.TrangThai = 0;
+            tb.Daxoa = 0;
+            _context.Add(tb);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(DaDuyetDon));
+
+
         }
+        public async Task<IActionResult> HuyHoaDon(int? id) // huỷ đơn hàng 4 
+        {
+            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
+            hd.TrangThai = 4 ; // đã nhận
+            _context.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DaHuy));
+        }
+        public async Task<IActionResult> DaVanChuyenHang(int? id) // đang vận chuyển 2
+        {
+            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
+            hd.TrangThai = 2; // đã nhận
+            _context.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DaVanChuyen));
+        }
+        // in hoá đơn
+        public async Task<IActionResult> InHoaDon(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hoadon = await _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .FirstOrDefaultAsync(m => m.MaHd == id);
+            if (hoadon == null)
+            {
+                return NotFound();
+            }
+            GetInfo();
+            return View(hoadon);
+        }
+        public async Task<IActionResult> InHoaDon1(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hoadon = await _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .FirstOrDefaultAsync(m => m.MaHd == id);
+            if (hoadon == null)
+            {
+                return NotFound();
+            }
+            GetInfo();
+            return View(hoadon);
+        }
+
 
         //------------------------------------------Khách hàng--------------------------------------------------
         // Xuất thông tin khách hàng
@@ -136,7 +207,7 @@ namespace WeSimMobifone.Controllers
             return View();
         }
 
-        // POST
+        // sửa thông tin khách hàng
         [HttpPost]
         public async Task<IActionResult> EditAccount(string email, string matkhau, string ten, string dienthoai,string cccd,IFormFile hinht, IFormFile hinhs)
         {
@@ -174,7 +245,8 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return RedirectToAction(nameof(Customer));
         }
-        // xuất địa chỉ
+        
+        // xuất địa chỉ khách hàng
         public IActionResult Address()
         {
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
@@ -183,13 +255,14 @@ namespace WeSimMobifone.Controllers
             return View(lstDiaChi);
         }
 
-        // thêm địa chỉ
+        // thêm địa chỉ khách hàng
         public IActionResult AddAddress()
         {
             GetInfo();
             return View();
         }
-        // thêm địa chỉ
+        
+        // thêm địa chỉ khách hàng
         [HttpPost]
         public async Task<IActionResult> AddAddress(string diachicuthe, string phuongxa, string quanhuyen, string tinhthanh)
         {
@@ -215,7 +288,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return RedirectToAction(nameof(Address));
         }
-
+        
         // đặt địa chỉ làm mặc định
         public async Task<IActionResult> SetDefaultAddress(int id)
         {
@@ -231,7 +304,8 @@ namespace WeSimMobifone.Controllers
 
             return RedirectToAction(nameof(Address));
         }
-
+       
+        // xoá địa chỉ
         public async Task<IActionResult> DeleteAddress(int id)
         {
             Diachi dc = _context.Diachi.FirstOrDefault(d => d.MaDc == id);
@@ -240,6 +314,7 @@ namespace WeSimMobifone.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Address));
         }
+       
         // upload file
         public string Upload(IFormFile hinht)
         {
@@ -269,80 +344,87 @@ namespace WeSimMobifone.Controllers
             }
             return uploadFileName;
         }
-
-        public IActionResult DonHang()
+       
+        // show đơn hàng
+        public IActionResult DonHang() // đơn hàng chưa duyệt 0
         {
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstdonhang = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation).Where(d => d.MaKh == makh && d.TrangThai == 0);
+            var lstdonhang = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaKh == makh && (d.TrangThai == 0 || d.TrangThai == 1 || d.TrangThai == 2) && d.Daxoa == 0);
             GetInfo();
             return View(lstdonhang);
         }
-        public IActionResult DonDaHuy()
+        public IActionResult DonDaHuy()// đơn hàng đã huỷ 4
         {
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstdonhang = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation).Where(d => d.MaKh == makh && d.TrangThai == 3);
+            var lstdonhang = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaKh == makh && d.TrangThai == 4 && d.Daxoa == 0);
             GetInfo();
             return View(lstdonhang);
         }
-        public IActionResult DonDaDuyet()
+        public IActionResult DonDaNhan()// đơn hàng đã nhận 3
         {
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstdonhang = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation).Where(d => d.MaKh == makh && d.TrangThai == 1);
+            var lstdonhang = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaKh == makh && d.TrangThai == 3 && d.Daxoa == 0);
             GetInfo();
             return View(lstdonhang);
         }
-        public IActionResult DonDaNhan()
-        {
-            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var lstdonhang = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation).Where(d => d.MaKh == makh && d.TrangThai == 2);
-            GetInfo();
-            return View(lstdonhang);
-        }
-
-        public async Task<IActionResult> HuyDon(int? id)
+       
+        // cập nhật trạng thái đơn hàng
+        public async Task<IActionResult> KhachDaNhanDon(int? id) // đang vận chuyển 3
         {
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
-            hd.TrangThai = 3; // đã xoá
-            _context.Update(hd);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(DonDaHuy));
-        }
-        public async Task<IActionResult> DaNhan(int? id)
-        {
-            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
-            hd.TrangThai = 2; // đã nhận
-            _context.Update(hd);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(DonDaNhan));
-        }
-        public async Task<IActionResult> DaDuyet(int? id)
-        {
-            //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
-            hd.TrangThai = 1; // đã duyệt
+            hd.TrangThai = 3; // đã nhận
             _context.Update(hd);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(DonDaNhan));
         }
-
-        public async Task<IActionResult> KichHoat(int id)
+       
+        // cập nhật kích hoạt SIM
+        public async Task<IActionResult> KichHoat(int id)  // mã khách hàng
         {
-            Khachhang kh;
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-
-            Qlthuebao tb = new Qlthuebao();
-            tb.MaKh = makh;
-            tb.MaTb = id; // mã thuê bao
-            tb.NgayKichHoat = DateTime.Now;
-            tb.TrangThai = 0;
-            tb.Daxoa = 0;
-            _context.Add(tb);
+            Qlthuebao tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == id && d.Daxoa == 0);
+            tb.TrangThai = 1; // đã nhận
+            _context.Update(tb);
             await _context.SaveChangesAsync();
             GetInfo();
-            return RedirectToAction(nameof(DonHang));
+            return RedirectToAction(nameof(DonDaNhan));
+        }
+       
+        // chi tiết đơn khách hàng
+        public async Task<IActionResult> ChiTietDonHangKhach(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hoadon = await _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .FirstOrDefaultAsync(m => m.MaHd == id);
+            if (hoadon == null)
+            {
+                return NotFound();
+            }
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == makh && d.Daxoa == 0);
+            ViewBag.qlthuebao = tb;
+            GetInfo();
+            return View(hoadon);
         }
 
     }

@@ -15,9 +15,12 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaHDan")]
         public int MaHdan { get; set; }
+        [Display(Name = "Câu hỏi")]
         [StringLength(255)]
         public string CauHoi { get; set; }
+        [Display(Name = "Trả lời")]
         public string TraLoi { get; set; }
+        [Display(Name = "Ngày đăng")]
         [Column(TypeName = "datetime")]
         public DateTime? NgayDang { get; set; }
     }

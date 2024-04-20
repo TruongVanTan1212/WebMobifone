@@ -1,0 +1,166 @@
+﻿@model WeSimMobifone.Models.Hoadon
+
+@{
+    ViewData["Title"] = "thông tin chi tiết hoá đơn khach";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Cập nhật đơn hàng
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-6">
+                <!-- The time line -->
+                <ul class="timeline">
+                    <!-- timeline time label -->
+                    <li class="time-label">
+                        <span class="bg-red">
+                        @Html.DisplayFor(model => model.Ngay)
+                        </span>
+                    </li>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa  fa-inbox bg-blue"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header"><a href="#">Đơn hàng đang được xét duyệt</a></h3>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                @if (@Model.TrangThai == 1 || @Model.TrangThai == 2 || @Model.TrangThai == 3)
+                {
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-file-text-o bg-aqua"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header no-border"><a href="#">Đơn hàng đã được duyệt</a></h3>
+                            <div class="timeline-body">
+                                Công ty đang chuẩn bị hàng . Đơn hàng của bạn sẽ sớm được giao đến bạn.
+                            </div>
+                        </div>
+                    </li>
+                    if (@Model.TrangThai == 2 || @Model.TrangThai == 3)
+                    {
+                        <!-- END timeline item -->
+                        <!-- timeline item -->
+                        <li>
+                            <i class="fa fa-truck bg-yellow"></i>
+                            <div class="timeline-item">
+                                <h3 class="timeline-header"><a href="#">Đơn hàng đã được vận chuyển</a></h3>
+                                <div class="timeline-body">
+                                    Đơn hàng đang được vận chuyển.
+                                </div>
+                            </div>
+                        </li>
+                        <!-- END timeline item -->
+                        if (@Model.TrangThai == 3)
+                        {
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa  fa-money bg-purple"></i>
+                                <div class="timeline-item">
+                                    <h3 class="timeline-header"><a href="#">Đã giao hàng thành công</a></h3>
+                                    <div class="timeline-body">
+                                        Vui lòng truy nhấn vào mục <b>"hướng dẫn"</b> chọn phần <b>"kích hoạt"</b> làm theo hướng dẫn để có thể sử dụng SIM. <br />
+                                        Xin chân thành cảm ơn quý khách đã đặt hàng.
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                        }
+                    }
+                }
+                </ul>
+            </div><!-- /.col -->
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <i class="fa fa-envelope"></i>
+                            <h3 class="box-title">Thông tin chi tiết hoá đơn</h3>
+                            <!-- tools box -->
+                        </div>
+                        <div class="box-body">
+                            <table class="table " style="font-size: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaHd)</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaHd)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaTbNavigation.SoThueBao)</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaTbNavigation.SoThueBao)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.Ten):</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Ten)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.DienThoai):</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.DienThoai)</td>
+                                        <td style="width: 10% "></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaKhNavigation.Email):</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Email)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaKhNavigation.Cccd):</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaKhNavigation.Cccd)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> Ảnh Căn Cước công dân:</td>
+                                        <td style="text-align: right;">
+                                            <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" style="width:150px; height: 100px; margin: 0px 10px 0px 10px" /> <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhS)" style="width:150px; height: 100px" ; />
+                                        </td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.MaDcNavigation.DiaChi1):</td>
+                                        <td style="text-align: right;">@Html.DisplayFor(model => model.MaDcNavigation.DiaChi1), @Html.DisplayFor(model => model.MaDcNavigation.PhuongXa), @Html.DisplayFor(model => model.MaDcNavigation.QuanHuyen), @Html.DisplayFor(model => model.MaDcNavigation.TinhThanh)</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.TongTien):</td>
+                                        <td style="font-weight: bold; text-align: right;">@Html.DisplayFor(model => model.TongTien) VNĐ</td>
+                                        <td style="width: 10%"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix no-border">
+                            @if (@Model.TrangThai == 2)
+                            {
+                            <a class="btn btn-block btn-success" style="width: 150px; " asp-action="KhachDaNhanDon" asp-route-id="@Model.MaHd">Đã Nhận</a>
+                            }
+                            else
+                            {
+                            @if (@Model.TrangThai == 3 && @ViewBag.qlthuebao.TrangThai == 0 && @ViewBag.qlthuebao.MaTb == @Model.MaTb)
+                                {
+                                    <a class="btn btn-block btn-primary" asp-action="KichHoat" asp-route-id="@Model.MaKh">Kich hoạt</a>
+                                }
+                            }
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <!-- /.row -->
+</section><!-- /.content -->

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +16,12 @@ namespace WeSimMobifone.Controllers
     public class ThuebaosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPasswordHasher<Khachhang> _passwordHasher;
 
-        public ThuebaosController(ApplicationDbContext context)
+        public ThuebaosController(ApplicationDbContext context, IPasswordHasher<Khachhang> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
         void GetInfo()
         {
@@ -183,6 +187,108 @@ namespace WeSimMobifone.Controllers
                             .Where(k => k.SoThueBao.Contains(searchThueBao)).ToListAsync();
             GetInfo();
             return View(lstThueBao);
+        }
+
+        /*-----------------------đăng ký thuê bao tại quầy--------------------*/
+        public async Task<IActionResult> DanhSachTB()
+        {
+            GetInfo();
+            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.TrangThai == 0 && k.Daxoa == 0);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        
+        public async Task<IActionResult> DKThueBao(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var thuebao = await _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .FirstOrDefaultAsync(m => m.MaTb == id);
+            if (thuebao == null)
+            {
+                return NotFound();
+            }
+            GetInfo();
+            return View(thuebao);
+        }
+        [HttpPost, ActionName("LuuDangKy")]
+        public async Task<IActionResult> LuuDangKy(int id/*matb*/, string ten, string email, string dienthoai, string cccd, string matkhau, string diachi, string xa, string huyen, string tinh, int phihoamang, IFormFile hinht, IFormFile hinhs)
+        {
+            Khachhang kh;
+            Diachi dc;
+
+            // đăng ký tài khoản mới
+            kh = new Khachhang();
+            kh.Ten = ten;
+            kh.Email = email;
+            kh.DienThoai = dienthoai;
+            kh.Cccd = cccd;
+            kh.HinhT = Upload(hinht);
+            kh.HinhS = Upload1(hinhs);
+            kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
+            kh.SlthueB = 1;
+            kh.Daxoa = 0;
+            _context.Add(kh);
+            _context.SaveChanges();
+
+            // đăng ký địa chỉ mới
+            dc = new Diachi();
+            dc.MaKh = kh.MaKh;
+            dc.DiaChi1 = diachi;
+            dc.PhuongXa = xa;
+            dc.QuanHuyen = huyen;
+            dc.TinhThanh = tinh;
+            dc.MacDinh = 1; // mặc định 
+            dc.Daxoa = 0;
+            _context.Add(dc);
+            await _context.SaveChangesAsync();
+
+
+            // tạo hoá đơn
+            Hoadon hd = new Hoadon();
+            hd.MaTb = id;
+            hd.MaKh = kh.MaKh;
+            hd.Ngay = DateTime.Now;
+            hd.MaDc = dc.MaDc;
+            hd.TongTien = phihoamang;
+            hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+            _context.Add(hd);
+            await _context.SaveChangesAsync();
+
+            GetInfo();
+            return View(hd);
+        }
+        // upload file
+        public string Upload(IFormFile hinht)
+        {
+            string uploadFileName = null;
+            if (hinht != null)
+            {
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinht.FileName;
+                var path = $"wwwroot\\img\\{uploadFileName}";
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    hinht.CopyTo(stream);
+                }
+            }
+            return uploadFileName;
+        }
+        public string Upload1(IFormFile hinhs)
+        {
+            string uploadFileName = null;
+            if (hinhs != null)
+            {
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinhs.FileName;
+                var path = $"wwwroot\\img\\{uploadFileName}";
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    hinhs.CopyTo(stream);
+                }
+            }
+            return uploadFileName;
         }
     }
 }

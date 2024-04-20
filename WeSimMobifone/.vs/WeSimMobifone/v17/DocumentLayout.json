@@ -1,71 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|c:\\users\\dell\\onedrive\\desktop\\webmobifone\\wesimmobifone\\wesimmobifone\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{404E7C36-242E-4572-B2E7-20421B03E8A9}|WeSimMobifone\\WeSimMobifone.csproj|solutionrelative:wesimmobifone\\views\\home\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "WeSimMobifone\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-18T02:59:21.838Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Login.cshtml",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Views\\Home\\Login.cshtml",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Login.cshtml",
-              "RelativeToolTip": "WeSimMobifone\\Views\\Home\\Login.cshtml",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA4AAABJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-18T02:51:18.066Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Details.cshtml",
-              "RelativeDocumentMoniker": "WeSimMobifone\\Views\\Home\\Details.cshtml",
-              "ToolTip": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\Views\\Home\\Details.cshtml",
-              "RelativeToolTip": "WeSimMobifone\\Views\\Home\\Details.cshtml",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAACIAAABxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-18T02:38:04.968Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

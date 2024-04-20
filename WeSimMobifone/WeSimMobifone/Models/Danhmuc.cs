@@ -20,7 +20,8 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaDM")]
         public int MaDm { get; set; }
-        [Required]
+        [Required(ErrorMessage = "vui lòng nhập tên danh mục SIM")]
+        [Display(Name = "Tên danh mục SIM")]
         [Column("TenDM")]
         [StringLength(100)]
         public string TenDm { get; set; }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WeSimMobifone.Models.Hoadon>
 
 @{
-    ViewData["Title"] = "Hoá Đơn";
+    ViewData["Title"] = "Hoá Đơn nhân viên";
 }
 
 <!-- Content Header (Page header) -->
@@ -143,36 +143,14 @@
                                     @Html.DisplayFor(modelItem => item.TongTien)
                                 </td>
                                 <td>
-                                    @if (item.TrangThai == 0)
+                                    @if (item.TrangThai == 1)
                                     {
-                                        <span class="label label-warning">Chờ Xét Duệt</span>
-                                    }
-                                    else
-                                    {
-                                        if (item.TrangThai == 1)
-                                        {
-                                            <span class="label label-info">Đã duyệt</span>
-                                        }
-                                        else
-                                        {
-                                            if (item.TrangThai == 2)
-                                            {
-                                                <span class="label label-success">Giao Dịch Thành Công</span>
-                                            }
-                                            else
-                                            {
-                                                if (item.TrangThai == 3)
-                                                {
-                                                    <span class="label label-danger">Đã huỷ</span>
-                                                }
-                                            }
-
-                                        }
+                                       <span class="label label-info">Đã duyệt</span>
                                     }
 
                                 </td>
                                 <td>
-                                    <a class="btn btn-block btn-warning" asp-action="Details" asp-route-id="@item.MaHd">Chi Tiết</a>
+                                    <a class="btn btn-block btn-info" asp-action="InHoaDon" asp-route-id="@item.MaHd">Chi Tiết</a>
                                 </td>
                             </tr>
                         }

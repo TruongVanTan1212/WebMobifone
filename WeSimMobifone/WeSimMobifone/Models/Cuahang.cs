@@ -15,13 +15,17 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaCH")]
         public int MaCh { get; set; }
-        [Required]
+        [Required(ErrorMessage = "vui lòng nhập tên cửa hàng")]
+        [Display(Name = "Tên cửa hàng")]
         [StringLength(100)]
         public string Ten { get; set; }
+        [Display(Name = "Điện thoại")]
         [StringLength(20)]
         public string DienThoai { get; set; }
+        [Display(Name = "Email")]
         [StringLength(100)]
         public string Email { get; set; }
+        [Display(Name = "Địa chỉ")]
         [StringLength(100)]
         public string DiaChi { get; set; }
     }

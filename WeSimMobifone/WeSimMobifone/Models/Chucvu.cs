@@ -20,9 +20,11 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaCV")]
         public int MaCv { get; set; }
-        [Required]
+        [Required(ErrorMessage = "vui lòng nhập tên chức vụ")]
+        [Display(Name = "Tên chức vụ")]
         [StringLength(100)]
         public string Ten { get; set; }
+        [Display(Name = "Hệ số lương")]
         public double HeSo { get; set; }
 
         [InverseProperty("MaCvNavigation")]

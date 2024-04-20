@@ -13,13 +13,22 @@ namespace WeSimMobifone.Models
     public partial class Tintuc
     {
         [Key]
+
         public int MaTin { get; set; }
+        [Required(ErrorMessage = "vui lòng nhập tiêu đề tin tức")]
+        [Display(Name = "Tiêu đề")]
         public string TieuDe { get; set; }
+        [Required(ErrorMessage = "vui lòng nhập tóm tắt tin")]
+        [Display(Name = "Tóm tắt")]
         public string TomTat { get; set; }
+        [Required(ErrorMessage = "vui lòng nhập nội dung tin")]
+        [Display(Name = "Nội dung")]
         public string NoiDung { get; set; }
         [StringLength(255)]
+        [Display(Name = "Hình ảnh")]
         public string HinhAnh { get; set; }
         [Column(TypeName = "datetime")]
+        [Display(Name = "Ngày đăng")]
         public DateTime? NgayDang { get; set; }
     }
 }

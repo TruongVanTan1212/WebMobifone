@@ -147,36 +147,6 @@
                                     {
                                         <span class="label label-warning">Chờ Xét Duệt</span>
                                     }
-                                    else
-                                    {
-                                        if (item.TrangThai == 1)
-                                        {
-                                            <span class="label label-info">Đã duyệt</span>
-                                        }
-                                        else
-                                        {
-                                            if (item.TrangThai == 2)
-                                            {
-                                                <span class="label label-success">đang vận chuyển</span>
-                                            }
-                                            else
-                                            {
-                                                if (item.TrangThai == 3)
-                                                {
-                                                    <span class="label label-primary">hàng đã nhận</span>
-                                                }
-                                                else
-                                                {
-                                                    if (item.TrangThai == 4)
-                                                    {
-                                                        <span class="label label-danger">Đã huỷ</span>
-                                                    }
-                                                }
-                                            }
-
-                                        }
-                                    }
-
                                 </td>
                                 <td>
                                      <a class="btn btn-block btn-warning" asp-action="Details" asp-route-id="@item.MaHd">Chi Tiết</a>

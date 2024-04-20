@@ -14,16 +14,22 @@ namespace WeSimMobifone.Models
     {
         [Key]
         [Column("MaHD")]
+        [Display(Name = "Mã hoá đơn")]
         public int MaHd { get; set; }
         [Column("MaTB")]
+        [Display(Name = "Mã thuê bao")]
         public int MaTb { get; set; }
         [Column(TypeName = "datetime")]
+        [Display(Name = "Ngày đặt hàng")]
         public DateTime? Ngay { get; set; }
+        [Display(Name = "Tổng tiền")]
         public int? TongTien { get; set; }
         [Column("MaKH")]
+        [Display(Name = "Mã khách hàng")]
         public int MaKh { get; set; }
         [Column("MaDc")]
         public int MaDc { get; set; }
+        [Display(Name = "Trạng thái")]
         public int TrangThai { get; set; }
         public int Daxoa { get; set; }
 

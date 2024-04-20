@@ -20,7 +20,8 @@ namespace WeSimMobifone.Models
         [Key]
         [Column("MaLTB")]
         public int MaLtb { get; set; }
-        [Required]
+        [Required(ErrorMessage = "vui lòng nhập tên loại thuê bao")]
+        [Display(Name = "Tên loại thuê bao")]
         [StringLength(100)]
         public string TenL { get; set; }
 

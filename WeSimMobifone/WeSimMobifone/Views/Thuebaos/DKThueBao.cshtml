@@ -1,0 +1,77 @@
+﻿@model WeSimMobifone.Models.Thuebao
+@{
+    ViewData["Title"] = "đăng ký thuê bao";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3>Đăng ký thuê  bao : </h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" enctype="multipart/form-data" asp-action="LuuDangKy">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input type="hidden" name="id" value="@Model.MaTb" />
+                            <input type="hidden" name="phihoamang" value="@Html.DisplayFor(model => model.PhiHoaMang)" />
+
+                            <label for="ten">Họ và tên</label>
+                            <input type="text" class="form-control" name="ten" placeholder="Họ và tên ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="dienthoai">Điện thoại</label>
+                            <input type="text" class="form-control" name="dienthoai" placeholder="Điện thoại ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email </label>
+                            <input type="email" class="form-control" name="email" placeholder="Email ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="matkhau">Mật khẩu</label>
+                            <input type="password" class="form-control" name="matkhau" placeholder="Mật khẩu ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd">Căn cước công dân</label>
+                            <input type="text" class="form-control" name="cccd" placeholder="Căn cước công dân ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="hinht">Ảnh mặt trước</label>
+                            <input type="file" name="hinht">
+                            <p class="help-block">Hình ảnh phải rõ nét không bị mờ</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="hinhs">Ảnh mặt sau</label>
+                            <input type="file" name="hinhs">
+                            <p class="help-block">Hình ảnh phải rõ nét không bị mờ</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="diachi">Địa chỉ</label>
+                            <input type="text" class="form-control" name="diachi" placeholder="Địa Chỉ ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd">Xã / Phường</label>
+                            <input type="text" class="form-control" name="xa" placeholder="Xã / Phường ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd">Quận / Huyện</label>
+                            <input type="text" class="form-control" name="huyen" placeholder="Quận / Huyện ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd">Tỉnh / Thành</label>
+                            <input type="text" class="form-control" name="tinh" placeholder="Tỉnh / Thành ...">
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
