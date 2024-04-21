@@ -130,7 +130,7 @@ namespace WeSimMobifone.Controllers
                 return RedirectToAction(nameof(AccountAlreadyExists));
             }
             // kiểm tra email đã tồn tại 
-            var taikhoan = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null);
+            var taikhoan = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null && k.Daxoa == 0);
             if(taikhoan != null)
             {
                 // tài khoản đã đăng ký
@@ -305,22 +305,6 @@ namespace WeSimMobifone.Controllers
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
             dc = _context.Diachi.FirstOrDefault(d => d.MaDc == madiachi);
-            // khách hàng mua hàng lần đầu cập nhật số lượng thuê bao 1
-            if (kh.SlthueB == 0)
-            {
-                kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-                kh.SlthueB = 1;
-                _context.Update(kh);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                // khách hàng đã mua hàng cập nhật số lượng thuê bao tăng thêm 1
-                kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-                kh.SlthueB = kh.SlthueB + 1;
-                _context.Update(kh);
-                await _context.SaveChangesAsync();
-            }
             // Mua trong giỏ hàng
                Hoadon hd = new Hoadon();
                 hd.MaTb = id;

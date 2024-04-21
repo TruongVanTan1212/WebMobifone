@@ -8,8 +8,8 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Nhân Viên</h3>
-                <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Add instruct</a>
+                <h3 class="box-title">Câu hỏi hướng dẫn</h3>
+                <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Thêm</a>
             </div><!-- /.box-header -->
             <div class="box-tools">
                 <div class="input-group">
@@ -22,19 +22,19 @@
                 </div>
             </div>
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
-                            <th>
+                            <th style="width: 30%">
                                 @Html.DisplayNameFor(model => model.CauHoi)
                             </th>
-                            <th>
+                            <th style="width: 40%">
                                 @Html.DisplayNameFor(model => model.TraLoi)
                             </th>
-                            <th>
+                            <th style ="width: 20%">
                                 @Html.DisplayNameFor(model => model.NgayDang)
                             </th>
-                            <th></th>
+                            <th style="width: 10%"></th>
                         </tr>
                     </thead>
                     <tbody>

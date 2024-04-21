@@ -24,19 +24,19 @@
                 <table id="example1" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
-                            <th style="width:20%;">
+                            <th >
                                 @Html.DisplayNameFor(model => model.TieuDe)
                             </th>
-                            <th style="width:40%;">
+                            <th >
                                 @Html.DisplayNameFor(model => model.TomTat)
                             </th>
-                            <th style="width:20%;">
+                            <th>
                                 @Html.DisplayNameFor(model => model.HinhAnh)
                             </th>
-                            <th style="width:10%;">
+                            <th >
                                 @Html.DisplayNameFor(model => model.NgayDang)
                             </th>
-                            <th style="width:10%;"></th>
+                            <th ></th>
 
                         </tr>
                     </thead>
@@ -44,19 +44,19 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
+                                <td style="width:20%;">
                                     @Html.DisplayFor(modelItem => item.TieuDe)
                                 </td>
-                                <td>
+                                <td style="width:40%;">
                                     @Html.DisplayFor(modelItem => item.TomTat)
                                 </td>
-                                <td>
+                                <td style="width:20%;">
                                     <img src="~/img/@Html.DisplayFor(modelItem => item.HinhAnh)" width="150" height="" />
                                 </td>
-                                <td>
+                                <td style="width:10%;">
                                     @Html.DisplayFor(modelItem => item.NgayDang)
                                 </td>
-                                <td>
+                                <td style="width:10%;">
                                     <div class="tools">
                                         <a style="margin: 0 5px 0 5px" asp-action="Details" asp-route-id="@item.MaTin"><i class="fa fa-eye"></i></a>
                                         <a style="margin-right: 5px" asp-action="Edit" asp-route-id="@item.MaTin"><i class="fa fa-edit"></i></a>

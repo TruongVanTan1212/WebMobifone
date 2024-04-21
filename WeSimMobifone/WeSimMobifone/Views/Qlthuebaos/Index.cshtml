@@ -4,56 +4,77 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayKichHoat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Daxoa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaKhNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaTbNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayKichHoat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Daxoa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaTbNavigation.SoThueBao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaQl">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaQl">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaQl">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Quản lý thuê bao</h3>
+            </div><!-- /.box-header -->
+            <div class="box-tools">
+                <div class="input-group">
+                    <form asp-controller="QlThueBaos" asp-action="SearchQlTB">
+                        <input type="text" name="searcQL" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped text-center" style="font-family: 15px;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Số thuê bao
+                            </th>
+                            <th>
+                                Khách hàng
+                            </th>
+                            <th>
+                                Ngày kích hoạt
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.SoThueBao)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayKichHoat)
+                                </td>
+                                <td>
+                                    @if(item.TrangThai == 0)
+                                    {
+                                        <span class="label label-warning">chưa kích hoạt</span>
+                                    }
+                                    else
+                                    {
+                                        if (item.TrangThai == 1)
+                                        {
+                                            <span class="label label-success">đã kích hoạt</span>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <div class="tools ">
+                                        <a class="btn btn-block btn-info" asp-action="Details" asp-route-id="@item.MaQl">Chi Tiết</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.row -->
+</section><!-- /.box -->

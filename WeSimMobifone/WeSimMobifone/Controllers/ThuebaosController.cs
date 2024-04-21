@@ -53,6 +53,7 @@ namespace WeSimMobifone.Controllers
                 .Include(t => t.MaDmNavigation)
                 .Include(t => t.MaLtbNavigation)
                 .FirstOrDefaultAsync(m => m.MaTb == id);
+
             if (thuebao == null)
             {
                 return NotFound();
@@ -207,6 +208,10 @@ namespace WeSimMobifone.Controllers
                 .Include(t => t.MaDmNavigation)
                 .Include(t => t.MaLtbNavigation)
                 .FirstOrDefaultAsync(m => m.MaTb == id);
+            thuebao.TrangThai = 1;
+            _context.Update(thuebao);
+            await _context.SaveChangesAsync();
+
             if (thuebao == null)
             {
                 return NotFound();
@@ -229,7 +234,7 @@ namespace WeSimMobifone.Controllers
             kh.HinhT = Upload(hinht);
             kh.HinhS = Upload1(hinhs);
             kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
-            kh.SlthueB = 1;
+            kh.SlthueB = 0;
             kh.Daxoa = 0;
             _context.Add(kh);
             _context.SaveChanges();

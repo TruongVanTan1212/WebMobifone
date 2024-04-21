@@ -40,6 +40,7 @@
                                 @Html.DisplayNameFor(model => model.SlthueB)
                             </th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,9 +65,12 @@
                                 <td>
                                     <div class="tools ">
                                     <a asp-action="Details" asp-route-id="@item.MaKh"><i class="fa fa-eye"></i></a>
-                                    <a asp-action="Edit" asp-route-id="@item.MaKh"><i class="fa fa-edit"></i></a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaKh"><i class="fa fa-trash-o"></i></a>
                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tools ">
+                                        <a class="btn btn-info" asp-action="DSThueBao" asp-route-id="@item.MaKh">Đăng ký</a>
+                                    </div>
                                 </td>
                             </tr>
                         }

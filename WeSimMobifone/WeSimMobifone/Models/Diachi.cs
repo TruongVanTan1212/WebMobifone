@@ -23,13 +23,13 @@ namespace WeSimMobifone.Models
         public int MaKh { get; set; }
         [Required]
         [Column("DiaChi")]
-        [StringLength(100)]
+        [StringLength(255)]
         public string DiaChi1 { get; set; }
-        [StringLength(20)]
+        [StringLength(255)]
         public string PhuongXa { get; set; }
-        [StringLength(50)]
+        [StringLength(255)]
         public string QuanHuyen { get; set; }
-        [StringLength(50)]
+        [StringLength(255)]
         public string TinhThanh { get; set; }
         public int MacDinh { get; set; }
 

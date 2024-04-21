@@ -17,14 +17,14 @@ namespace WeSimMobifone.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<Khachhang> _passwordHasher;
-        
+
         public AdminController(ApplicationDbContext context, IPasswordHasher<Khachhang> passwordHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
         }
-       
-      
+
+
 
         //-------------------------------------Hoá đơn-------------------------------------------------------
         // tra cứu hoá đơn
@@ -112,10 +112,22 @@ namespace WeSimMobifone.Controllers
             return View(hoadon);
         }
         // cập nhật trạng thái đơn hàng
-        public async Task<IActionResult> DuyetHoaDon(int? id,int matb, int makh) // duyệt đơn hàng 1
+        public async Task<IActionResult> DuyetHoaDon(int? id, int matb, int makh) // duyệt đơn hàng 1
         {
+            Khachhang kh = _context.Khachhang.FirstOrDefault(d => d.MaKh == makh);
+            if (kh.SlthueB == 3)
+            {
+                return RedirectToAction(nameof(ThongBaoLoi));
+            }
+            else
+            {
+                kh.SlthueB = kh.SlthueB + 1; // đã nhận
+                _context.Update(kh);
+                await _context.SaveChangesAsync();
+            }
+           
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id );
+            Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id);
             hd.TrangThai = 1; // đã nhận
             _context.Update(hd);
             await _context.SaveChangesAsync();
@@ -128,7 +140,7 @@ namespace WeSimMobifone.Controllers
             tb.Daxoa = 0;
             _context.Add(tb);
             await _context.SaveChangesAsync();
-
+            GetInfo();
             return RedirectToAction(nameof(DaDuyetDon));
 
 
@@ -137,9 +149,16 @@ namespace WeSimMobifone.Controllers
         {
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             Hoadon hd = _context.Hoadon.FirstOrDefault(d => d.MaHd == id && d.Daxoa == 0);
-            hd.TrangThai = 4 ; // đã nhận
+            hd.TrangThai = 4; // đã nhận
             _context.Update(hd);
             await _context.SaveChangesAsync();
+
+            Thuebao tb = await _context.Thuebao.FirstOrDefaultAsync(d => d.MaTb == hd.MaTb);
+            tb.TrangThai = 0;
+            _context.Update(tb);
+            await _context.SaveChangesAsync();
+
+            GetInfo();
             return RedirectToAction(nameof(DaHuy));
         }
         public async Task<IActionResult> DaVanChuyenHang(int? id) // đang vận chuyển 2
@@ -189,6 +208,11 @@ namespace WeSimMobifone.Controllers
             }
             GetInfo();
             return View(hoadon);
+        }
+
+        public IActionResult ThongBaoLoi(){
+            GetInfo();
+            return View();
         }
 
 
@@ -301,7 +325,7 @@ namespace WeSimMobifone.Controllers
             dc2.MacDinh = 1;
             _context.Update(dc2);
             await _context.SaveChangesAsync();
-
+            GetInfo();
             return RedirectToAction(nameof(Address));
         }
        
@@ -392,10 +416,11 @@ namespace WeSimMobifone.Controllers
         }
        
         // cập nhật kích hoạt SIM
-        public async Task<IActionResult> KichHoat(int id)  // mã khách hàng
+        public async Task<IActionResult> KichHoat(int id, int idTB)  // mã khách hàng
         {
+
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            Qlthuebao tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == id && d.Daxoa == 0);
+            Qlthuebao tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == id && d.Daxoa == 0 && d.MaTb == idTB);
             tb.TrangThai = 1; // đã nhận
             _context.Update(tb);
             await _context.SaveChangesAsync();
@@ -421,7 +446,7 @@ namespace WeSimMobifone.Controllers
                 return NotFound();
             }
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            var tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == makh && d.Daxoa == 0);
+            var tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == makh && d.Daxoa == 0 && d.MaTb == hoadon.MaTb);// điều kiện sai
             ViewBag.qlthuebao = tb;
             GetInfo();
             return View(hoadon);

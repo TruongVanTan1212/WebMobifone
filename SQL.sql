@@ -75,10 +75,10 @@ GO
 CREATE TABLE DIACHI(	
 	MaDC int primary key identity(1,1),
 	MaKH int not null foreign key(MaKH) references KHACHHANG(MaKH),
-	DiaChi nvarchar(100),
-	PhuongXa nvarchar(20),
-	QuanHuyen nvarchar(50) ,
-	TinhThanh nvarchar(50),
+	DiaChi nvarchar(255),
+	PhuongXa nvarchar(255),
+	QuanHuyen nvarchar(255) ,
+	TinhThanh nvarchar(255),
 	MacDinh int default 1,
 	Daxoa int default 0 ------------
 ) 
@@ -111,6 +111,8 @@ CREATE TABLE TINTUC(
 	NoiDung nvarchar(max),
 	HinhAnh varchar(255),
 	NgayDang  datetime default getdate(),
+	Hot int  default 0
+
 ) 
 GO
 CREATE TABLE HUONGDAN(
@@ -195,9 +197,7 @@ INSERT INTO KHACHHANG(Ten,DienThoai,Email,MatKhau,CCCD,SLThueB) VALUES(N'NGuyễ
 GO
 INSERT INTO DIACHI(MaKH,DiaChi,PhuongXa,QuanHuyen,TinhThanh,MacDinh) VALUES(1,N'Ấp Long Thuận 2',N'Long Điền A',N'Chợ Mới',N'An Giang',1)
 GO
--- dữ liệu Hoá Đơn
-INSERT INTO HOADON(MaTB,Ngay,TongTien,MaKH,MaDC,TrangThai) VALUES(1,N'3/12/2024',60000,1,1,0);
-GO
+
 
 
 -- xuất dữ liệu bảng

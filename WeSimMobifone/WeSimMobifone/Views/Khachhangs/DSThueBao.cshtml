@@ -1,0 +1,95 @@
+﻿@model WeSimMobifone.Models.Khachhang
+
+@{
+    ViewData["Title"] = "Thuê Bao";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Thuê Bao</h3>
+            </div><!-- /.box-header -->
+            <div class="box-tools">
+                <div class="input-group">
+                    <form asp-controller="Thuebaos" asp-action="SearchThueBao">
+                        <input type="text" name="searchThueBao" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped text-center" style=" height:100%;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Số thuê bao
+                            </th>
+                            <th>
+                                Phí hoà mạng
+                            </th>
+                            <th>
+                                Loại số
+                            </th>
+                            <th>
+                                Địa điểm hoà mạng
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Danh mục Sim
+                            </th>
+                            <th>
+                                Loại thuê bao
+                            </th>
+                            <th style="width:10%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Thuebao item in ViewBag.thuebao)
+                        {
+                            <tr>
+                                <td>
+                                    @item.SoThueBao
+                                </td>
+                                <td>
+                                    @item.PhiHoaMang
+                                </td>
+                                <td>
+                                    @item.LoaiSo
+                                </td>
+                                <td>
+                                    @item.DiaDiemHm
+                                </td>
+                                <td>
+                                    @if (item.TrangThai == 0)
+                                    {
+                                        <span class="label label-success">Trống</span>
+                                    }
+                                </td>
+                                <td>
+                                    @item.MaDmNavigation.TenDm
+                                </td>
+                                <td>
+                                    @item.MaLtbNavigation.TenL
+                                </td>
+                                <td>
+                                    <div class="tools ">
+                                        @if (item.TrangThai == 0)
+                                        {
+                                            <a class="btn btn-block btn-primary" asp-action="DangKyTB" asp-route-idTB="@item.MaTb" asp-route-id="@Model.MaKh" >Chọn Số</a>
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.row -->
+</section><!-- /.box -->

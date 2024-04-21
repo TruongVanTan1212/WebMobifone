@@ -35,7 +35,7 @@ namespace WeSimMobifone.Controllers
             return View(await _context.Khachhang.ToListAsync());
         }
 
-        // GET: Khachhangs/Details/5
+        // GET: // số thuê bao đã đăng ký
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,89 +49,35 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+            List<Qlthuebao> listQlTB = _context.Qlthuebao.Include(d => d.MaTbNavigation).Where(d => d.MaKh == id && d.Daxoa == 0).ToList();
+            ViewBag.QlTB = listQlTB;
             GetInfo();
             return View(khachhang);
         }
-
-        // GET: Khachhangs/Create
-        public IActionResult Create()
+        // tìm kiếm khách hàng
+        public async Task<IActionResult> SearchKH(string searchKhachHang)
         {
+            var lstKhachHang = await _context.Khachhang.Where(k => k.Ten.Contains(searchKhachHang)).ToListAsync();
             GetInfo();
-            return View();
+            return View(lstKhachHang);
         }
-
-        // POST: Khachhangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,Ten,DienThoai,Email,MatKhau,Cccd,HinhT,HinhS,SlthueB")] Khachhang khachhang)
+        // huỷ thuê bao
+        public async Task<IActionResult> HuyThueBao(int id)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(khachhang);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            GetInfo();
-            return View(khachhang);
+            Qlthuebao tb = await _context.Qlthuebao.FirstOrDefaultAsync(k => k.MaQl == id );
+            tb.Daxoa = 1;
+            _context.Update(tb);
+            await _context.SaveChangesAsync();
+
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(k => k.MaKh == tb.MaKh && k.Daxoa == 0);
+            kh.SlthueB = kh.SlthueB - 1;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
-
-        // GET: Khachhangs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var khachhang = await _context.Khachhang.FindAsync(id);
-            if (khachhang == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(khachhang);
-        }
-
-        // POST: Khachhangs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaKh,Ten,DienThoai,Email,MatKhau,Cccd,HinhT,HinhS,SlthueB")] Khachhang khachhang)
-        {
-            if (id != khachhang.MaKh)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(khachhang);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!KhachhangExists(khachhang.MaKh))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            GetInfo();
-            return View(khachhang);
-        }
-
-        // GET: Khachhangs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // đăng ký thuê bao
+        public async Task<IActionResult> DSThueBao(int? id)
         {
             if (id == null)
             {
@@ -144,31 +90,58 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+            List<Thuebao> listTB = _context.Thuebao.Include(d => d.MaDmNavigation).Include(d => d.MaLtbNavigation).Where(d => d.TrangThai == 0 && d.Daxoa == 0).ToList();
+            ViewBag.thuebao = listTB;
             GetInfo();
             return View(khachhang);
         }
 
-        // POST: Khachhangs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DangKyTB(int idTB ,int? id)
         {
-            var khachhang = await _context.Khachhang.FindAsync(id);
-            _context.Khachhang.Remove(khachhang);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var khachhang = await _context.Khachhang
+                .FirstOrDefaultAsync(m => m.MaKh == id);
+
+            var dc = await _context.Diachi.Include(d => d.MaKhNavigation).FirstOrDefaultAsync(m => m.MaKh == id && m.MacDinh == 1);
+            ViewBag.diachi = dc;
+
+            var thuebao = await _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .FirstOrDefaultAsync(m => m.MaTb == idTB);
+            thuebao.TrangThai = 1;
+            _context.Update(thuebao);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            ViewBag.tb = thuebao;
 
-        private bool KhachhangExists(int id)
-        {
-            return _context.Khachhang.Any(e => e.MaKh == id);
-        }
-
-        public async Task<IActionResult> SearchKH(string searchKhachHang)
-        {
-            var lstKhachHang = await _context.Khachhang.Where(k => k.Ten.Contains(searchKhachHang)).ToListAsync();
+            if (thuebao == null)
+            {
+                return NotFound();
+            }
             GetInfo();
-            return View(lstKhachHang);
+            return View(khachhang);
+        }
+        public async Task<IActionResult> LuuDangKyTB(int id/*makh*/,int idTB ,int phihoamang)
+        {
+            Diachi dc = await _context.Diachi.Include(d => d.MaKhNavigation).FirstOrDefaultAsync( m => m.MaKh == id && m.MacDinh == 1) ;
+
+            // tạo hoá đơn
+            Hoadon hd = new Hoadon();
+            hd.MaTb = idTB;
+            hd.MaKh = id;
+            hd.Ngay = DateTime.Now;
+            hd.MaDc = dc.MaDc;
+            hd.TongTien = phihoamang;
+            hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+            _context.Add(hd);
+            await _context.SaveChangesAsync();
+
+            GetInfo();
+            return View(hd);
         }
     }
 }

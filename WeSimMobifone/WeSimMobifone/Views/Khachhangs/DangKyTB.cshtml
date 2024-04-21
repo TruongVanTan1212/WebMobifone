@@ -1,0 +1,58 @@
+﻿@model WeSimMobifone.Models.Khachhang
+
+@{
+    ViewData["Title"] = "Details";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3>Đăng ký thuê  bao : @ViewBag.tb.SoThueBao</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" enctype="multipart/form-data" asp-action="LuuDangKyTB">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input type="hidden" name="id" value="@Model.MaKh" />
+                            <input type="hidden" name="idTB" value="@ViewBag.tb.MaTb" />
+                            <input type="hidden" name="phihoamang" value="@ViewBag.tb.PhiHoaMang" />
+
+                            <label for="ten">Họ và tên</label>
+                            <input type="text" class="form-control" name="ten" value="@Html.DisplayFor(model => model.Ten)">
+                        </div>
+                        <div class="form-group">
+                            <label for="dienthoai">Điện thoại</label>
+                            <input type="text" class="form-control" name="dienthoai" value="@Html.DisplayFor(model => model.DienThoai)">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email </label>
+                            <input type="email" class="form-control" name="email" value="@Html.DisplayFor(model => model.Email)">
+                        </div>
+                        <div class="form-group">
+                            <label for="cccd">Căn cước công dân</label>
+                            <input type="text" class="form-control" name="cccd" value="@Html.DisplayFor(model => model.Cccd)">
+                        </div>
+                        <div class="form-group">
+                            <label for="hinht">Ảnh mặt trước</label>
+                            <img src="~/img/@Html.DisplayFor(model => model.HinhT)" style="width: 150px; height: 100px; margin: 0 10px 0 10px;" /> 
+                            <img src="~/img/@Html.DisplayFor(model => model.HinhS)" style="width: 150px; height: 100px;" />
+                        </div>
+                        <div class="form-group">
+                            <label for="diachi">Địa chỉ</label>
+                            <input type="text" class="form-control" name="diachi" value="@ViewBag.diachi.DiaChi1, @ViewBag.diachi.PhuongXa, @ViewBag.diachi.QuanHuyen, @ViewBag.diachi.TinhThanh">
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+

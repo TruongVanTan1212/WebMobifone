@@ -30,5 +30,6 @@ namespace WeSimMobifone.Models
         [Column(TypeName = "datetime")]
         [Display(Name = "Ngày đăng")]
         public DateTime? NgayDang { get; set; }
+        public int Hot { get; set; }
     }
 }
