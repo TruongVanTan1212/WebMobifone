@@ -31,107 +31,167 @@
         </div>
         <div class="row ">
             <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header text-center border-info" style="background-color: #007AFE;"><h2 class="mt-2 text-light"> Thông tin khách hàng </h2></div>
-                    <div class="card-body  m-2">
+                    @if (ViewBag.Nhanvien != null)
+                    {
+                        <div class="text-center">
+                        <h3 style=" margin-top: 150px;"> Nhân viên không thể đăng ký thuê bao vui lòng đăng nhập vào tài khoản khách để có thể đăng ký</h3>
+                            <a asp-controller="Home" asp-action="Signout" asp-route-id="@Model.MaTb" class="btn btn-primary text-light rounded-pill py-2 px-4 ms-3">Đăng xuất</a>
+                        </div>
+                    }
+                    else
+                    {
                         @if (ViewBag.khachhang != null)
                         {
-                            <form asp-action="CreateBill" asp-route-id="@Model.MaTb">
-                                <input type="hidden" value="@Model.PhiHoaMang" name="phihoamang" />
-                                <div class="my-3">
-                                    <label>Họ tên</label>
-                                    <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
-
-                                </div>
-                                <div class="my-3">
-                                    <label>Email</label>
-                                    <input type="email" disabled value="@ViewBag.khachhang.Email" name="email" class="form-control" />
-                                </div>
-                                <div class="my-3">
-                                    <label>Điện thoại</label>
-                                    <input type="text" disabled value="@ViewBag.khachhang.DienThoai" name="dienthoai" class="form-control" />
-                                </div>
-                                <div class="my-3">
-                                    <label>Căn cước công dân</label>
-                                    @if (@ViewBag.khachhang.Cccd == null)
-                                    {
-                                        <input type="text" value="@ViewBag.khachhang.Cccd" name="cccd" class="form-control" />
-                                    }
-                                    else
-                                    {
-                                        <input type="text" disabled value="@ViewBag.khachhang.Cccd" name="cccd" class="form-control" />
-                                    }
-                                </div>
-                                <div class="my-3">
-                                    <label>Ảnh căn cước công dân</label>
-                                    @if (@ViewBag.khachhang.HinhT == null && @ViewBag.khachhang.HinhS == null)
-                                    {
-                                        <input type="file" name="hinht" class="form-control" />
-                                        <input type="file" name="hinhs" class="form-control" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/img/@ViewBag.khachhang.HinhT" width="100px" height="80px" style="margin: 0 20px 0 20px"/>  <img src="~/img/@ViewBag.khachhang.HinhS" width="100px" height="80px" />
-                                    }
-                                </div>
-                                <div class="my-3">
-                                        <label>Địa chỉ</label><br>
-                                            @foreach (Diachi dc in ViewBag.diachi)
+                        <div class="card">
+                            <div class="card-header text-center border-info" style="background-color: #007AFE;"><h2 class="mt-2 text-light"> Thông tin khách hàng </h2></div>
+                            <div class="card-body  m-2">
+                                <form asp-action="CreateBill" asp-route-id="@Model.MaTb" enctype="multipart/form-data">
+                                    <input type="hidden" value="@Model.PhiHoaMang" name="phihoamang" />
+                                    <div class="my-3">
+                                        <label>Họ tên</label>
+                                        <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Email</label>
+                                        <input type="email" disabled value="@ViewBag.khachhang.Email" name="email" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Điện thoại</label>
+                                        <input type="text" disabled value="@ViewBag.khachhang.DienThoai" name="dienthoai" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Căn cước công dân</label>
+                                        @if (@ViewBag.khachhang.Cccd == null)
+                                        {
+                                            <input type="text" name="cccd" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input type="text" disabled value="@ViewBag.khachhang.Cccd" class="form-control" />
+                                        }
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Ảnh căn cước công dân</label>
+                                        @if (@ViewBag.khachhang.HinhT == null && @ViewBag.khachhang.HinhS == null)
+                                        {
+                                            <input type="file" name="hinht" class="form-control" />
+                                            <input type="file" name="hinhs" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/img/@ViewBag.khachhang.HinhT" width="100px" height="80px" style="margin: 0 20px 0 20px" />  <img src="~/img/@ViewBag.khachhang.HinhS" width="100px" height="80px" />
+                                        }
+                                    </div>
+                                    <div class="my-3">
+                                        @foreach (Diachi dc in ViewBag.diachi)
+                                        {
+                                            string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
+                                            if (dc.MacDinh == 1)
                                             {
-                                                string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
-                                                if (dc.MacDinh == 1)
-                                                {
-                                                        <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="true">
-                                                        <label for="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill"></i></label><br>
-                                                }
-                                                else
-                                                {
-                                                    <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
-                                                    <label for="@dc.MaDc">@tmp</label><br>
-                                                }
+                                                <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="true">
+                                                <label for="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill"></i></label>
+                                                <br>
                                             }
-                                </div>
-                                <div class="my-2">
-                                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary  text-light rounded-pill py-2 px-4 ms-3" />
-                                    <a class="btn btn-outline-success rounded-pill py-2 px-4 ms-3" style="margin: 0 20px 0 20px;" asp-controller="Admin" asp-action="AddAddress">Thêm địa Chỉ</a>
-                                    <a class="btn btn-outline-danger rounded-pill py-2 px-4 ms-3" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
-                                </div>
-                            </form>
+                                            else
+                                            {
+                                                <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
+                                                <label for="@dc.MaDc">@tmp</label>
+                                                <br>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="my-2">
+                                        <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary  text-light rounded-pill py-2 px-4 ms-3" />
+                                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#myModal"> Thêm địa chỉ </button>
+                                        <a class="btn btn-outline-danger rounded-pill py-2 px-4 ms-3" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer">
+                                <p>nếu muốn chọn thuê bao khác vui lòng nhấn nút "Huỷ Số"</p>
+                            </div>
+                        </div>
                         }
-                    </div>
-                    <div class="card-footer">
-                           <p>nếu muốn chọn thuê bao khác vui lòng nhấn nút "Huỷ Số"</p> 
+                        else
+                        {
+                            <div class="text-center" >
+                                <h3 style=" margin-top: 150px;"> Bạn cần đăng nhập để có thể đăng ký thuê bao !</h3>
+                                <h3>Vui lòng đăng để có thể đăng ký.</h3>
+                                <a asp-controller="Home" asp-action="LoginKH" asp-route-id="@Model.MaTb" class="btn btn-primary text-light rounded-pill py-2 px-4 ms-3">Đăng nhập</a>
+                            </div>
+                        }
+                    }
+                </div>
+            <!------------------------------------------------>
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thêm địa chỉ</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <form asp-action="ThemDiaChi" asp-route-id="@Model.MaTb">
+
+                                    <div class="my-3">
+                                        <label>Địa chỉ cụ thể</label>
+                                        <input type="text" name="diachicuthe" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Phường / xã</label>
+                                        <input type="text" name="phuongxa" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Quận / huyện</label>
+                                        <input type="text" name="quanhuyen" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <label>Tỉnh thành</label>
+                                        <input type="text" name="tinhthanh" class="form-control" />
+                                    </div>
+                                    <div class="my-3">
+                                        <input type="submit" class="btn btn-success" value="Thêm địa chỉ" />
+                                    </div>
+                                 </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- The Modal -->
             <div class="col-md-5 ">
                 <div class="card">
-                   <div class="card-header text-center text-light border-info" style="font-weight: bolder; background-color: #007AFE;">Thông tin thuê bao @Html.DisplayFor(model => model.SoThueBao)</div>
+                   <div class="card-header text-center text-light border-info" style="font-weight: bolder; background-color: #007AFE; font-size: 16px;">Thông tin thuê bao @Html.DisplayFor(model => model.SoThueBao)</div>
                     <div class="card-body " >
                         <table class="table ">
                             <tbody>
                                   <tr>
-                                <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.PhiHoaMang) </td>
-                                <td style="text-align: right;"> @Html.DisplayFor(model => model.PhiHoaMang)</td>
+                                <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.PhiHoaMang) </td>
+                                <td style="text-align: right;">  @(Model.PhiHoaMang.ToString("n0")) VNĐ</td>
                                 <td style="width: 10%"></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.LoaiSo):</td>
+                                <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.LoaiSo):</td>
                                 <td style="text-align: right;">@Html.DisplayFor(model => model.LoaiSo)</td>
                                 <td style="width: 10%"></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.DiaDiemHm):</td>
+                                <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.DiaDiemHm):</td>
                                 <td style="text-align: right;">@Html.DisplayFor(model => model.DiaDiemHm)</td>
                                 <td style="width: 10%"></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaDmNavigation):</td>
+                                <td style="font-weight: bold; width: 50%">Danh mục SIM:</td>
                                 <td style="text-align: right;">@Html.DisplayFor(model => model.MaDmNavigation.TenDm)</td>
                                 <td style="width: 10%"></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold; width: 20%">@Html.DisplayNameFor(model => model.MaLtbNavigation):</td>
+                                <td style="font-weight: bold; width: 50%">Loại thuê bao :</td>
                                 <td style="text-align: right;">@Html.DisplayFor(model => model.MaLtbNavigation.TenL)</td>
                                 <td style="width: 10%"></td>
                             </tr>

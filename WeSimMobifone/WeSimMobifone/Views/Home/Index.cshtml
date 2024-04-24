@@ -21,6 +21,26 @@
 </div>
 <!-- Navbar & Hero End -->
 <!-- Full Screen Search Start -->
+
+<div class="modal fade" id="searchModal" tabindex="-1">
+   
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(29, 29, 39, 0.7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body d-flex align-items-center justify-content-center">
+                        <div class="input-group" style="max-width: 600px;">
+                            <input type="text" class="form-control bg-transparent border-light p-3" placeholder="Type search keyword">
+                            <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+<!-- Full Screen Search Start -->
 <div class="container-xxl py-5">
     <div class="container px-lg-5">
         <div class="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
@@ -36,7 +56,7 @@
                             <i class="bi bi-sim-fill fa-2x"></i>
                         </div>
                         <h5 class="mb-3">@Html.DisplayFor(modelItem => item.SoThueBao)</h5>
-                        <p>Phí hoà mạng: @Html.DisplayFor(modelItem => item.PhiHoaMang)K</p>
+                        <p>Phí hoà mạng: @(item.PhiHoaMang.ToString("n0")) VNĐ</p>
                         <p>Loại thuê bao: @Html.DisplayFor(modelItem => item.LoaiSo)</p>
                         <p>Điểm hoà mạng: @Html.DisplayFor(modelItem => item.DiaDiemHm)</p>
                         <a class="btn px-3 mt-auto mx-auto" asp-action="Details" asp-route-id="@item.MaTb">Chọn Số</a>

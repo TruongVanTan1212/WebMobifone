@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +51,6 @@ namespace WeSimMobifone.Controllers
             }
         }
 
-
         // GET: Home // hiển thị danh sách sp
         public async Task<IActionResult> Index()
         {
@@ -65,10 +66,20 @@ namespace WeSimMobifone.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-
+        //------------------------ đăng nhập--- đăng ký--------------------
         // đăng nhập
         public IActionResult Login()
         {
+            GetInfo();
+            return View();
+        }
+        // khách mua hàng ch đăng nhập
+        public async Task<IActionResult> LoginKH(int? id)
+        {
+            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
+            sp.TrangThai = 0;
+            _context.Update(sp);
+           await _context.SaveChangesAsync();
             GetInfo();
             return View();
         }
@@ -120,7 +131,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
-
+        // đăng ký
         [HttpPost]
         public IActionResult Register(string email, string matkhau, string hoten, string dienthoai)
         {
@@ -148,7 +159,6 @@ namespace WeSimMobifone.Controllers
 
             return RedirectToAction(nameof(Login));
         }
-
         // đăng xuất
         public IActionResult Signout()
         {
@@ -157,9 +167,22 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return RedirectToAction(nameof(Index));
         }
-        // thông tin khách hàng
+        // đăng xuất nhân viên
+        public async Task<IActionResult> SignoutNV(int? id)
+        {
+            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
+            sp.TrangThai = 0;
+            _context.Update(sp);
+            await _context.SaveChangesAsync();
 
-       // Giữ số khi khách hàng chọn thuê bao
+            HttpContext.Session.SetString("khachhang", "");
+            HttpContext.Session.SetString("Nhanvien", "");
+            GetInfo();
+            return RedirectToAction(nameof(Login));
+        }
+
+        //---------------------- khách hàng đăng ký thuê bao -----------------------
+        // Giữ số khi khách hàng chọn thuê bao
         public async Task<IActionResult> Update(int? id)
         {
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
@@ -169,99 +192,122 @@ namespace WeSimMobifone.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-      /*  //------------giỏ hàng--------------------------------
-        // thêm thuê bao vào giỏ hàng
-        public async Task<IActionResult> AddToCart(int id)
+        // GET: đưa ra thông tin bill
+        public async Task<IActionResult> Details(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var thuebao = await _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .FirstOrDefaultAsync(m => m.MaTb == id);
+            if (thuebao == null)
+            {
+                return NotFound();
+            }
+            if(HttpContext.Session.GetString("khachhang") != null)
+            {
+                int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+                Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
+                if (kh.SlthueB == 3)
+                {
+                    return RedirectToAction(nameof(KiemTraSL));
+                }
+
+                List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
+                ViewBag.diachi = lstDiaChi;
+
+            }
             Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
             sp.TrangThai = 1;
             _context.Update(sp);
             await _context.SaveChangesAsync();
-
-            var thuebao = await _context.Thuebao.FirstOrDefaultAsync(m => m.MaTb == id);
-
-            if (thuebao == null)
-            {
-                return NotFound("Sản phẩm không tồn tại");
-            }
-
-            var cart = GetCartItems();
-
-            cart.Add(new CartItem() { Thuebao = thuebao, SoLuong = 1 });
-            
-            SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewCart));
+            GetInfo();
+            return View(thuebao);
         }
-        // chuyển đến view giỏ hàng
-        public IActionResult ViewCart()
+        // thông báo lỗi khi thuê bao đã đủ
+        public IActionResult KiemTraSL()
         {
             GetInfo();
-            return View(GetCartItems());
+            return View();
         }
-        
-        //đọc danh sách
-        List<CartItem> GetCartItems()
+        // đăng ký thuê bao
+        public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang,string diachicuthe,string phuongxa,string quanhuyen,string tinhthanh,string cccd, IFormFile hinht, IFormFile hinhs)
         {
-            var session = HttpContext.Session;
-            string jsoncart = session.GetString("Mobifone");
-            if (jsoncart != null)
+            Khachhang kh;
+            Diachi dc;
+
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
+            if(kh.Cccd == null)
             {
-                return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+                kh.Cccd = cccd;
+                _context.Update(kh);
+                await _context.SaveChangesAsync();
             }
-            return new List<CartItem>();
-        }
+            if(kh.HinhT == null && kh.HinhS == null)
+            {
+                kh.HinhS = Upload1(hinhs);
+                kh.HinhT = Upload(hinht);
+                _context.Update(kh);
+                await _context.SaveChangesAsync();
+            }
 
-        // Lưu danh sách CartItem trong giỏ hàng vào session
-        void SaveCartSession(List<CartItem> list)
-        {
-            var session = HttpContext.Session;
-            string jsoncart = JsonConvert.SerializeObject(list);
-            session.SetString("Mobifone", jsoncart);
-        }
+            dc = _context.Diachi.FirstOrDefault(d => d.MaDc == madiachi);
+             
+            // Mua trong giỏ hàng
+               Hoadon hd = new Hoadon();
+                hd.MaTb = id;
+                hd.MaKh = kh.MaKh;
+                hd.Ngay = DateTime.Now;
+                hd.MaDc = dc.MaDc;
+                hd.TongTien = phihoamang;
+                hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+                _context.Add(hd);
+                await _context.SaveChangesAsync();
 
+            List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
+            ViewBag.diachi = lstDiaChi;
 
-        // Xóa session giỏ hàng
-        void ClearCart()
-        {
             GetInfo();
-            var session = HttpContext.Session;
-            session.Remove("Mobifone");
+            return View(hd);
         }
-
-        public async Task<IActionResult> RemoveItem(int id)
+        // tải ảnh lên
+        public string Upload(IFormFile hinht)
         {
-            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
-            sp.TrangThai = 0;
-            _context.Update(sp);
-            await _context.SaveChangesAsync();
-
-            var cart = GetCartItems();
-            var item = cart.Find(p => p.Thuebao.MaTb == id);
-            if (item != null)
+            string uploadFileName = null;
+            if (hinht != null)
             {
-                cart.Remove(item);
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinht.FileName;
+                var path = $"wwwroot\\img\\{uploadFileName}";
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    hinht.CopyTo(stream);
+                }
             }
-            SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewCart));
+            return uploadFileName;
         }
-
-        // Chuyển đến view thanh toán
-        public IActionResult CheckOut()
+        // tải ảnh lên
+        public string Upload1(IFormFile hinhs)
         {
-                int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-                List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh).ToList();
-                ViewBag.diachi = lstDiaChi;
-                GetInfo();
-                return View();
-        }*/
-        // GET: đưa ra thông tin bill
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (HttpContext.Session.GetString("khachhang") == "" || HttpContext.Session.GetString("khachhang") == null) // chưa đăng nhập
+            string uploadFileName = null;
+            if (hinhs != null)
             {
-                return RedirectToAction(nameof(Login));
+                uploadFileName = Guid.NewGuid().ToString() + "_" + hinhs.FileName;
+                var path = $"wwwroot\\img\\{uploadFileName}";
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    hinhs.CopyTo(stream);
+                }
             }
+            return uploadFileName;
+        }
+        // thêm địa chỉ
+        [HttpPost]
+        public async Task<IActionResult> ThemDiaChi(int? id,string diachicuthe, string phuongxa, string quanhuyen, string tinhthanh)
+        {
 
             if (id == null)
             {
@@ -277,47 +323,35 @@ namespace WeSimMobifone.Controllers
             }
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-            if (kh.SlthueB == 3) 
+            if (kh.SlthueB == 3)
             {
                 return RedirectToAction(nameof(KiemTraSL));
             }
+
             List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
             ViewBag.diachi = lstDiaChi;
-            Thuebao sp = _context.Thuebao.FirstOrDefault(d => d.MaTb == id);
-            sp.TrangThai = 1;
-            _context.Update(sp);
+
+
+            Diachi dc = new Diachi();
+            dc.MaKh = makh;
+            dc.DiaChi1 = diachicuthe;
+            dc.PhuongXa = phuongxa;
+            dc.QuanHuyen = quanhuyen;
+            dc.TinhThanh = tinhthanh;
+            var kt = _context.Diachi.FirstOrDefault(d => d.MaKh == makh);
+            if (kt != null)
+            {
+                dc.MacDinh = 2;
+            }
+            else
+            {
+                dc.MacDinh = 1;
+            }
+            dc.Daxoa = 0;
+            _context.Add(dc);
             await _context.SaveChangesAsync();
             GetInfo();
             return View(thuebao);
-        }
-        // thông báo lỗi khi thuê bao đã đủ
-        public IActionResult KiemTraSL()
-        {
-            GetInfo();
-            return View();
-        }
-        // đăng ký thuê bao
-        public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang)
-        {
-            Khachhang kh;
-            Diachi dc;
-
-            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-            kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-            dc = _context.Diachi.FirstOrDefault(d => d.MaDc == madiachi);
-            // Mua trong giỏ hàng
-               Hoadon hd = new Hoadon();
-                hd.MaTb = id;
-                hd.MaKh = kh.MaKh;
-                hd.Ngay = DateTime.Now;
-                hd.MaDc = dc.MaDc;
-                hd.TongTien = phihoamang;
-                hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
-                _context.Add(hd);
-                await _context.SaveChangesAsync();
-
-            GetInfo();
-            return View(hd);
         }
         // Giới Thiệu công ty
         public IActionResult GioiThieu()

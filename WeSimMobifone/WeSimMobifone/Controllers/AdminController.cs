@@ -24,8 +24,6 @@ namespace WeSimMobifone.Controllers
             _passwordHasher = passwordHasher;
         }
 
-
-
         //-------------------------------------Hoá đơn-------------------------------------------------------
         // tra cứu hoá đơn
         public async Task<IActionResult> SearchHD(string searchHoaDon)
@@ -44,6 +42,7 @@ namespace WeSimMobifone.Controllers
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
             ViewData["SLDaNhan"] = _context.Hoadon.Where(k => k.TrangThai == 3 && k.Daxoa == 0).Count();  // 3 đã nhận
             ViewData["SLDaHuy"] = _context.Hoadon.Where(k => k.TrangThai == 4 && k.Daxoa == 0).Count();
+            ViewData["SLDanhMuc"] = _context.Danhmuc.Count();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -54,6 +53,13 @@ namespace WeSimMobifone.Controllers
                 ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.MaKh.ToString() == HttpContext.Session.GetString("khachhang"));
 
             }
+            var lstHD = _context.Hoadon.Where(d => d.TrangThai == 3 && d.Daxoa == 0);
+            int tongtien = 0;
+            foreach (Hoadon hd in lstHD)
+            {
+                tongtien += hd.TongTien;
+            }
+            ViewData["tongtien"] = tongtien.ToString("n0");
         }
         // show hoá đơn
         public async Task<IActionResult> Index() // chưa duyệt 0
@@ -259,7 +265,7 @@ namespace WeSimMobifone.Controllers
             {
                 kh.HinhS = Upload1(hinhs);
             }
-            if (kh.MatKhau != matkhau )
+            if (matkhau != null)
             {
                 kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
             }
@@ -452,5 +458,33 @@ namespace WeSimMobifone.Controllers
             return View(hoadon);
         }
 
+        // -------------------------báo cáo thống kê -----------------------
+        [HttpPost]
+        public IActionResult BaoCao(DateTime ngaybatdau ,DateTime ngayketthuc)
+        {
+            var lstHD = _context.Hoadon.Include(d => d.MaKhNavigation).Include(d => d.MaDcNavigation).Include(d => d.MaTbNavigation).Where(d => d.Ngay >= ngaybatdau && d.Ngay <= ngayketthuc && d.TrangThai == 3);
+            int tongtien = 0;
+            foreach (Hoadon hd in lstHD)
+            {
+                tongtien += hd.TongTien;
+            }
+            ViewData["ngaybatdau"] = ngaybatdau.Month.ToString() + "/" + ngaybatdau.Day.ToString() + "/" + ngaybatdau.Year.ToString();
+            ViewData["ngayketthuc"] = ngaybatdau.Month.ToString() + "/" + ngaybatdau.Day.ToString() + "/" + ngaybatdau.Year.ToString();
+            ViewData["tongtienDH"] = tongtien.ToString("n0");
+            GetInfo();
+            return View(lstHD);
+        }
+        public IActionResult BaoCaoTong()
+        {
+            
+            GetInfo();
+            return View();
+        }
+        public IActionResult BaoCaoNgay()
+        {
+            
+            GetInfo();
+            return View();
+        }
     }
 }

@@ -25,12 +25,13 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-
+            ViewBag.cuahang = _context.Cuahang.ToList();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
+
         }
 
         // GET: Thuebaos
@@ -234,7 +235,7 @@ namespace WeSimMobifone.Controllers
             kh.HinhT = Upload(hinht);
             kh.HinhS = Upload1(hinhs);
             kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
-            kh.SlthueB = 0;
+            kh.SlthueB = 1;
             kh.Daxoa = 0;
             _context.Add(kh);
             _context.SaveChanges();
@@ -251,7 +252,6 @@ namespace WeSimMobifone.Controllers
             _context.Add(dc);
             await _context.SaveChangesAsync();
 
-
             // tạo hoá đơn
             Hoadon hd = new Hoadon();
             hd.MaTb = id;
@@ -259,15 +259,42 @@ namespace WeSimMobifone.Controllers
             hd.Ngay = DateTime.Now;
             hd.MaDc = dc.MaDc;
             hd.TongTien = phihoamang;
-            hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+            hd.TrangThai = 3; // cập nhật trạng thái đã nhận
             _context.Add(hd);
             await _context.SaveChangesAsync();
+
+            // lưu thông tin khách hàng vào thuê bao
+            Qlthuebao tb = new Qlthuebao();
+            tb.MaKh = kh.MaKh;
+            tb.MaTb = id; // mã thuê bao
+            tb.NgayKichHoat = DateTime.Now;
+            tb.TrangThai = 1;
+            tb.Daxoa = 0;
+            _context.Add(tb);
+            await _context.SaveChangesAsync();
+
+            List<Hoadon> lstHoaDon = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaHd == hd.MaHd && d.Daxoa == 0 && d.TrangThai == 3).ToList();
+            ViewBag.Hoadon = lstHoaDon;
 
             GetInfo();
             return View(hd);
         }
         // upload file
-        public string Upload(IFormFile hinht)
+        public IActionResult InHoaDonKH(int? id)
+        {
+            List<Hoadon> lstHoaDon = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaHd == id && d.Daxoa == 0 && d.TrangThai == 3).ToList();
+            ViewBag.Hoadon = lstHoaDon;
+            return View();
+        }
+            public string Upload(IFormFile hinht)
         {
             string uploadFileName = null;
             if (hinht != null)

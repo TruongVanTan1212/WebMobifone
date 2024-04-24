@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Hoadon>
+
+@{
+    ViewData["Title"] = "Thống kê";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header" style="margin-bottom: 30px;">
+    <h1>
+        Thống kê báo cáo
+        <small>Mobifone An Giang</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-controller="Admin" asp-action="Index"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">Thống kế báo cáo</li>
+    </ol>
+</section>
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@ViewData["tongtien"] VNĐ<sup style="font-size: 20px"></sup></h3>
+                <p>Tổng doanh thu: </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a asp-controller="Admin" asp-action="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@ViewData["SLDaNhan"]<sup style="font-size: 20px"></sup></h3>
+                <p>Tổng đơn hàng: </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a asp-area="" asp-controller="Admin" asp-action="BaoCaoNgay" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-teal">
+            <div class="inner">
+                <h3>@ViewData["SLDanhMuc"]<sup style="font-size: 20px"></sup></h3>
+                <p>Thống kê theo danh mục</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a asp-area="" asp-controller="Admin" asp-action="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+</div><!-- /.row -->

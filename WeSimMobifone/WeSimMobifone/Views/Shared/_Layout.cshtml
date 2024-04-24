@@ -219,46 +219,59 @@
                                 <i class="fa fa-home"></i> <span>Trang Chủ</span>
                             </a>
                         </li>
+                        @if (ViewBag.Nhanvien.MaCv == 1)
+                        {
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Danh mục</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a asp-controller="Cuahangs" asp-action="Index"><i class="fa fa-circle-o"></i>Thông tin cửa hàng</a></li>
+                                    <li><a asp-controller="Danhmucs" asp-action="Index"><i class="fa fa-circle-o"></i> Danh mục SIM</a></li>
+                                    <li><a asp-controller="Loaitbs" asp-action="Index"><i class="fa fa-circle-o"></i>Loại Thuê bao</a></li>
+                                    <li><a asp-controller="Chucvus" asp-action="Index"><i class="fa fa-circle-o"></i>Chức vụ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a asp-controller="Nhanviens" asp-action="Index">
+                                    <i class="fa fa-user"></i> <span>Nhân Viên</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Admin" asp-action="BaoCaoTong">
+                                    <i class="fa fa-bar-chart-o"></i> <span>Thống Kê</span>
+                                </a>
+                            </li>
+                        }
+                        
                         <li>
                             <a asp-controller="Thuebaos" asp-action="Index">
-                                <i class="fa fa-home"></i> <span>SIM</span>
+                                <i class="fa fa-rss"></i> <span>SIM</span>
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Tintucs" asp-action="Index">
-                                <i class="fa fa-home"></i> <span>Tin Tức</span>
+                                <i class="fa fa-building-o"></i> <span>Tin Tức</span>
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Huongdans" asp-action="Index">
-                                <i class="fa fa-home"></i> <span>Câu Hỏi Hướng Dẫn</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Qlthuebaos" asp-action="Index">
-                                <i class="fa fa-home"></i> <span>Quản lý thuê bao</span>
+                                <i class="fa fa-question-circle"></i> <span>Câu Hỏi Hướng Dẫn</span>
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Thuebaos" asp-action="DanhSachTB">
-                                <i class="fa fa-home"></i> <span>Đăng Ký thuê bao</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Nhanviens" asp-action="Index">
-                                <i class="fa fa-female"></i> <span>Nhân Viên</span>
+                                <i class="fa fa-plus-square"></i> <span>Đăng Ký thuê bao</span>
                             </a>
                         </li>
                         <li>
                             <a asp-controller="Khachhangs" asp-action="Index">
-                                <i class="fa fa-user"></i> <span>Khách Hàng</span>
+                                <i class="fa fa-users"></i> <span>Khách Hàng</span>
                             </a>
                         </li>
-                        <li>
-                            <a asp-controller="Admin" asp-action="Index">
-                                <i class="fa fa-calendar-o"></i> <span>Thống Kê</span>
-                            </a>
-                        </li>
+                       
                     </ul>
                 }
                 else
@@ -276,25 +289,20 @@
                             </li>
                             <li>
                                 <a asp-controller="Admin" asp-action="Address">
-                                    <i class="fa fa-female"></i> <span>Địa Chỉ</span>
+                                    <i class="fa fa-map-marker"></i> <span>Địa Chỉ</span>
                                 </a>
                             </li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-files-o"></i>
                                     <span>Lịch sử đơn hàng</span>
-                                    <span class="label label-primary pull-right">4</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li><a asp-action="DonHang"><i class="fa fa-circle-o"></i> Đơn hàng</a></li>
                                     <li><a asp-action="DonDaNhan"><i class="fa fa-circle-o"></i> Đơn hàng đã nhận</a></li>
                                     <li><a asp-action="DonDaHuy"><i class="fa fa-circle-o"></i> Đơn hàng đã huỷ</a></li>
                                 </ul>
-                            </li>
-                            <li>
-                                <a asp-controller="Admin" asp-action="Donhang">
-                                    <i class="fa fa-user"></i> <span>Đơn hàng</span>
-                                </a>
                             </li>
                         </ul>
                     }

@@ -21,7 +21,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-
+            ViewBag.cuahang = _context.Cuahang.ToList();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -72,6 +72,11 @@ namespace WeSimMobifone.Controllers
             Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(k => k.MaKh == tb.MaKh && k.Daxoa == 0);
             kh.SlthueB = kh.SlthueB - 1;
             _context.Update(kh);
+            await _context.SaveChangesAsync();
+
+            Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync(k => k.MaTb == tb.MaTb );
+            thuebao.TrangThai = 0;
+            _context.Update(thuebao);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -136,12 +141,45 @@ namespace WeSimMobifone.Controllers
             hd.Ngay = DateTime.Now;
             hd.MaDc = dc.MaDc;
             hd.TongTien = phihoamang;
-            hd.TrangThai = 0; //0: chưa duyệt, 1: đã duyệt, 2: hủy
+            hd.TrangThai = 3; //0: chưa duyệt, 1: đã duyệt, 2: hủy
             _context.Add(hd);
             await _context.SaveChangesAsync();
 
+            // cập nhật trạng thái đơn hàng
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 0);
+            kh.SlthueB = kh.SlthueB + 1;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+
+            // lưu thông tin khách hàng vào thuê bao
+            Qlthuebao tb = new Qlthuebao();
+            tb.MaKh = id;
+            tb.MaTb = idTB; // mã thuê bao
+            tb.NgayKichHoat = DateTime.Now;
+            tb.TrangThai = 1;
+            tb.Daxoa = 0;
+            _context.Add(tb);
+            await _context.SaveChangesAsync();
+
+            List<Hoadon> lstHoaDon = _context.Hoadon
+               .Include(h => h.MaKhNavigation)
+               .Include(h => h.MaTbNavigation)
+               .Include(h => h.MaDcNavigation)
+               .Where(d => d.MaHd == hd.MaHd && d.Daxoa == 0 && d.TrangThai == 3).ToList();
+            ViewBag.Hoadon = lstHoaDon;
+
             GetInfo();
             return View(hd);
+        }
+        public IActionResult InHoaDonKH1(int? id)
+        {
+            List<Hoadon> lstHoaDon = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .Where(d => d.MaHd == id && d.Daxoa == 0 && d.TrangThai == 3).ToList();
+            ViewBag.Hoadon = lstHoaDon;
+            return View();
         }
     }
 }

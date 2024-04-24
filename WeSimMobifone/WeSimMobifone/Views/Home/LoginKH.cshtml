@@ -1,0 +1,38 @@
+﻿@{
+
+    ViewData["Title"] = "Đăng Nhập";
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container-xxl py-5 ">
+    <div class="container px-lg-5">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 card h-100 border-primary shadow">
+                <h3 class="text-primary text-center m-3"> Đăng Nhập </h3>
+                <form asp-action="Login">
+                    <div class="my-3 text-primary">
+                        <label> Email</label>
+                        <input type="text" name="email" class="form-control" />
+                    </div>
+                    <div class="my-3 text-primary">
+                        <label> Mật Khẩu</label>
+                        <input type="password" name="matkhau" class="form-control" />
+                    </div>
+                    <div class="d-grid">
+                        <input type="submit" value="Đăng Nhập" class="btn btn-outline-primary btn-block" />
+                    </div>
+                    <div class="my-3">
+                    </div>
+                </form>
+                <p class="text-center"> Chưa có tài khoản? <a asp-action="Register"> Đăng Ký </a></p>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</div>

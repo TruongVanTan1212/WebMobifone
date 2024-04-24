@@ -1,0 +1,130 @@
+﻿@model WeSimMobifone.Models.Hoadon
+@{
+    ViewData["Title"] = "In hoá đơn khách hàng";
+}
+
+<!-- Main content -->
+<section class="invoice">
+    @foreach (Hoadon item in ViewBag.Hoadon)
+    {
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Thông tin chi tiết hoá đơn
+                    <small class="pull-right">@item.Ngay</small>
+                </h2>
+            </div><!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                From
+                @foreach (var i in (List<Cuahang>)ViewBag.cuahang)
+                {
+                    <address>
+                        <strong>@i.Ten</strong><br />
+                        @i.DiaChi<br />
+                        Điện thoại: @i.DienThoai <br />
+                        Email: @i.Email
+                    </address>
+                }
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                To
+                <address>
+                    <strong>@item.MaKhNavigation.Ten</strong><br>
+                    @item.MaDcNavigation.DiaChi1, @item.MaDcNavigation.PhuongXa<br>
+                    @item.MaDcNavigation.QuanHuyen, @item.MaDcNavigation.TinhThanh<br>
+                    Điện thoại: @item.MaKhNavigation.DienThoai <br />
+                    Email: @item.MaKhNavigation.Email <br />
+                    Căn Cước Công Dân : @item.MaKhNavigation.Cccd<br />
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <b>Thông tin đơn hàng</b><br />
+                <br />
+                <b>Mã hoá đơn:</b> @item.MaHd<br />
+                <b>Ngày đặt:</b> @item.Ngay<br />
+                <b>Mã khách hàng:</b> @item.MaKhNavigation.MaKh
+            </div><!-- /.col -->
+        </div>
+
+        <!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã thuê bao</th>
+                            <th>Số Thuê bao</th>
+                            <th>Loại số</th>
+                            <th>Địa điểm hoà mạng</th>
+                            <th>Phí Hoà mạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@item.MaTbNavigation.MaTb</td>
+                            <td>@item.MaTbNavigation.SoThueBao</td>
+                            <td>@item.MaTbNavigation.LoaiSo</td>
+                            <td>@item.MaTbNavigation.DiaDiemHm</td>
+                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.col -->
+        </div>
+
+        <!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <p class="lead">Payment Methods:</p>
+                <img src="../../dist/img/credit/visa.png" alt="Visa" />
+                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard" />
+                <img src="../../dist/img/credit/american-express.png" alt="American Express" />
+                <img src="../../dist/img/credit/paypal2.png" alt="Paypal" />
+                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                    Sau khi nhận được SIM , xin quý khách vui lòng truy cập trang website Mobifone An Giang vào mục <b>" hướng dẫn "</b> chọn phần <b>" Kích hoạt "</b> làm theo hướng dẫn để có thể sử dụng SIM . Sau khi kích hoạt xong xin nhấn vào nút <b>"Kích hoạt" </b> tại mục<b>" lịch sử hoá đơn "</b>. Xin chân thành cảm ơn quý khách !
+                </p>
+            </div><!-- /.col -->
+            <div class="col-xs-6">
+                <p class="lead">Ngày đặt hàng: @item.Ngay </p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th style="width:50%">Phí hoà mạng:</th>
+                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                        </tr>
+                        <tr>
+                            <th>Phí giữ số:</th>
+                            <td> 0 VND</td>
+                        </tr>
+                        <tr>
+                            <th>Phí vận chuyển:</th>
+                            <td> 0 VND</td>
+                        </tr>
+                        <tr>
+                            <th>Thành tiền:</th>
+                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                        </tr>
+                    </table>
+                </div>
+            </div><!-- /.col -->
+        </div>
+
+        <!-- /.row -->
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a asp-action="InHoaDonKH1" asp-route-id="@item.MaHd" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+            </div>
+        </div>
+    }
+</section><!-- /.content -->
+
+<div class="clearfix"></div>
+

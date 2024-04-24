@@ -1,0 +1,150 @@
+﻿@model WeSimMobifone.Models.Thuebao
+@{
+    ViewData["Title"] = "Đăng ký thuê bao";
+}
+<div class="container-xxl py-5  hero-header mb-5" style="background-color: #007AFE;">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5 py-5">
+            <div class="col-12 text-center m-4">
+                <h1 class="text-white animated zoomIn">Thanh Toán</h1>
+                <hr class="bg-white mx-auto mt-0" style="width: 90px;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Thanh Toán</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Navbar & Hero End-->
+
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="position-relative d-inline text-primary ps-4">Đăng ký thuê bao</h6>
+            <h2 class="mt-2"> Thông tin đăng ký thuê bao </h2>
+        </div>
+        <div class="row ">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header text-center border-info" style="background-color: #007AFE;"><h2 class="mt-2 text-light"> Thông tin khách hàng </h2></div>
+                    <div class="card-body  m-2">
+                        @if (ViewBag.khachhang != null)
+                        {
+                            <form asp-action="CreateBill" asp-route-id="@Model.MaTb" enctype="multipart/form-data">
+                                <input type="hidden" value="@Model.PhiHoaMang" name="phihoamang" />
+                                <div class="my-3">
+                                    <label>Họ tên</label>
+                                    <input type="text" disabled value="@ViewBag.khachhang.Ten" name="hoten" class="form-control" />
+                                </div>
+                                <div class="my-3">
+                                    <label>Email</label>
+                                    <input type="email" disabled value="@ViewBag.khachhang.Email" name="email" class="form-control" />
+                                </div>
+                                <div class="my-3">
+                                    <label>Điện thoại</label>
+                                    <input type="text" disabled value="@ViewBag.khachhang.DienThoai" name="dienthoai" class="form-control" />
+                                </div>
+                                <div class="my-3">
+                                    <label>Căn cước công dân</label>
+                                    @if (@ViewBag.khachhang.Cccd == null)
+                                    {
+                                        <input type="text" name="cccd" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" disabled value="@ViewBag.khachhang.Cccd" class="form-control" />
+                                    }
+                                </div>
+                                <div class="my-3">
+                                    <label>Ảnh căn cước công dân</label>
+                                    @if (@ViewBag.khachhang.HinhT == null && @ViewBag.khachhang.HinhS == null)
+                                    {
+                                        <input type="file" name="hinht" class="form-control" />
+                                        <input type="file" name="hinhs" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/@ViewBag.khachhang.HinhT" width="100px" height="80px" style="margin: 0 20px 0 20px" />  <img src="~/img/@ViewBag.khachhang.HinhS" width="100px" height="80px" />
+                                    }
+                                </div>
+                                <div class="my-3">
+                                    @foreach (Diachi dc in ViewBag.diachi)
+                                    {
+                                        string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
+                                        if (dc.MacDinh == 1)
+                                        {
+                                            <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="true">
+                                            <label for="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill"></i></label>
+                                            <br>
+                                        }
+                                        else
+                                        {
+                                            <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
+                                            <label for="@dc.MaDc">@tmp</label>
+                                            <br>
+                                        }
+                                    }
+                                </div>
+                                <div class="my-2">
+                                    <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary  text-light rounded-pill py-2 px-4 ms-3" />
+                                    <a class="btn btn-outline-danger rounded-pill py-2 px-4 ms-3" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <p>nếu muốn chọn thuê bao khác vui lòng nhấn nút "Huỷ Số"</p>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-md-5 ">
+                <div class="card">
+                    <div class="card-header text-center text-light border-info" style="font-weight: bolder; background-color: #007AFE;">Thông tin thuê bao @Html.DisplayFor(model => model.SoThueBao)</div>
+                    <div class="card-body ">
+                        <table class="table ">
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.PhiHoaMang) </td>
+                                    <td style="text-align: right;"> @(Model.PhiHoaMang.ToString("n0")) VNĐ</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.LoaiSo):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.LoaiSo)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">@Html.DisplayNameFor(model => model.DiaDiemHm):</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.DiaDiemHm)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">Danh mục SIM :</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaDmNavigation.TenDm)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">Loại thuê bao :</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.MaLtbNavigation.TenL)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> Mỗi CMND/Thẻ căn cước/Hộ chiếu không được hòa mạng quá 3 thuê bao MobiFone.</label>
+                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> Số CMND/CCCD/Hộ chiếu được sử dụng để đăng ký thông tin thuê bao, quý khách vui lòng nhập chính xác.</label>
+                        <label class="mb-3"><i class="fa fa-check text-primary me-2"></i> CMND/CCCD/Hộ chiếu phải còn hạn sử dụng, nguyên vẹn, không rách rời chắp vá, không bị mờ. </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
