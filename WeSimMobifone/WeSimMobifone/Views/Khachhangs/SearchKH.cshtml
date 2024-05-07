@@ -11,14 +11,14 @@
                 <h3 class="box-title">Khách hàng</h3>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <div class="input-group">
-                    <form asp-controller="Khachhangs" asp-action="SearchKH">
+                <form asp-controller="Khachhangs" asp-action="SearchKH" style="margin-right: 30px;">
+                    <div class="input-group">
                         <input type="text" name="searchKhachHang" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped">

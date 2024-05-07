@@ -20,15 +20,12 @@
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 From
-                @foreach (var i in (List<Cuahang>)ViewBag.cuahang)
-                {
                     <address>
-                        <strong>@i.Ten</strong><br />
-                        @i.DiaChi<br />
-                        Điện thoại: @i.DienThoai <br />
-                        Email: @i.Email
+                    <strong>@ViewBag.cuahang.Ten</strong><br />
+                    @ViewBag.cuahang.DiaChi<br />
+                    Điện thoại: @ViewBag.cuahang.DienThoai <br />
+                    Email: @ViewBag.cuahang.Email
                     </address>
-                }
             </div><!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 To

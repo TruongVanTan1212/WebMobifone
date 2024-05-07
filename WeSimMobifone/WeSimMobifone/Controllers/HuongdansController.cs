@@ -33,7 +33,7 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            return View(await _context.Huongdan.ToListAsync());
+            return View(await _context.Huongdan.OrderByDescending(t => t.MaHdan).ToListAsync());
         }
 
         // GET: Huongdans/Details/5

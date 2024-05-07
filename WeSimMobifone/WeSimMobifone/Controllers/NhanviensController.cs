@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace WeSimMobifone.Controllers
     public class NhanviensController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPasswordHasher<Nhanvien> _nvpasswordHasher;
 
-        public NhanviensController(ApplicationDbContext context)
+        public NhanviensController(ApplicationDbContext context, IPasswordHasher<Nhanvien> nvpasswordHasher)
         {
             _context = context;
+            _nvpasswordHasher = nvpasswordHasher;
         }
 
         void GetInfo()
@@ -29,11 +32,23 @@ namespace WeSimMobifone.Controllers
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
         }
+
+        public async Task<IActionResult> SearchNV(string searchNhanVien)
+        {
+            var lstNhanVien = await _context.Nhanvien
+                .Include(n => n.MaCvNavigation)
+                .OrderByDescending(t => t.MaNv)
+                .Where(k => k.Ten.Contains(searchNhanVien) && k.Daxoa == 0).ToListAsync();
+            GetInfo();
+            return View(lstNhanVien);
+        }
         // GET: Nhanviens
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            var applicationDbContext = _context.Nhanvien.Include(n => n.MaCvNavigation);
+            var applicationDbContext = _context.Nhanvien
+                .Include(n => n.MaCvNavigation)
+                .OrderByDescending(t => t.MaNv);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -69,10 +84,12 @@ namespace WeSimMobifone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNv,Ten,MaCv,DienThoai,Email,MatKhau")] Nhanvien nhanvien)
+        public async Task<IActionResult> Create([Bind("MaNv,Ten,MaCv,DienThoai,Email")] Nhanvien nhanvien, string matkhau)
         {
             if (ModelState.IsValid)
             {
+                nhanvien.MatKhau = _nvpasswordHasher.HashPassword(nhanvien, matkhau);
+                nhanvien.Daxoa = 0;
                 _context.Add(nhanvien);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -105,7 +122,7 @@ namespace WeSimMobifone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNv,Ten,MaCv,DienThoai,Email,MatKhau")] Nhanvien nhanvien)
+        public async Task<IActionResult> Edit(int id, [Bind("MaNv,Ten,MaCv,DienThoai,Email")] Nhanvien nhanvien, string matkhau)
         {
             if (id != nhanvien.MaNv)
             {
@@ -116,6 +133,11 @@ namespace WeSimMobifone.Controllers
             {
                 try
                 {
+                    if(matkhau != null)
+                    {
+                        nhanvien.MatKhau = _nvpasswordHasher.HashPassword(nhanvien, matkhau);
+                    }
+                    nhanvien.Daxoa = 0;
                     _context.Update(nhanvien);
                     await _context.SaveChangesAsync();
                 }
@@ -162,7 +184,8 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var nhanvien = await _context.Nhanvien.FindAsync(id);
-            _context.Nhanvien.Remove(nhanvien);
+            nhanvien.Daxoa = 2;
+            _context.Nhanvien.Update(nhanvien);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -172,11 +195,23 @@ namespace WeSimMobifone.Controllers
             return _context.Nhanvien.Any(e => e.MaNv == id);
         }
 
-        public async Task<IActionResult> SearchNV(string searchNhanVien)
+        public async Task<IActionResult> LockNV(int? id)
         {
-            var lstNhanVien = await _context.Nhanvien.Include(n => n.MaCvNavigation).Where(k => k.Ten.Contains(searchNhanVien)).ToListAsync();
-            GetInfo();
-            return View(lstNhanVien);
+            Nhanvien kh = await _context.Nhanvien.FirstOrDefaultAsync(d => d.MaNv == id && d.Daxoa == 0);
+            kh.Daxoa = 1;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+        // mở khóa tài khoản
+        public async Task<IActionResult> UnlockNV(int? id)
+        {
+            Nhanvien kh = await _context.Nhanvien.FirstOrDefaultAsync(d => d.MaNv == id && d.Daxoa == 1);
+            kh.Daxoa = 0;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

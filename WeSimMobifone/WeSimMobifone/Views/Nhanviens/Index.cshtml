@@ -9,20 +9,20 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Nhân Viên</h3>
-                <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Add User</a>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <div class="input-group">
-                    <form asp-controller="Nhanviens" asp-action="SearchNV">
-                    <input type="text" name="searchNhanVien" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                <a class="btn btn-block btn-info" style="width: 150px; margin-left: 30px;" asp-action="Create">Add User</a>
+                <form asp-controller="Nhanviens" asp-action="SearchNV" style="margin-right: 30px;">
+                    <div class="input-group">
+                        <input type="text" name="searchNhanVien" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        </div>
                     </div>
-                    </form>
-                </div>
+                </form>
             </div>
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped  text-center">
                     <thead>
                         <tr>
                             <th>
@@ -37,6 +37,9 @@
                             <th>
                                 Chức vụ
                             </th>
+                            <th></th> 
+                            <th></th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -57,11 +60,32 @@
                                     @Html.DisplayFor(modelItem => item.MaCvNavigation.Ten)
                                 </td>
                                 <td>
-                                    <div class="tools ">
-                                        <a asp-action="Details" asp-route-id="@item.MaNv"><i class="fa fa-eye"></i></a>
-                                        <a asp-action="Edit" asp-route-id="@item.MaNv"><i class="fa fa-edit"></i></a>
-                                        <a asp-action="Delete" asp-route-id="@item.MaNv"><i class="fa fa-trash-o"></i></a>
-                                    </div>
+                                    @if(item.Daxoa == 0)
+                                    {
+                                        <a asp-action="LockNV" asp-route-id="@item.MaNv"><i class=" fa fa-unlock"></i></a>
+                                    }
+                                    else
+                                    {
+                                        @if (item.Daxoa == 1)
+                                        {
+                                            <a asp-action="UnlockNV" asp-route-id="@item.MaNv"><i class="fa fa-lock"></i></a>
+                                        }
+                                    }
+                                </td>
+                                <td style="width: 5%;">
+                                    <a class="btn btn-block btn-info" asp-action="Details" asp-route-id="@item.MaNv">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td style="width: 5%;">
+                                    <a class="btn btn-block btn-success" asp-action="Edit" asp-route-id="@item.MaNv">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td style="width: 5%;">
+                                    <a class="btn btn-block btn-danger" asp-action="Delete" asp-route-id="@item.MaNv">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }

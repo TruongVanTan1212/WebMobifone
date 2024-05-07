@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WeSimMobifone.Data;
@@ -36,7 +39,9 @@ namespace WeSimMobifone.Controllers
         // lấy thông tin hoá đơn
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            
+
+            ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
             ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
             ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
@@ -51,7 +56,6 @@ namespace WeSimMobifone.Controllers
             if (HttpContext.Session.GetString("khachhang") != "")
             {
                 ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.MaKh.ToString() == HttpContext.Session.GetString("khachhang"));
-
             }
             var lstHD = _context.Hoadon.Where(d => d.TrangThai == 3 && d.Daxoa == 0);
             int tongtien = 0;
@@ -65,35 +69,52 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index() // chưa duyệt 0
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+            var applicationDbContext = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 0 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
         public async Task<IActionResult> DaDuyetDon()  // đã duyệt 1
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+            var applicationDbContext = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 1 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
         public async Task<IActionResult> DaVanChuyen() // đã vận chuyển 2
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+            var applicationDbContext = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
                 .Where(k => k.TrangThai == 2 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
         public async Task<IActionResult> DaNhanDon() //đã nhận đơn 3
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+            var applicationDbContext = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .OrderByDescending(k => k.MaHd)
                 .Where(k => k.TrangThai == 3 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
         public async Task<IActionResult> DaHuy() //đã huỷ 4
         {
             GetInfo();
-            var applicationDbContext = _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+            var applicationDbContext = _context.Hoadon
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaDcNavigation)
+                .OrderByDescending(t => t.MaHd)
                 .Where(k => k.TrangThai == 4 && k.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -141,7 +162,6 @@ namespace WeSimMobifone.Controllers
             Qlthuebao tb = new Qlthuebao();
             tb.MaKh = makh;
             tb.MaTb = matb; // mã thuê bao
-            tb.NgayKichHoat = DateTime.Now;
             tb.TrangThai = 0;
             tb.Daxoa = 0;
             _context.Add(tb);
@@ -220,7 +240,35 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
+        // GET: Cuahangs/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var hd = await _context.Hoadon
+                .FirstOrDefaultAsync(m => m.MaHd == id);
+            if (hd == null)
+            {
+                return NotFound();
+            }
+            GetInfo();
+            return View(hd);
+        }
+
+        // POST: Cuahangs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var hd = await _context.Hoadon.FindAsync(id);
+            hd.Daxoa = 1;
+            _context.Hoadon.Update(hd);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         //------------------------------------------Khách hàng--------------------------------------------------
         // Xuất thông tin khách hàng
@@ -275,7 +323,30 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return RedirectToAction(nameof(Customer));
         }
-        
+        // hiển thịu khêu bao đã đăng ký 
+        public IActionResult ShowThueBaoKhach()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var listThueBao = _context.Qlthuebao
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaKhNavigation)
+                .OrderByDescending(t => t.MaQl)
+                .Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
+            GetInfo();
+            return View(listThueBao);
+        }
+        // hiển thị thuê bao đã hủy
+        public IActionResult ShowThueBaoKhachHuy()
+        {
+            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
+            var listThueBao = _context.Qlthuebao
+                .Include(h => h.MaTbNavigation)
+                .Include(h => h.MaKhNavigation)
+                .OrderByDescending(t => t.MaQl)
+                .Where(d => d.MaKh == makh && d.Daxoa == 1).ToList();
+            GetInfo();
+            return View(listThueBao);
+        }
         // xuất địa chỉ khách hàng
         public IActionResult Address()
         {
@@ -383,6 +454,7 @@ namespace WeSimMobifone.Controllers
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
                 .Include(h => h.MaDcNavigation)
+                .OrderByDescending(t => t.MaHd)
                 .Where(d => d.MaKh == makh && (d.TrangThai == 0 || d.TrangThai == 1 || d.TrangThai == 2) && d.Daxoa == 0);
             GetInfo();
             return View(lstdonhang);
@@ -394,6 +466,7 @@ namespace WeSimMobifone.Controllers
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
                 .Include(h => h.MaDcNavigation)
+                .OrderByDescending(t => t.MaHd)
                 .Where(d => d.MaKh == makh && d.TrangThai == 4 && d.Daxoa == 0);
             GetInfo();
             return View(lstdonhang);
@@ -405,7 +478,9 @@ namespace WeSimMobifone.Controllers
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
                 .Include(h => h.MaDcNavigation)
+                .OrderByDescending(t => t.MaHd)
                 .Where(d => d.MaKh == makh && d.TrangThai == 3 && d.Daxoa == 0);
+
             GetInfo();
             return View(lstdonhang);
         }
@@ -427,8 +502,14 @@ namespace WeSimMobifone.Controllers
 
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             Qlthuebao tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == id && d.Daxoa == 0 && d.MaTb == idTB);
+            tb.NgayKichHoat = DateTime.Now;
             tb.TrangThai = 1; // đã nhận
             _context.Update(tb);
+            await _context.SaveChangesAsync();
+
+            Thuebao lsttb = await _context.Thuebao.FirstOrDefaultAsync(d => d.MaTb ==  idTB);
+            lsttb.TrangThai = 2;
+            _context.Update(lsttb);
             await _context.SaveChangesAsync();
             GetInfo();
             return RedirectToAction(nameof(DonDaNhan));
@@ -451,6 +532,7 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             var tb = _context.Qlthuebao.FirstOrDefault(d => d.MaKh == makh && d.Daxoa == 0 && d.MaTb == hoadon.MaTb);// điều kiện sai
             ViewBag.qlthuebao = tb;
@@ -458,33 +540,160 @@ namespace WeSimMobifone.Controllers
             return View(hoadon);
         }
 
+
+
         // -------------------------báo cáo thống kê -----------------------
         [HttpPost]
         public IActionResult BaoCao(DateTime ngaybatdau ,DateTime ngayketthuc)
         {
-            var lstHD = _context.Hoadon.Include(d => d.MaKhNavigation).Include(d => d.MaDcNavigation).Include(d => d.MaTbNavigation).Where(d => d.Ngay >= ngaybatdau && d.Ngay <= ngayketthuc && d.TrangThai == 3);
+            var lstHD = _context.Hoadon.Include(d => d.MaKhNavigation).Include(d => d.MaDcNavigation).Include(d => d.MaTbNavigation)
+                .Where(d => d.Ngay >= ngaybatdau && d.Ngay <= ngayketthuc && d.TrangThai == 3);
             int tongtien = 0;
             foreach (Hoadon hd in lstHD)
             {
                 tongtien += hd.TongTien;
             }
             ViewData["ngaybatdau"] = ngaybatdau.Month.ToString() + "/" + ngaybatdau.Day.ToString() + "/" + ngaybatdau.Year.ToString();
-            ViewData["ngayketthuc"] = ngaybatdau.Month.ToString() + "/" + ngaybatdau.Day.ToString() + "/" + ngaybatdau.Year.ToString();
+            ViewData["ngayketthuc"] = ngayketthuc.Month.ToString() + "/" + ngayketthuc.Day.ToString() + "/" + ngayketthuc.Year.ToString();
             ViewData["tongtienDH"] = tongtien.ToString("n0");
+            GetInfo();
+            return View(lstHD);
+        }
+        public IActionResult BaoCaothuebao(DateTime ngaybatdau1 ,DateTime ngayketthuc1)
+        {
+            var lstHD = _context.Qlthuebao
+                .Include(d => d.MaTbNavigation)
+                .Include(h => h.MaTbNavigation.MaLtbNavigation)
+                .Include(h => h.MaTbNavigation.MaDmNavigation)
+                .OrderByDescending(t => t.MaQl)
+                .Where(d => d.NgayKichHoat >= ngaybatdau1 && d.NgayKichHoat <= ngayketthuc1 && d.TrangThai == 1);
+           
+            ViewData["ngaybatdau1"] = ngaybatdau1.Month.ToString() + "/" + ngaybatdau1.Day.ToString() + "/" + ngaybatdau1.Year.ToString();
+            ViewData["ngayketthuc1"] = ngayketthuc1.Month.ToString() + "/" + ngayketthuc1.Day.ToString() + "/" + ngayketthuc1.Year.ToString();
             GetInfo();
             return View(lstHD);
         }
         public IActionResult BaoCaoTong()
         {
-            
             GetInfo();
             return View();
         }
-        public IActionResult BaoCaoNgay()
+        public async Task<IActionResult> BaoCaoNgay()
         {
-            
+            var hd = _context.Hoadon
+                .Include(h => h.MaDcNavigation)
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .OrderByDescending(t => t.MaHd)
+                .Where(h => h.TrangThai == 3);
             GetInfo();
-            return View();
+            return View(await hd.ToListAsync());
         }
+        public IActionResult ThongKeThueBao()
+        {
+            var tb = _context.Qlthuebao
+                .Include(h => h.MaTbNavigation.MaLtbNavigation)
+                .Include(h => h.MaTbNavigation.MaDmNavigation)
+                .Include(h => h.MaTbNavigation)
+                .OrderByDescending(t => t.MaQl)
+                .Where(h => h.TrangThai == 1);
+            GetInfo();
+            return View(tb.ToList());
+        }
+
+        //-----------------------EXCEL------------------------------
+        [HttpGet]
+        public async Task<FileResult> DowloadEx()
+        {
+            var hoadon = await _context.Hoadon
+                .Include(h => h.MaDcNavigation)
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Where(h => h.TrangThai == 3).ToListAsync();
+            var fil = "Hoa_Don.xlsx";
+            return Excel(fil, hoadon);
+        }
+        public async Task<FileResult> DowloadEx3()
+        {
+            var tb = await _context.Qlthuebao
+                .Include(h => h.MaTbNavigation)
+                .Where(h => h.TrangThai == 1).ToListAsync();
+            var fil = "ThueBao.xlsx";
+            return Excel1(fil, tb);
+        }
+        public async Task<FileResult> DowloadEx1(DateTime  BD, DateTime KT)
+        {
+            var hoadon = await _context.Hoadon
+                .Include(h => h.MaDcNavigation)
+                .Include(h => h.MaKhNavigation)
+                .Include(h => h.MaTbNavigation)
+                .Where(d => d.Ngay >= BD && d.Ngay <= KT && d.TrangThai == 3).ToListAsync();
+            var fil = "Hoa_Don.xlsx";
+            return Excel(fil, hoadon);
+        } 
+        public async Task<FileResult> DowloadEx2(DateTime  BD, DateTime KT)
+        {
+            var tb = await _context.Qlthuebao
+                .Include(h => h.MaTbNavigation)
+                .Where(d => d.NgayKichHoat >= BD && d.NgayKichHoat <= KT && d.TrangThai == 1).ToListAsync();
+            var fil1 = "Thue_Bao.xlsx";
+            return Excel1(fil1, tb);
+        }
+
+        private FileResult Excel(string fil, IEnumerable<Hoadon> hoadon)
+        {
+            DataTable data = new DataTable("hoadon");
+            data.Columns.AddRange(new DataColumn[]
+            {
+              new DataColumn("Mã hóa đơn"),
+              new DataColumn("Số thuê bao"),
+              new DataColumn("Ngày đặt"),
+              new DataColumn("Tên khách hàng"),
+              new DataColumn("Địa chỉ"),
+              new DataColumn("Tổng tiền"),
+            });
+
+            foreach (var p in hoadon)
+            {
+                data.Rows.Add(p.MaHd, p.MaTbNavigation.SoThueBao, p.Ngay, p.MaKhNavigation.Ten, p.MaDcNavigation.DiaChi1, p.TongTien);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(data);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fil);
+                }
+            }
+        }
+        private FileResult Excel1(string fil1, IEnumerable<Qlthuebao> qltb)
+            {
+                DataTable data = new DataTable("thuebao");
+                data.Columns.AddRange(new DataColumn[]
+                {
+              new DataColumn("số thuê bao"),
+              new DataColumn("Phí Hòa mạng"),
+              new DataColumn("Loại số"),
+              new DataColumn("Điểm hòa mạng"),
+              new DataColumn("Ngày kích hoạt"),
+                });
+
+                foreach (var p in  qltb)
+                {
+                    data.Rows.Add(p.MaTbNavigation.SoThueBao, p.MaTbNavigation.PhiHoaMang,p.MaTbNavigation.LoaiSo, p.MaTbNavigation.DiaDiemHm,p.NgayKichHoat);
+                }
+
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(data);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fil1);
+                    }
+                }
+            }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@{
-
+    @model WeSimMobifone.Models.Khachhang
     ViewData["Title"] = "Đăng Ký Tài Khoản";
 }
 <br />
@@ -15,29 +15,34 @@
             <div class="col-md-4  card h-100 border-primary shadow">
                 <h3 class="text-primary text-center m-3"> Đăng Ký Tài Khoản </h3>
                 <form asp-action="Register">
-                    <div class="my-3">
-                        <label> Email</label>
-                        <input type="text" name="email" class="form-control" />
-                    </div>
-                    <div class="my-3">
-                        <label> Mật Khẩu</label>
-                        <input type="password" name="matkhau" class="form-control" />
-                    </div>
-                    <div class="my-3">
-                        <label> Họ Tên</label>
-                        <input type="text" name="hoten" class="form-control" />
-                    </div>
-                    <div class="my-3">
-                        <label> Số Điện Thoại</label>
-                        <input type="text" name="dienthoai" class="form-control" />
-                    </div>
-                    <div class="d-grid">
-                        <input type="submit" value="Đăng Ký ." class="btn btn-outline-primary btn-block" />
-                    </div>
-                    <div class="my-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                    <div class="form-group my-3 text-primary">
+                        <label asp-for="Ten" class="control-label"></label>
+                        <input asp-for="Ten" class="form-control" required />
+                        <span asp-validation-for="Ten" class="text-danger"></span>
+                    </div>
+                    <div class="form-group my-3 text-primary">
+                        <label asp-for="DienThoai" class="control-label"></label>
+                        <input asp-for="DienThoai" class="form-control" required />
+                        <span asp-validation-for="DienThoai" class="text-danger"></span>
+                    </div>
+                    <div class="form-group my-3 text-primary">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group my-3 text-primary">
+                        <label asp-for="MatKhau" class="control-label"></label>
+                        <input name="MatKhau" class="form-control" required />
+                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                    </div>
+                    <div class="form-group my-3"></div>
+                    <div class="form-group my-3 d-grid">
+                        <input type="submit" value="Đăng Ký." class="btn btn-outline-primary btn-block" />
                     </div>
                 </form>
+
                 <div class="col-md-4"></div>
             </div>
         </div>

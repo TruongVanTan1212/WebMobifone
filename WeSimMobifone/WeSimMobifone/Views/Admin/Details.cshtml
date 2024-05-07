@@ -3,14 +3,16 @@
 @{
     ViewData["Title"] = "thông tin chi tiết hoá đơn";
 }
-@if(@Model.MaKhNavigation.SlthueB == 3)
+@if(@Model.MaKhNavigation.SlthueB == 3 && Model.TrangThai == 0)
 {
+ <section class="content-header">
     <div class="pad margin no-print">
         <div class="callout callout-danger" style="margin-bottom: 0!important;">
             <h4><i class="fa fa-info"></i> Thông báo:</h4>
             Số lượng thuê bao khách hàng @Html.DisplayFor(model => model.MaKhNavigation.Ten) đã đủ 3 thuê bao vui lòng huỷ đơn.
         </div>
     </div>
+ </section>
 }
 <section class="content">
     <div class="row">
@@ -66,7 +68,7 @@
                                 <tr>
                                     <td style="font-weight: bold; width: 30%"> Ảnh Căn Cước công dân:</td>
                                     <td style="text-align: right;">
-                                        <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" style="width:150px; height: 100px; margin: 0px 5px 0px 5px" /> <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhS)" style="width:150px; height: 100px" ; />
+                                    <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhT)" style="width:150px; height: 100px; margin: 0px 5px 0px 5px" /> <img src="~/img/@Html.DisplayFor(model => model.MaKhNavigation.HinhS)" style="width:150px; height: 100px" ; />
                                     </td>
                                     <td style="width: 10%"></td>
                                 </tr>
@@ -77,22 +79,29 @@
                                 </tr>
                                 <tr>
                                     <td style="font-weight: bold; width: 30%"> @Html.DisplayNameFor(model => model.TongTien):</td>
-                                    <td style="font-weight: bold; text-align: right;">@Html.DisplayFor(model => model.TongTien) VNĐ</td>
+                                    <td style="font-weight: bold; text-align: right;">@(Model.TongTien.ToString("n0")) VNĐ</td>
                                     <td style="width: 10%"></td>
                                 </tr>
+                                @if (@Model.TrangThai == 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="btn btn-block btn-info" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd" asp-route-matb="@Model.MaTb" asp-route-makh="@Model.MaKh">Duyệt đơn</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-danger" style="width: 150px; " asp-action="HuyHoaDon" asp-route-id="@Model.MaHd">Huỷ đơn</a>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+
+                                }
+                               
                             </tbody>
                        </table>
                     </div>
-                    <div class="box-footer clearfix no-border">
-                        @if(@Model.TrangThai == 0)
-                        {
-                            <a class="btn btn-block btn-info" style="width: 150px; " asp-action="DuyetHoaDon" asp-route-id="@Model.MaHd" asp-route-matb="@Model.MaTb" asp-route-makh="@Model.MaKh">Duyệt đơn</a>
-                            <a class="btn btn-block btn-danger" style="width: 150px; " asp-action="HuyHoaDon" asp-route-id="@Model.MaHd">Huỷ đơn</a>
-                        }
-                    </div>
                 </div>
+              </div>
           </div>
-        </div>
         <div class="col-md-3"></div>
     </div>
 </section>

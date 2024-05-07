@@ -3,34 +3,54 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Huongdan</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CauHoi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CauHoi)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TraLoi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TraLoi)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayDang)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NgayDang)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaHdan">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <i class="fa fa-rss"></i>
+                        <h3 class="box-title">Thông tin chi cầu hỏi hướng dẫn: </h3>
+                        <!-- tools box -->
+                    </div>
+                    <div class="box-body">
+                        <table class="table " style="font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; width: 30%"> @Html.DisplayNameFor(model => model.CauHoi)</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.CauHoi)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 60%">Trả lời</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.TraLoi)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-block btn-success" asp-action="Edit" asp-route-id="@Model.MaHdan">Sửa</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-block btn-primary" asp-action="Index">Trở về</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- /.row -->
+</section><!-- /.content -->

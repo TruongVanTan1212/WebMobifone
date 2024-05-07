@@ -1,0 +1,39 @@
+﻿@model WeSimMobifone.Models.Hoadon
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete Hoá đơn này?</h3>
+<div>
+    <h4>Thuebao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaHd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ngay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaTbNavigation.SoThueBao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaKhNavigation.Ten)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TongTien)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaHd" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

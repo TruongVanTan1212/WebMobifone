@@ -12,14 +12,15 @@
                 <a class="btn btn-block btn-info" style="width: 150px;" asp-action="Create">Thêm</a>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <div class="input-group">
-                    <form asp-controller="Huongdans" asp-action="SearchHDan">
+                <a class="btn btn-block btn-info" style="width: 150px; margin-left: 30px;" asp-action="Create">Add instruct</a>
+                <form asp-controller="Huongdans" asp-action="SearchHDan" style="margin-right: 30px;">
+                    <div class="input-group">
                         <input type="text" name="searchHuongDan" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped text-center">

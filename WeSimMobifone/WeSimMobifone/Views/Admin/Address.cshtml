@@ -32,7 +32,6 @@
                                 </th>
                                 <th style="width:5%;"></th>
                                 <th style="width:10%;"></th>
-                                <th style="width:10%;"></th>
 
                             </tr>
                         </thead>
@@ -61,11 +60,8 @@
                                                 @i.TinhThanh
                                             </td>
                                             <td>
-                                                <div class="tools">
-                                                    <span class="label label-success">mặc định</span>
-                                                </div>
+                                                <a asp-action="SetDefaultAddress" asp-route-id="@i.MaDc"><i class="fa fa-dot-circle-o" style="color: seagreen;"></i></a>
                                             </td>
-                                            <td> </td>
                                             <td> </td>
                                         </tr>
                                     }
@@ -89,11 +85,8 @@
                                                 <td>
                                                     @i.TinhThanh
                                                 </td>
-                                                <td></td>
                                                 <td>
-                                                    <div class="tools">
-                                                        <a class="btn btn-block btn-success" asp-action="SetDefaultAddress" asp-route-id="@i.MaDc">Mặc định</a>
-                                                    </div>
+                                                    <a asp-action="SetDefaultAddress" asp-route-id="@i.MaDc"><i class="fa fa-circle-o"></i></a>
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-block btn-danger" asp-action="DeleteAddress" asp-route-id="@i.MaDc">Xoá</a>

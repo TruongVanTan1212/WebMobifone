@@ -1,0 +1,134 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Qlthuebao>
+
+@{
+    ViewData["Title"] = "Thống kê theo ngày";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Thống kê báo cáo
+        <small>Mobifone An Giang</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-controller="Admin" asp-action="Index"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">Thống kế báo cáo</li>
+    </ol>
+</section>
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@ViewData["tongtien"] VNĐ<sup style="font-size: 20px"></sup></h3>
+                <p>Tổng doanh thu: </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@ViewData["SLDaNhan"]<sup style="font-size: 20px"></sup></h3>
+                <p>Tổng đơn hàng: </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a asp-area="" asp-controller="Admin" asp-action="BaoCaoNgay" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-teal">
+            <div class="inner">
+                <h3>@ViewData["SLDanhMuc"]<sup style="font-size: 20px"></sup></h3>
+                <p>Thống kê thuê bao</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a asp-area="" asp-controller="Admin" asp-action="ThongKeThueBao" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+</div><!-- /.row -->
+<section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                    <div class="input-group">
+                         Từ Ngày:  @ViewData["ngaybatdau1"]
+                         Đến Ngày: @ViewData["ngayketthuc1"]
+                         <a class="btn btn-success" style="margin-left: 70px;" asp-action="DowloadEx2" asp-route-BD="@ViewData["ngaybatdau1"]" asp-route-KT="@ViewData["ngayketthuc1"]">EXCEL</a>
+                        <div class="input-group-btn">
+                        </div>
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+            </div>
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaTbNavigation.SoThueBao)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MaTbNavigation.PhiHoaMang)
+                            </th>
+                            <th>
+                                Danh mục Sim
+                            </th>
+                            <th>
+                                Loại thuê bao
+                            </th>
+                            <th>
+                                Loại số
+                            </th>
+                            <th>
+                                Điểm hòa mạng
+                            </th>
+                            <th>
+                                Ngày kích hoạt
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Qlthuebao item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.SoThueBao)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.PhiHoaMang)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.MaDmNavigation.TenDm)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.MaLtbNavigation.TenL)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.LoaiSo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaTbNavigation.DiaDiemHm)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayKichHoat)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+</section>
+

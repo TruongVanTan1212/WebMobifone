@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Thuebao>
+
+@{
+    ViewData["Title"] = "MobiFone An Giang";
+}
+<div class="container-xxl py-5  hero-header mb-5" style="background-color: #007AFE;">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5 py-5">
+            <div class="col-12 text-center m-4">
+                <h1 class="text-white animated zoomIn"></h1>
+                <hr class="bg-white mx-auto mt-0" style="width: 90px;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" asp-controller="Homes" asp-action="Index">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a class="text-white">Số thuê bao</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Tìm kiếm</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Navbar & Hero End -->
+<!-- Full Screen Search Start -->
+
+<div class="modal fade" id="searchModal" tabindex="-1">
+
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(29, 29, 39, 0.7);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="SearchTB">
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" name="timkiemTB" class="form-control bg-transparent border-light p-3" placeholder="Nhập đầu số bạn muốn tìm">
+                        <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer border-0" style="margin-right: 470px;">
+                <h5 class="text-light"> Đầu số : </h5>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="1">093</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="2">090</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="3">089</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="4">070</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="5">076</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="6">077</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="7">078</a>
+                <a class="btn btn-outline-light " asp-action="SearchTB" asp-route-id="8">079</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Screen Search Start -->
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="position-relative d-inline text-primary ps-4">Trang Chủ</h6>
+            <h2 class="mt-2">Đầu Số: @ViewBag.timkiem</h2>
+        </div>
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="bi bi-sim-fill fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">@Html.DisplayFor(modelItem => item.SoThueBao)</h5>
+                        <p>Phí hoà mạng: @(item.PhiHoaMang.ToString("n0")) VNĐ</p>
+                        <p>Loại thuê bao: @Html.DisplayFor(modelItem => item.LoaiSo)</p>
+                        <p>Điểm hoà mạng: @Html.DisplayFor(modelItem => item.DiaDiemHm)</p>
+                        <a class="btn px-3 mt-auto mx-auto" asp-action="Details" asp-route-id="@item.MaTb">Chọn Số</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

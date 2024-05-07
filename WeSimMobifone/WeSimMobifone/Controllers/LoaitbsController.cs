@@ -21,7 +21,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            
             ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
             ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
@@ -50,7 +50,7 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            return View(await _context.Loaitb.ToListAsync());
+            return View(await _context.Loaitb.OrderByDescending(t => t.MaLtb).ToListAsync());
         }
 
         // GET: Loaitbs/Details/5
@@ -147,36 +147,6 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(loaitb);
         }
-
-        // GET: Loaitbs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var loaitb = await _context.Loaitb
-                .FirstOrDefaultAsync(m => m.MaLtb == id);
-            if (loaitb == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(loaitb);
-        }
-
-        // POST: Loaitbs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var loaitb = await _context.Loaitb.FindAsync(id);
-            _context.Loaitb.Remove(loaitb);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool LoaitbExists(int id)
         {
             return _context.Loaitb.Any(e => e.MaLtb == id);

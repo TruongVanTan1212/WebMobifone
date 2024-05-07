@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -29,13 +30,12 @@ namespace WeSimMobifone.Controllers
         // lấy dữ liệu bảng
         void GetInfo()
         {
-            
             // lấy dữ liệu bảng danh mục
             ViewBag.danhmuc = _context.Danhmuc.ToList();
             // lấy dữ liệu của hàng
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
             // lấy dữ liệu bảng tin tức
-            ViewBag.tintuc = _context.Tintuc.ToList();
+            ViewBag.tintuc = _context.Tintuc.Where(d => d.Hot == 1).ToList();
             // số lượng mặt hàng có trong giỏ   
            
             // ViewBag.thuebao = _context.Thuebao.FirstOrDefault(k => k.TrangThai == int.Parse(HttpContext.Session.GetString("Thuebao")));
@@ -55,18 +55,112 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(h =>h.TrangThai== 0 && h.Daxoa == 0);
+            var applicationDbContext = _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .OrderByDescending(t => t.MaTb)
+                .Where(h => h.TrangThai == 0 && h.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> SearchTB(string timkiemTB, int id)
+        {
+            GetInfo();  
+            if(id == 1)
+            {
+                string timkiem = "093";
+                var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                ViewBag.timkiem = timkiem;
+                return View(await applicationDbContext);
+            }
+            else
+            {
+                if (id == 2)
+                {
+                    string timkiem = "090";
+                    var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                    ViewBag.timkiem = timkiem;
+                    return View(await applicationDbContext);
+                }
+                else
+                {
+                    if (id ==3)
+                    {
+                        string timkiem = "089";
+                        var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                        ViewBag.timkiem = timkiem;
+                        return View(await applicationDbContext);
+                    }
+                    else
+                    {
+                        if (id == 4)
+                        {
+                            string timkiem = "070";
+                            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                            ViewBag.timkiem = timkiem;
+                            return View(await applicationDbContext);
+                        }
+                        else
+                        {
+                            if (id == 5)
+                            {
+                                string timkiem = "076";
+                                var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                                ViewBag.timkiem = timkiem;
+                                return View(await applicationDbContext);
+                            }
+                            else
+                            {
+                                if (id == 6)
+                                {
+                                    string timkiem = "077";
+                                    var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                                    ViewBag.timkiem = timkiem;
+                                    return View(await applicationDbContext);
+                                }
+                                else
+                                {
+                                    if (id == 7)
+                                    {
+                                        string timkiem = "078";
+                                        var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                                        ViewBag.timkiem = timkiem;
+                                        return View(await applicationDbContext);
+                                    }
+                                    else
+                                    {
+                                        if (id == 8)
+                                        {
+                                            string timkiem = "079";
+                                            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiem) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                                            ViewBag.timkiem = timkiem;
+                                            return View(await applicationDbContext);
+                                        }
+                                        else
+                                        {
+                                            ViewBag.timkiem = timkiemTB;
+                                            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(k => k.SoThueBao.Contains(timkiemTB) && k.TrangThai == 0 && k.Daxoa == 0).ToListAsync();
+                                            return View(await applicationDbContext);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         // danh mục thuê bao
         public async Task<IActionResult> DanhMucSP(int id)
         {
             GetInfo();
             var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation).Where(h => h.TrangThai == 0 && h.MaDm == id && h.Daxoa == 0);
+            var tb  =  _context.Danhmuc.FirstOrDefault(h => h.MaDm == id);
+            ViewBag.DM = tb;
+                
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //------------------------ đăng nhập--- đăng ký--------------------
+        //------------------------ đăng nhập --- đăng ký --------------------
         // đăng nhập
         public IActionResult Login()
         {
@@ -93,12 +187,6 @@ namespace WeSimMobifone.Controllers
         [HttpPost]
         public IActionResult Login(string email, string matkhau)
         {
-            if(String.IsNullOrEmpty(email) || String.IsNullOrEmpty(matkhau))
-            {
-                // không nhập email hoặc mật khẩu
-                return RedirectToAction(nameof(LoginInAgain));
-            }
-
             var nv = _context.Nhanvien.FirstOrDefault(k => k.Email == email && k.Daxoa == 0);
 
             Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null && k.Daxoa == 0);
@@ -106,7 +194,7 @@ namespace WeSimMobifone.Controllers
             if (kh != null && matkhau!= null && _pwHear.VerifyHashedPassword(kh, kh.MatKhau, matkhau) == PasswordVerificationResult.Success)
             {
                 HttpContext.Session.SetString("khachhang", kh.MaKh.ToString());
-                return RedirectToAction("Customer", "Admin");
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -125,39 +213,25 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
-        // tài khoản đã tồn tại
-        public IActionResult AccountAlreadyExists()
-        {
-            GetInfo();
-            return View();
-        }
         // đăng ký
         [HttpPost]
-        public IActionResult Register(string email, string matkhau, string hoten, string dienthoai)
+        public async Task<IActionResult> Register([Bind("MaNv,Ten,MaCv,DienThoai,Email")] Khachhang kh, string MatKhau)
         {
-            if(String.IsNullOrEmpty(email) || String.IsNullOrEmpty(matkhau)) 
+            if (ModelState.IsValid)
             {
-                // email || matkhau null
-                return RedirectToAction(nameof(AccountAlreadyExists));
+                if (_context.Khachhang.Any(h => (h.Email == kh.Email || h.DienThoai == kh.DienThoai) && h.Daxoa == 0))
+                {
+                    ModelState.AddModelError(string.Empty, "Email hoặc số điện thoại đã tồn tại");
+                    GetInfo();
+                    return View(kh);
+                }
+                kh.MatKhau = _pwHear.HashPassword(kh, MatKhau);
+                _context.Add(kh);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Login));
             }
-            // kiểm tra email đã tồn tại 
-            var taikhoan = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null && k.Daxoa == 0);
-            if(taikhoan != null)
-            {
-                // tài khoản đã đăng ký
-                return RedirectToAction(nameof(AccountAlreadyExists));
-            }
-
-            // thêm khach hàng vào db
-            var kh = new Khachhang();
-            kh.Email = email;
-            kh.MatKhau = _pwHear.HashPassword(kh, matkhau);   // mã hóa mật khẩu
-            kh.Ten = hoten;
-            kh.DienThoai = dienthoai;
-            _context.Add(kh);
-            _context.SaveChanges();
-
-            return RedirectToAction(nameof(Login));
+            GetInfo();
+            return View(kh);
         }
         // đăng xuất
         public IActionResult Signout()
@@ -175,7 +249,6 @@ namespace WeSimMobifone.Controllers
             _context.Update(sp);
             await _context.SaveChangesAsync();
 
-            HttpContext.Session.SetString("khachhang", "");
             HttpContext.Session.SetString("Nhanvien", "");
             GetInfo();
             return RedirectToAction(nameof(Login));
@@ -234,11 +307,10 @@ namespace WeSimMobifone.Controllers
             return View();
         }
         // đăng ký thuê bao
-        public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang,string diachicuthe,string phuongxa,string quanhuyen,string tinhthanh,string cccd, IFormFile hinht, IFormFile hinhs)
+        public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang,string cccd, IFormFile hinht, IFormFile hinhs)
         {
             Khachhang kh;
             Diachi dc;
-
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
             if(kh.Cccd == null)
@@ -321,16 +393,13 @@ namespace WeSimMobifone.Controllers
             {
                 return NotFound();
             }
+
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
             Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
             if (kh.SlthueB == 3)
             {
                 return RedirectToAction(nameof(KiemTraSL));
             }
-
-            List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
-            ViewBag.diachi = lstDiaChi;
-
 
             Diachi dc = new Diachi();
             dc.MaKh = makh;
@@ -350,6 +419,9 @@ namespace WeSimMobifone.Controllers
             dc.Daxoa = 0;
             _context.Add(dc);
             await _context.SaveChangesAsync();
+
+            List<Diachi> lstDiaChi = _context.Diachi.Where(d => d.MaKh == makh && d.Daxoa == 0).ToList();
+            ViewBag.diachi = lstDiaChi;
             GetInfo();
             return View(thuebao);
         }
@@ -359,6 +431,19 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
+
+        public async Task<IActionResult> XoaTaiKhoan(int? id)
+        {
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id);
+            kh.Daxoa = 2;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+
+            HttpContext.Session.SetString("khachhang", "");
+            GetInfo();
+            return RedirectToAction(nameof(Login));
+        }
+
 
     }
 }

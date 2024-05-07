@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {}
+    "D:\\báo Cáo thực tập\\DTH205971_TruongVanTan\\DTH205971_TruongVanTan\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {
+    "D:\\báo Cáo thực tập\\DTH205971_TruongVanTan\\DTH205971_TruongVanTan\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
+        "projectUniqueName": "D:\\báo Cáo thực tập\\DTH205971_TruongVanTan\\DTH205971_TruongVanTan\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
         "projectName": "WeSimMobifone",
-        "projectPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\obj\\",
+        "projectPath": "D:\\báo Cáo thực tập\\DTH205971_TruongVanTan\\DTH205971_TruongVanTan\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\WeSimMobifone.csproj",
+        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+        "outputPath": "D:\\báo Cáo thực tập\\DTH205971_TruongVanTan\\DTH205971_TruongVanTan\\WebMobifone\\WeSimMobifone\\WeSimMobifone\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -45,6 +45,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.2, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.32, )"
@@ -105,7 +109,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -10,7 +10,7 @@
 
     <!-- FontAwesome 4.3.0 -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Ionicons 2.0.0 -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
@@ -54,10 +54,14 @@
                         <!-- Messages: style can be found in dropdown.less-->
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">@ViewData["SLChuaDuyet"]</span>
-                            </a>
+                            @if (ViewBag.Nhanvien != null)
+                            {
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="label label-warning">@ViewData["SLChuaDuyet"]</span>
+
+                                </a>
+                            }
                             <ul class="dropdown-menu">
                                 <li class="header">You have 10 notifications</li>
                                 <li>
@@ -149,9 +153,12 @@
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
+                                    @if (ViewBag.khachhang != null)
+                                    {
+                                        <div class="pull-left">
+                                            <a asp-controller="Home" asp-action="XoaTaiKhoan" class="btn btn-default btn-flat" asp-route-id="@ViewBag.khachhang.MaKh">Xóa Tài Khoản</a>
+                                        </div>
+                                    }
                                     <div class="pull-right">
                                         <a asp-controller="Home" asp-action="Signout" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
@@ -280,12 +287,23 @@
                     {
                         <ul class="sidebar-menu">
                             <li class="header">
-                                Manage Mobifone
+                                User Mobifone
                             </li>
                             <li>
                                 <a asp-controller="Admin" asp-action="Customer">
                                     <i class="fa fa-home"></i> <span>Trang Chủ</span>
                                 </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-rss"></i>
+                                    <span>Thuê Bao</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a asp-action="ShowThueBaoKhach"><i class="fa fa-circle-o"></i>Thuê bao đã đăng ký</a></li>
+                                    <li><a asp-action="ShowThueBaoKhachHuy"><i class="fa fa-circle-o"></i>Thuê bao đã hủy</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a asp-controller="Admin" asp-action="Address">
@@ -296,7 +314,7 @@
                                 <a href="#">
                                     <i class="fa fa-files-o"></i>
                                     <span>Lịch sử đơn hàng</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
+                                    <small class="label pull-right bg-yellow">@ViewData["slDonKhach"]</small>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li><a asp-action="DonHang"><i class="fa fa-circle-o"></i> Đơn hàng</a></li>

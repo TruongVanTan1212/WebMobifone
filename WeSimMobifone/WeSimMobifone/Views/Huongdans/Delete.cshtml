@@ -3,37 +3,61 @@
 @{
     ViewData["Title"] = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Huongdan</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CauHoi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CauHoi)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TraLoi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TraLoi)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayDang)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NgayDang)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaHdan" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+<section class="content-header">
+    <div class="pad margin no-print">
+        <div class="callout callout-danger" style="margin-bottom: 0!important;">
+            <h4><i class="fa fa-info"></i> Thông báo:</h4>
+            Bạn có thật sự muốn xóa hướng dẫn này ?
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <i class="fa fa-rss"></i>
+                        <h3 class="box-title">Thông tin chi cầu hỏi hướng dẫn: </h3>
+                        <!-- tools box -->
+                    </div>
+                    <div class="box-body">
+                        <table class="table " style="font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%"> @Html.DisplayNameFor(model => model.CauHoi)</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.CauHoi)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 20%">Trả lời</td>
+                                    <td style="text-align: right;">@Html.DisplayFor(model => model.TraLoi)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="MaHdan" />
+                                <input style="width: 300px; margin-right: 20px;" type="submit" value="Xóa" class="btn btn-primary" />
+                                <a style="width: 300px;" class="btn btn-danger" asp-action="Index">Hủy</a>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- /.row -->
+</section><!-- /.content -->

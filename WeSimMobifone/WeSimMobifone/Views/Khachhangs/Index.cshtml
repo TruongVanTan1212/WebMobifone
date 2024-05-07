@@ -11,17 +11,17 @@
                 <h3 class="box-title">Khách hàng</h3>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <div class="input-group">
-                    <form asp-controller="Khachhangs" asp-action="SearchKH">
+                <form asp-controller="Khachhangs" asp-action="SearchKH" style="margin-right: 30px;">
+                    <div class="input-group">
                         <input type="text" name="searchKhachHang" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <th>
@@ -39,6 +39,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.SlthueB)
                             </th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -63,14 +64,30 @@
                                     @Html.DisplayFor(modelItem => item.SlthueB)
                                 </td>
                                 <td>
+                                    @if(item.Daxoa == 0)
+                                    {
+                                        <a asp-action="Lock" asp-route-id="@item.MaKh"><i class=" fa fa-unlock"></i></a>
+                                    }
+                                    else
+                                    {
+                                        if(item.Daxoa == 1)
+                                        {
+                                            <a asp-action="Unlock" asp-route-id="@item.MaKh"><i class="fa fa-lock"></i></a>
+                                        }
+                                    }
+                                </td>
+                                <td>
                                     <div class="tools ">
                                     <a asp-action="Details" asp-route-id="@item.MaKh"><i class="fa fa-eye"></i></a>
                                    </div>
                                 </td>
                                 <td>
-                                    <div class="tools ">
-                                        <a class="btn btn-info" asp-action="DSThueBao" asp-route-id="@item.MaKh">Đăng ký</a>
-                                    </div>
+                                    @if(item.SlthueB < 3)
+                                    {
+                                        <div class="tools ">
+                                            <a class="btn btn-block btn-info" asp-action="DSThueBao" asp-route-id="@item.MaKh">Đăng ký</a>
+                                        </div>
+                                    }
                                 </td>
                             </tr>
                         }

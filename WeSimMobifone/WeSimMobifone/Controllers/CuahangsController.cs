@@ -21,7 +21,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            
             ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
             ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
@@ -52,50 +52,6 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(await _context.Cuahang.ToListAsync());
         }
-
-        // GET: Cuahangs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cuahang = await _context.Cuahang
-                .FirstOrDefaultAsync(m => m.MaCh == id);
-            if (cuahang == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(cuahang);
-        }
-
-        // GET: Cuahangs/Create
-        public IActionResult Create()
-        {
-            GetInfo();
-            return View();
-        }
-
-        // POST: Cuahangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaCh,Ten,DienThoai,Email,DiaChi")] Cuahang cuahang)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(cuahang);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            GetInfo();
-            return View(cuahang);
-        }
-
-        // GET: Cuahangs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -146,35 +102,6 @@ namespace WeSimMobifone.Controllers
             }
             GetInfo();
             return View(cuahang);
-        }
-
-        // GET: Cuahangs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cuahang = await _context.Cuahang
-                .FirstOrDefaultAsync(m => m.MaCh == id);
-            if (cuahang == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(cuahang);
-        }
-
-        // POST: Cuahangs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var cuahang = await _context.Cuahang.FindAsync(id);
-            _context.Cuahang.Remove(cuahang);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool CuahangExists(int id)

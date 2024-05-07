@@ -87,7 +87,7 @@
                 <h3 class="box-title">Đơn Hàng Đã Huỷ</h3>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <form asp-controller="Admin" asp-action="SearchHD">
+                <form asp-controller="Admin" asp-action="SearchHD" style="margin-right: 30px;">
                 <div class="input-group">
                         <input type="text" name="searchHoaDon" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
                         <div class="input-group-btn">
@@ -140,10 +140,10 @@
                                     @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TongTien)
+                                    @(item.TongTien.ToString("n0")) VNĐ
                                 </td>
                                 <td>
-                                    @if (item.TrangThai == 3)
+                                    @if (item.TrangThai == 4)
                                     {
                                         <span class="label label-danger">Đã huỷ</span>
                                     }          

@@ -34,7 +34,7 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            return View(await _context.Tintuc.ToListAsync());
+            return View(await _context.Tintuc.OrderByDescending(t => t.MaTin).ToListAsync());
         }
 
         // GET: Tintucs/Details/5
@@ -115,7 +115,18 @@ namespace WeSimMobifone.Controllers
             {
                 try
                 {
-                    tintuc.HinhAnh = Upload(file);
+                    if(tintuc.Hot == 1)
+                    {
+                        tintuc.Hot = 1;
+                    }
+                    else
+                    {
+                        tintuc.Hot = 0;
+                    }
+                    if(file != null)
+                    {
+                        tintuc.HinhAnh = Upload(file);
+                    }
                     _context.Update(tintuc);
                     await _context.SaveChangesAsync();
                 }
@@ -170,7 +181,6 @@ namespace WeSimMobifone.Controllers
             return _context.Tintuc.Any(e => e.MaTin == id);
         }
 
-
         public string Upload(IFormFile file)
         {
             string uploadFileName = null;
@@ -191,6 +201,23 @@ namespace WeSimMobifone.Controllers
             var lstTinTuc = await _context.Tintuc.Where(k => k.TieuDe.Contains(searchTinTuc)).ToListAsync();
             GetInfo();
             return View(lstTinTuc);
+        }
+
+        public async Task<IActionResult> HOT(int? id)
+        {
+            Tintuc tintuc = await _context.Tintuc.FirstOrDefaultAsync(d => d.MaTin == id);
+            tintuc.Hot = 1;
+            _context.Update(tintuc);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> UnHOT(int? id)
+        {
+            Tintuc tintuc = await _context.Tintuc.FirstOrDefaultAsync(d => d.MaTin == id);
+            tintuc.Hot = 0;
+            _context.Update(tintuc);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

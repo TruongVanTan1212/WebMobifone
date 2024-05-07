@@ -6,8 +6,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="col-lg-4">
@@ -59,7 +58,7 @@
                                                 @i.MaDcNavigation.DiaChi1,@i.MaDcNavigation.PhuongXa,@i.MaDcNavigation.QuanHuyen,@i.MaDcNavigation.TinhThanh
                                             </td>
                                             <td>
-                                                @i.TongTien VNĐ
+                                                @i.TongTien.ToString("n0") VNĐ
                                             </td>
                                            
                                             <td>
@@ -88,7 +87,7 @@
                                             <td>
                                                 @if(i.TrangThai == 0 && i.Daxoa == 0)
                                                 {
-                                                    <a class="btn btn-block btn-danger" asp-action="HuyHoaDon" asp-route-id="@i.MaHd">Huỷ</a>
+                                                <a class="btn btn-block btn-danger" asp-action="DonDaHuy" asp-route-id="@i.MaHd">Huỷ</a>
                                                 }
                                             </td>
                                         </tr>  
@@ -103,6 +102,5 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 </section>

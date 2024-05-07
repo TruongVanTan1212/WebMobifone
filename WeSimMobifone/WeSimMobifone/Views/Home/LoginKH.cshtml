@@ -18,11 +18,15 @@
                 <form asp-action="Login">
                     <div class="my-3 text-primary">
                         <label> Email</label>
-                        <input type="text" name="email" class="form-control" />
+                        <input type="text" name="email" class="form-control" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Vui lòng nhập Email !.</div>
                     </div>
                     <div class="my-3 text-primary">
                         <label> Mật Khẩu</label>
-                        <input type="password" name="matkhau" class="form-control" />
+                        <input type="password" name="matkhau" class="form-control" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>
                     </div>
                     <div class="d-grid">
                         <input type="submit" value="Đăng Nhập" class="btn btn-outline-primary btn-block" />

@@ -23,12 +23,21 @@ namespace WeSimMobifone.Models
         [Column("MaKH")]
         [Display(Name = "Mã khách hàng")]
         public int MaKh { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập tên.")]
+        [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage = "Tên chỉ được chứa ký tự chữ cái.")]
         [Display(Name = "Tên khách hàng")]
         [StringLength(100)]
         public string Ten { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
+        [RegularExpression(@"^0[0-9]{9}$", ErrorMessage = "Số điện thoại phải bắt đầu bằng số 0 và có đúng 10 chữ số.")]
         [Display(Name = "Điện thoại")]
         [StringLength(10)]
         public string DienThoai { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng Email.")]
+        [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ.")]
         [Display(Name = "Email")]
         [StringLength(100)]
         public string Email { get; set; }

@@ -4,45 +4,72 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<!-- Main content -->
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <i class="fa fa-rss"></i>
+                        <h3 class="box-title">Tin tức</h3>
+                        <!-- tools box -->
+                    </div>
+                    <div class="box-body">
+                        <table class="table " style="font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%"> @Html.DisplayNameFor(model => model.TieuDe)</td>
+                                    <td style="text-align: left;">@Html.Raw(Model.TieuDe)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%"> @Html.DisplayNameFor(model => model.TomTat)</td>
+                                    <td style="text-align: left;">@Html.Raw(Model.TomTat)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                               
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">Nội dung:</td>
+                                    <td style="text-align: left;">@Html.Raw(Model.NoiDung)</td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%">Hình ảnh</td>
+                                    <td style="text-align: left;"><img src="~/img/@Html.DisplayFor(model => model.HinhAnh)" style="width :300px; height: 400px;" /> </td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; width: 50%"> Ngày đăng:</td>
+                                    <td style="text-align: left;">@Html.DisplayFor(model => model.NgayDang)</td>
+                                    <td style="width: 10% "></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-block btn-success" asp-action="Edit" asp-route-id="@Model.MaTin">Sửa</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-block btn-primary" asp-action="Index">Trở về</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section><!-- /.content -->
 
-<div>
-    <h4>Tintuc</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TieuDe)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TieuDe)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TomTat)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TomTat)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NoiDung)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NoiDung)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HinhAnh)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayDang)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NgayDang)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaTin">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>

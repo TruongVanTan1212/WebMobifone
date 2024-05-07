@@ -34,13 +34,12 @@
         <div class="row g-4">
         @foreach (var item in Model)
         {
-            <div class="col-lg-6 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+            <div class="col-lg-6 col-md-6 wow zoomIn" data-wow-delay="0.1s " >
             <div class="service-item d-flex flex-column justify-content-center text-center rounded">
             <div class=" flex-shrink-0 ">
                    <img src="~/img/@Html.DisplayFor(modelItem => item.HinhAnh)" width="350px" height="200px" />
              </div>
-                <h5 class="mb-3">@Html.DisplayFor(modelItem => item.TieuDe)</h5>
-                <p>@Html.DisplayFor(modelItem => item.TomTat)</p>
+                <h5 class="mb-3">@Html.Raw(item.TieuDe)</h5>
                 <p>Ngày Đăng: @Html.DisplayFor(modelItem => item.NgayDang)</p>
                 <a class="btn px-3 mt-auto mx-auto" asp-action="Details" asp-route-id="@item.MaTin">Chi tiết</a>
             </div>

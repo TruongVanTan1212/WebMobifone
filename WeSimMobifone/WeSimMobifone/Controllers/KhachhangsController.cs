@@ -21,7 +21,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -32,7 +32,7 @@ namespace WeSimMobifone.Controllers
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            return View(await _context.Khachhang.ToListAsync());
+            return View(await _context.Khachhang.OrderByDescending(t => t.MaKh).ToListAsync());
         }
 
         // GET: // số thuê bao đã đăng ký
@@ -130,6 +130,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(khachhang);
         }
+        // 
         public async Task<IActionResult> LuuDangKyTB(int id/*makh*/,int idTB ,int phihoamang)
         {
             Diachi dc = await _context.Diachi.Include(d => d.MaKhNavigation).FirstOrDefaultAsync( m => m.MaKh == id && m.MacDinh == 1) ;
@@ -161,6 +162,11 @@ namespace WeSimMobifone.Controllers
             _context.Add(tb);
             await _context.SaveChangesAsync();
 
+            Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync(d => d.MaTb == idTB);
+            thuebao.TrangThai = 2;
+            _context.Update(thuebao);
+            await _context.SaveChangesAsync();
+
             List<Hoadon> lstHoaDon = _context.Hoadon
                .Include(h => h.MaKhNavigation)
                .Include(h => h.MaTbNavigation)
@@ -179,7 +185,27 @@ namespace WeSimMobifone.Controllers
                 .Include(h => h.MaDcNavigation)
                 .Where(d => d.MaHd == id && d.Daxoa == 0 && d.TrangThai == 3).ToList();
             ViewBag.Hoadon = lstHoaDon;
+            GetInfo();
             return View();
         }
+        // khóa tài khoản
+        public async Task<IActionResult> Lock(int? id)
+        {
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 0);
+            kh.Daxoa = 1;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        // mở khóa tài khoản
+        public async Task<IActionResult> Unlock(int? id)
+        {
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 1);
+            kh.Daxoa = 0;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -174,15 +174,37 @@ INSERT INTO THUEBAO(SoThueBao,PhiHoaMang,MaDM,MaLTB,LoaiSo,DiaDiemHM,TrangThai) 
 INSERT INTO THUEBAO(SoThueBao,PhiHoaMang,MaDM,MaLTB,LoaiSo,DiaDiemHM,TrangThai) VALUES(N'0788234241',60000,3,1,N'Trả Trước',N'Toàn Quốc',0);
 GO
 -- dữ liệu tin tức
-INSERT INTO TINTUC(TieuDe,TomTat,NoiDung,HinhAnh,NgayDang) VALUES(N'Mình cùng đón Giáp Thìn – 2024!',N'Từ ngày 12/12/2023 đến ngày 31/01/2024, MobiFone Tỉnh An Giang triển khai chương trình khuyến mại “Mình cùng đón Giáp Thìn – 2024!”',N'Chào đón Năm Mới Giáp Thìn 2024, MobiFone An Giang triển khai chương trình khuyến mại “Mình Cùng Đón Giáp Thìn 2024! ” từ ngày 12/12/2023 đến 31/01/2024 Khách hàng hòa mạng mới hoặc đăng ký mới/gia hạn bất kỳ gói cước Data nào của MobiFone trong thời gian diễn ra chương trình, như một lời chúc, một lời tri ân sâu sắc dành cho các khách hàng đã luôn tin yêu và đồng hành cùng MobiFone Tỉnh An Giang.
-
-Theo đó, từ ngày từ ngày 12/12/2023 đến 31/01/2024, Khách hàng hòa mạng mới hoặc đăng ký mới/gia hạn bất kỳ gói cước data nào của MobiFone trong thời gian diễn ra chương trình có nhắn tin sms tới số thuê bao 0779249999 kèm số dự đoán gần đúng nhất của 03 số cuối kết quả Giải đặc biệt Xổ số Kiến thiết tỉnh An Giang xổ ngày 01/02/2024.
-
-Ví dụ: Thuê bao phát triển mới ngày 15/12/2023 soạn tin nhắn: 678 gởi đến 0779249999.
-
-Sau khi nhắn tin tham gia chương trình thành công, khách hàng sẽ nhận lại được tin nhắn xác nhận đã đăng ký thành công – chậm nhất ngày n+1
-Mỗi khách hàng chỉ được tham dự 01 mã dự thưởng cho 1 số thuê bao (gồm thuê bao trả trước hoặc thuê bao trả sau)
-Kết quả trúng thưởng được căn cứ vào dự đoán của khách hàng có số gần đúng với 03 số cuối (trường hợp giống kết quả sẽ xét thời gian sớm hơn) của Giải đặc biết Xổ số Kiến thiết tỉnh An Giang ngày 01/02/2024',N'mobifone1.png',3/19/2024);
+INSERT INTO TINTUC(TieuDe,TomTat,NoiDung,HinhAnh,NgayDang) VALUES(N'<h3><strong>Mình cùng đón Giáp Thìn – 2024!</strong></h3>',N'<p><i><strong>Từ ngày&nbsp;
+12/12/2023&nbsp;đến ngày&nbsp;31/01/2024, MobiFone Tỉnh An Giang triển khai chương trình khuyến mại “</strong></i><strong>Mình cùng đón Giáp Thìn – 2024!
+”&nbsp;</strong></p>',N'<p>Chào đón Năm Mới Giáp Thìn 2024, MobiFone An Giang triển khai chương trình khuyến mại “Mình Cùng Đón Giáp Thìn 2024! ” từ ngày 
+12/12/2023 đến 31/01/2024 Khách hàng hòa mạng mới hoặc đăng ký mới/gia hạn bất kỳ gói cước&nbsp;Data&nbsp;nào của MobiFone trong thời gian diễn ra chương
+trình, như một lời chúc, một lời tri ân sâu sắc dành cho các khách hàng đã luôn tin yêu và đồng hành cùng MobiFone Tỉnh An Giang.</p><p>Theo đó, từ ngày từ 
+ngày 12/12/2023 đến 31/01/2024, Khách hàng hòa mạng mới hoặc đăng ký mới/gia hạn bất kỳ gói cước&nbsp;data&nbsp;nào của MobiFone trong thời gian diễn ra 
+chương trình có nhắn tin&nbsp;sms&nbsp;tới số thuê bao 0779249999 kèm số dự đoán gần đúng nhất của 03 số cuối kết quả Giải đặc biệt Xổ số Kiến thiết tỉnh An 
+Giang xổ ngày 01/02/2024.</p><p>Ví dụ: Thuê bao phát triển mới ngày 15/12/2023 soạn tin nhắn: 678 gởi đến 0779249999.</p><ul><li>Sau khi nhắn tin tham gia 
+chương trình thành công, khách hàng sẽ nhận lại được tin nhắn xác nhận đã đăng ký thành công – chậm nhất ngày n+1</li><li>Mỗi khách hàng chỉ được tham dự 01 
+mã dự thưởng cho 1 số thuê bao (gồm thuê bao trả trước hoặc thuê bao trả sau)</li><li>Kết quả trúng thưởng được căn cứ vào dự đoán của khách hàng có số gần
+đúng với 03 số cuối (trường hợp giống kết quả sẽ xét thời gian sớm hơn) của Giải đặc biết Xổ số Kiến thiết tỉnh An Giang ngày 01/02/2024</li><li>Giải thưởng
+:</li></ul><figure class="table"><table><tbody><tr><td><strong>Giải thưởng</strong></td><td><strong>Số lượng</strong></td><td><strong>Quà tặng</strong></td>
+</tr><tr><td>Giải Nhất</td><td>01</td><td>01 chỉ vàng&nbsp;9999</td></tr><tr><td>Giải Nhì</td><td>20</td><td>Thẻ cào mệnh giá 100.000 đồng</td></tr><tr><td>Giải 
+Ba</td><td>24</td><td>Thẻ cào mệnh giá 50.000 đồng</td></tr><tr><td>Giải Khuyến khích</td><td>100</td><td>01 hộp khẩu trang y tế</td></tr></tbody></table>
+</figure><ul><li>Danh sách trúng giải sẽ được công bố trên trang fanpage của MobiFone Tỉnh An Giang, đường link:&nbsp;
+<a href="https://www.facebook.com/mobifonetinhangiang">https://www.facebook.com/mobifonetinhangiang</a></li><li>Thời gian trao giải chậm nhất đến ngày 8/2/2024</li>
+</ul><p>Gọi 0779 24 9999 hoặc 9090 để biết thêm thông tin chi tiết.</p>',N'mobifone1.png',3/19/2024);
+go
+INSERT INTO TINTUC(TieuDe,TomTat,NoiDung,HinhAnh,NgayDang) VALUES(N'<h4><strong>DATA NHÓM THẢ GA – NHẬN 200GB QUÁ ĐÃ</strong></h4>'
+,N'<p>Nếu như bạn thường xuyên đi chơi cùng hội bạn bè, đi du lịch xa cùng với các thành viên trong gia đình thì để có thể giúp bạn tiết kiệm trong việc sử dụng 4G,
+thay vì từng thành viên đăng ký thì giờ đây nhờ những gói data nhóm, người dùng hoàn toàn có thể chia sẻ dung lượng truy cập 4G cho các thuê bao khác</p>'
+,N'<p>Hiện tại, MobiFone đem đến cho khách hàng nhiều gói cước nhóm với chi phí hợp lý tùy theo nhu cầu sử dụng. Các gói cước mFamily của MobiFone đem lại nhiều ưu 
+điểm nổi trội như:</p><ul><li>Chi phí tiết kiệm cho gói nhóm, có thể phân bổ hạn mức theo nhu cầu sử dụng của từng thuê bao.</li><li>Thanh toán chỉ 1 lần duy nhất,
+tiện lợi và dễ dàng quản lý theo nhóm.</li><li>Ngoài ra còn miễn phí gọi không giới hạn nội nhóm.</li></ul><p>Đặc biệt, các gói cước MFY200, MFY với ưu đãi data khủng
+lên đến 400GB/tháng, miễn phí truy cập Facebook, YouTube là lựa chọn phù hợp cho những khách hàng có nhu cầu sử dụng lưu lượng lớn data hàng ngày.</p><p>Gói cước áp 
+dụng với thuê bao trả trước, trả sau phát triển mới từ 01/6/2023. Hoặc thuê bao trả trước, trả sau hiện hữu theo danh sách quy định.</p><p>Gói cước cho phép chia sẻ 
+tới 05 thuê bao (bao gồm 01 thuê bao trưởng nhóm và 04 thuê bao thành viên khác)</p><p>Chi tiết các gói cước như sau:<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Để đăng
+ký gói cước, soạn tin:&nbsp;<strong>DK Tên gói cước</strong>&nbsp; <strong>0799980067</strong> gửi <strong>909</strong></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Để
+chia sẻ gói cước cho thành viên, soạn tin&nbsp;<strong>ADM</strong>&nbsp;<strong>MFY Số thuê bao thành viên&nbsp;</strong>gửi<strong>&nbsp;999</strong></p><p>&nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;(Phí thành viên:&nbsp;<strong>15.000 đ/thuê bao/30 ngày</strong>, trừ vào Tài khoản chính của thuê bao trưởng nhóm).</p><p>&nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp;Mọi thông tin chi tiết vui lòng liên hệ hotline 0779 24 9999.</p>',N'tin2.png',5/6/2024);
 go
 -- dữ liệu chức vụ
 INSERT INTO CHUCVU(Ten) VALUES(N'Admin');

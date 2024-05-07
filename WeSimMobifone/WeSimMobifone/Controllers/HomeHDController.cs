@@ -25,7 +25,7 @@ namespace WeSimMobifone.Controllers
             // lấy dữ liệu bảng danh mục
             ViewBag.danhmuc = _context.Danhmuc.ToList();
             // lấy dữ liệu của hàng
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
             // đếm số lượng sp trong giỏ hàng
             ViewData["solg"] = GetCartItems().Count();
 

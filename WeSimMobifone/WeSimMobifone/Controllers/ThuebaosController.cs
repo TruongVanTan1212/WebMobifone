@@ -25,7 +25,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
             //  ViewBag.tintuc = _context.Danhmuc.ToList();
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
@@ -33,12 +33,25 @@ namespace WeSimMobifone.Controllers
             }
 
         }
-
+        // tìm kiếm thuê bao
+        public async Task<IActionResult> SearchThueBao(string searchThueBao)
+        {
+            var lstThueBao = await _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .Where(k => k.SoThueBao.Contains(searchThueBao)).ToListAsync();
+            GetInfo();
+            return View(lstThueBao);
+        }
         // GET: Thuebaos
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            var applicationDbContext = _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation);
+            var applicationDbContext = _context.Thuebao
+                .Include(t => t.MaDmNavigation)
+                .Include(t => t.MaLtbNavigation)
+                .OrderByDescending(t => t.MaTb)
+                .Where(h => h.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -77,10 +90,12 @@ namespace WeSimMobifone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaTb,SoThueBao,PhiHoaMang,MaDm,MaLtb,LoaiSo,DiaDiemHm,TrangThai")] Thuebao thuebao)
+        public async Task<IActionResult> Create([Bind("MaTb,SoThueBao,PhiHoaMang,MaDm,MaLtb,LoaiSo,DiaDiemHm")] Thuebao thuebao)
         {
             if (ModelState.IsValid)
             {
+                thuebao.TrangThai = 0;
+                thuebao.Daxoa = 0;
                 _context.Add(thuebao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -115,7 +130,7 @@ namespace WeSimMobifone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaTb,SoThueBao,PhiHoaMang,MaDm,MaLtb,LoaiSo,DiaDiemHm,TrangThai")] Thuebao thuebao)
+        public async Task<IActionResult> Edit(int id, [Bind("MaTb,SoThueBao,PhiHoaMang,MaDm,MaLtb,LoaiSo,DiaDiemHm")] Thuebao thuebao)
         {
             if (id != thuebao.MaTb)
             {
@@ -126,6 +141,8 @@ namespace WeSimMobifone.Controllers
             {
                 try
                 {
+                    thuebao.TrangThai = 0;
+                    thuebao.Daxoa = 0;
                     _context.Update(thuebao);
                     await _context.SaveChangesAsync();
                 }
@@ -147,7 +164,11 @@ namespace WeSimMobifone.Controllers
             return View(thuebao);
         }
 
-        // GET: Thuebaos/Delete/5
+        private bool ThuebaoExists(int id)
+        {
+            return _context.Thuebao.Any(e => e.MaTb == id);
+        }
+        // xóa thuê bao
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -156,8 +177,8 @@ namespace WeSimMobifone.Controllers
             }
 
             var thuebao = await _context.Thuebao
-                .Include(t => t.MaDmNavigation)
-                .Include(t => t.MaLtbNavigation)
+                .Include(n => n.MaDmNavigation)
+                .Include(n => n.MaLtbNavigation)
                 .FirstOrDefaultAsync(m => m.MaTb == id);
             if (thuebao == null)
             {
@@ -166,20 +187,24 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(thuebao);
         }
-
-        // POST: Thuebaos/Delete/5
+        // POST: Huongdans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var thuebao = await _context.Thuebao.FindAsync(id);
-            _context.Thuebao.Remove(thuebao);
+            thuebao.Daxoa = 1;
+            _context.Thuebao.Update(thuebao);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-
         /*-----------------------đăng ký thuê bao tại quầy--------------------*/
+        public IActionResult ThongBaoLoi404()
+        {
+            GetInfo();
+            return View();
+        }
         public async Task<IActionResult> DanhSachTB()
         {
             GetInfo();
@@ -209,37 +234,61 @@ namespace WeSimMobifone.Controllers
             return View(thuebao);
         }
         [HttpPost, ActionName("LuuDangKy")]
+        public async Task<IActionResult> HuyThueBao(int? id)
+        {
+            Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync( d => d.MaTb == id);
+            thuebao.TrangThai = 0;
+            _context.Update(thuebao);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DanhSachTB));
+        }
         public async Task<IActionResult> LuuDangKy(int id/*matb*/, string ten, string email, string dienthoai, string cccd, string matkhau, string diachi, string xa, string huyen, string tinh, int phihoamang, IFormFile hinht, IFormFile hinhs)
         {
+
             Khachhang kh;
             Diachi dc;
 
-            // đăng ký tài khoản mới
-            kh = new Khachhang();
-            kh.Ten = ten;
-            kh.Email = email;
-            kh.DienThoai = dienthoai;
-            kh.Cccd = cccd;
-            kh.HinhT = Upload(hinht);
-            kh.HinhS = Upload1(hinhs);
-            kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
-            kh.SlthueB = 1;
-            kh.Daxoa = 0;
-            _context.Add(kh);
-            _context.SaveChanges();
+             var  khachH = await _context.Khachhang.FirstOrDefaultAsync(d => d.Email == email && d.Cccd == cccd);
+            if(khachH == null)
+            {
+                // đăng ký tài khoản mới
+                kh = new Khachhang();
+                kh.Ten = ten;
+                kh.Email = email;
+                kh.DienThoai = dienthoai;
+                kh.Cccd = cccd;
+                kh.HinhT = Upload(hinht);
+                kh.HinhS = Upload1(hinhs);
+                kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
+                kh.SlthueB = 1;
+                kh.Daxoa = 0;
+                _context.Add(kh);
+                _context.SaveChanges();
 
-            // đăng ký địa chỉ mới
-            dc = new Diachi();
-            dc.MaKh = kh.MaKh;
-            dc.DiaChi1 = diachi;
-            dc.PhuongXa = xa;
-            dc.QuanHuyen = huyen;
-            dc.TinhThanh = tinh;
-            dc.MacDinh = 1; // mặc định 
-            dc.Daxoa = 0;
-            _context.Add(dc);
-            await _context.SaveChangesAsync();
-
+                // đăng ký địa chỉ mới
+                dc = new Diachi();
+                dc.MaKh = kh.MaKh;
+                dc.DiaChi1 = diachi;
+                dc.PhuongXa = xa;
+                dc.QuanHuyen = huyen;
+                dc.TinhThanh = tinh;
+                dc.MacDinh = 1; // mặc định 
+                dc.Daxoa = 0;
+                _context.Add(dc);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.Email == email && d.Cccd == cccd);
+                if(kh.SlthueB == 3)
+                {
+                    return RedirectToAction(nameof(ThongBaoLoi404));
+                }
+                kh.SlthueB = kh.SlthueB + 1;
+                _context.Update(kh);
+                await _context.SaveChangesAsync();
+                dc = await _context.Diachi.FirstOrDefaultAsync(d => d.MaKh == kh.MaKh && d.Daxoa == 0 && d.MacDinh == 1);
+            }
             // tạo hoá đơn
             Hoadon hd = new Hoadon();
             hd.MaTb = id;
@@ -261,6 +310,11 @@ namespace WeSimMobifone.Controllers
             _context.Add(tb);
             await _context.SaveChangesAsync();
 
+            Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync(d => d.MaTb == id);
+            thuebao.TrangThai = 2;
+            _context.Update(thuebao);
+            await _context.SaveChangesAsync();
+
             List<Hoadon> lstHoaDon = _context.Hoadon
                 .Include(h => h.MaKhNavigation)
                 .Include(h => h.MaTbNavigation)
@@ -280,9 +334,10 @@ namespace WeSimMobifone.Controllers
                 .Include(h => h.MaDcNavigation)
                 .Where(d => d.MaHd == id && d.Daxoa == 0 && d.TrangThai == 3).ToList();
             ViewBag.Hoadon = lstHoaDon;
+            GetInfo();
             return View();
         }
-            public string Upload(IFormFile hinht)
+        public string Upload(IFormFile hinht)
         {
             string uploadFileName = null;
             if (hinht != null)

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WeSimMobifone.Models.Hoadon>
 
 @{
-    ViewData["Title"] = "Thống kê";
+    ViewData["Title"] = "Thống kê tìm kiếm";
 }
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -22,7 +22,7 @@
             <div class="icon">
                 <i class="ion ion-person-add"></i>
             </div>
-            <a asp-controller="Admin" asp-action="Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div><!-- ./col -->
     <div class="col-lg-4 col-xs-6">
@@ -35,7 +35,7 @@
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a asp-area="" asp-controller="Admin" asp-action="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a asp-area="" asp-controller="Admin" asp-action="BaoCaoNgay" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div><!-- ./col -->
     <div class="col-lg-4 col-xs-6">
@@ -43,12 +43,12 @@
         <div class="small-box bg-teal">
             <div class="inner">
                 <h3>@ViewData["SLDanhMuc"]<sup style="font-size: 20px"></sup></h3>
-                <p>Thống kê theo danh mục</p>
+                <p>Thống kê thuê bao</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            <a asp-area="" asp-controller="Admin" asp-action="DaVanChuyen" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a asp-area="" asp-controller="Admin" asp-action="ThongKeThueBao" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div><!-- ./col -->
 </div><!-- /.row -->
@@ -58,17 +58,17 @@
             <div class="box-header">
                 <h3 class="box-title">Tổng doanh thu : @ViewData["tongtienDH"] VNĐ</h3>
             </div><!-- /.box-header -->
-            <form asp-controller="Admin" asp-action="BaoCao">
                 <div class="box-tools">
                     <div class="input-group">
-                        Từ: <input style="display: inline-block; width: 70px; " type="date" name="ngaybatdau" class="form-control " pattern="\d{2}/\d{2}/\d{4}" value="@ViewData["ngaybatdau"]" />
-                        Đến: <input style="display: inline-block; width: 70px; " type="date" name="ngayketthuc" class="form-control" pattern="\d{2}/\d{2}/\d{4}" value="@ViewData[" ngayketthuc"]" />
+                          Từ Ngày:  @ViewData["ngaybatdau"]
+                          Đến Ngày: @ViewData["ngayketthuc"]
+                        <a class="btn btn-success" style="margin-left: 70px;" asp-action="DowloadEx1" asp-route-BD="@ViewData["ngaybatdau"]" asp-route-KT="@ViewData["ngayketthuc"]">EXCEL</a>
                         <div class="input-group-btn">
-                            <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                            <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                 </div>
-            </form>
+            
             <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -113,7 +113,7 @@
                                     @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TongTien)
+                                    @(item.TongTien.ToString("n0")) VNĐ
                                 </td>
                                 <td>
 

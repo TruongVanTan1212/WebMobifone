@@ -109,13 +109,11 @@
                 <div class="container py-5 px-lg-5">
                     <div class="row g-5">
                         <div class="col-md-6 col-lg-3">
-                            @foreach (var i in (List<Cuahang>)ViewBag.cuahang)
-                            {
                                 <h5 class="text-white mb-4">Thông tin công ty</h5>
-                                <p><i class="fa fa-map-marker-alt me-3"></i>@i.DiaChi</p>
-                                <p><i class="fa fa-phone-alt me-3"></i>+@i.DienThoai</p>
-                                <p><i class="fa fa-envelope me-3"></i>@i.Email</p>
-                            }
+                                <p><i class="fa fa-map-marker-alt me-3"></i>@ViewBag.cuahang.DiaChi</p>
+                                <p><i class="fa fa-phone-alt me-3"></i>+@ViewBag.cuahang.DienThoai</p>
+                                <p><i class="fa fa-envelope me-3"></i>@ViewBag.cuahang.Email</p>
+                            
                             <div class="d-flex pt-2">
                                 <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/mobifonetinhangiang"><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-outline-light btn-social" href="https://www.youtube.com/channel/UCN9i2HY175c08D3oHLvLwYA"><i class="fab fa-youtube"></i></a>
@@ -150,7 +148,7 @@
                         <div class="row">
                             <div class="col-md-12 text-center ">
                                 &copy; <a class="border-bottom" href="https://mobifoneangiang.com/">Mobifone An Giang</a>.
-                                Designer By <a class="border-bottom" href="https://htmlcodex.com">DTH205971 . Trương Văn Tân . DH21TH1</a>
+                                Designer By <a class="border-bottom" >DTH205971 . Trương Văn Tân . DH21TH1</a>
                             </div>
                         </div>
                     </div>

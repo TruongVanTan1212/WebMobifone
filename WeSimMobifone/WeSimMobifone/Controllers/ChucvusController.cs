@@ -21,7 +21,7 @@ namespace WeSimMobifone.Controllers
         }
         void GetInfo()
         {
-            ViewBag.cuahang = _context.Cuahang.ToList();
+            
             ViewData["SLChuaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 0 && k.Daxoa == 0).Count(); // 0 chưa duyệt
             ViewData["SLDaDuyet"] = _context.Hoadon.Where(k => k.TrangThai == 1 && k.Daxoa == 0).Count(); // 1 đã duyệt
             ViewData["SLDaVanChuyen"] = _context.Hoadon.Where(k => k.TrangThai == 2 && k.Daxoa == 0).Count(); // 2 đã vận chuyển
@@ -46,11 +46,18 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["tongtien"] = tongtien.ToString("n0");
         }
+
+        public async Task<IActionResult> SearchChucVu(string searchdanhmuc)
+        {
+            var lstHDan = await _context.Danhmuc.Where(k => k.TenDm.Contains(searchdanhmuc)).ToListAsync();
+            GetInfo();
+            return View(lstHDan);
+        }
         // GET: Chucvus
         public async Task<IActionResult> Index()
         {
             GetInfo();
-            return View(await _context.Chucvu.ToListAsync());
+            return View(await _context.Chucvu.OrderByDescending(t => t.MaCv).ToListAsync());
         }
 
         // GET: Chucvus/Details/5
@@ -147,36 +154,6 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(chucvu);
         }
-
-        // GET: Chucvus/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chucvu = await _context.Chucvu
-                .FirstOrDefaultAsync(m => m.MaCv == id);
-            if (chucvu == null)
-            {
-                return NotFound();
-            }
-            GetInfo();
-            return View(chucvu);
-        }
-
-        // POST: Chucvus/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var chucvu = await _context.Chucvu.FindAsync(id);
-            _context.Chucvu.Remove(chucvu);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool ChucvuExists(int id)
         {
             return _context.Chucvu.Any(e => e.MaCv == id);

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WeSimMobifone.Models.Qlthuebao>;
+@{
+    ViewData["Title"] = "Thông tin thuê bao hủy khách hàng";
+}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3>Thuê bao đã đăng ký</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">
+                                    Stt
+                                </th>
+                                <th style="width:40%;">
+                                    Số thuê bao
+                                </th>
+                                <th style="width:40%;">
+                                    Ngày kích hoạt
+                                </th>
+                                <th style="width:10%;">
+                                    Trạng thái
+                                </th>
+                                <th style="width:5%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int stt = 1;
+                                @foreach (Qlthuebao i in Model)
+                                {
+                                    <tr class="table-success">
+                                        <td>
+                                            @(stt)
+                                        </td>
+                                        <td>
+                                            @i.MaTbNavigation.SoThueBao
+                                        </td>
+                                        <td>
+                                            @i.NgayKichHoat
+                                        </td>
+                                        <td>
+
+                                           <span class="label label-danger">Đã hủy</span>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    stt++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</section>
+

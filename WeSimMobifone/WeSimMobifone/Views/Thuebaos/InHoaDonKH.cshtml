@@ -21,15 +21,12 @@
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 From
-                @foreach (var i in (List<Cuahang>)ViewBag.cuahang)
-                {
                     <address>
-                        <strong>@i.Ten</strong><br />
-                        @i.DiaChi<br />
-                        Điện thoại: @i.DienThoai <br />
-                        Email: @i.Email
+                    <strong>@ViewBag.cuahang.Ten</strong><br />
+                    @ViewBag.cuahang.DiaChi<br />
+                    Điện thoại: @ViewBag.cuahang.DienThoai <br />
+                    Email: @ViewBag.cuahang.Email
                     </address>
-                }
             </div><!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 To
@@ -71,7 +68,7 @@
                             <td>@item.MaTbNavigation.SoThueBao</td>
                             <td>@item.MaTbNavigation.LoaiSo</td>
                             <td>@item.MaTbNavigation.DiaDiemHm</td>
-                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                            <td>@item.MaTbNavigation.PhiHoaMang.ToString("n0") VNĐ</td>
                         </tr>
                     </tbody>
                 </table>
@@ -98,7 +95,7 @@
                     <table class="table">
                         <tr>
                             <th style="width:50%">Phí hoà mạng:</th>
-                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                            <td>@item.MaTbNavigation.PhiHoaMang.ToString("n0") VNĐ</td>
                         </tr>
                         <tr>
                             <th>Phí giữ số:</th>
@@ -109,8 +106,8 @@
                             <td> 0 VND</td>
                         </tr>
                         <tr>
-                            <th>Thành tiền:</th>
-                            <td>@item.MaTbNavigation.PhiHoaMang VNĐ</td>
+                            <th>
+                            <td>@item.MaTbNavigation.PhiHoaMang.ToString("n0") VNĐ</td>
                         </tr>
                     </table>
                 </div>

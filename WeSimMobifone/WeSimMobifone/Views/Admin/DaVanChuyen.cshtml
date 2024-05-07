@@ -87,14 +87,14 @@
                 <h3 class="box-title">Đơn Hàng Đang Vận Chuyển</h3>
             </div><!-- /.box-header -->
             <div class="box-tools">
-                <div class="input-group">
-                    <form asp-controller="Admin" asp-action="SearchHD">
+                <form asp-controller="Admin" asp-action="SearchHD" style="margin-right: 30px;">
+                    <div class="input-group">
                         <input type="text" name="searchHoaDon" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
                         <div class="input-group-btn">
-                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                           <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped">
@@ -140,7 +140,7 @@
                                     @Html.DisplayFor(modelItem => item.MaKhNavigation.Ten)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TongTien)
+                                    @(item.TongTien.ToString("n0")) VNĐ
                                 </td>
                                 <td>
                                     @if (item.TrangThai == 2)
