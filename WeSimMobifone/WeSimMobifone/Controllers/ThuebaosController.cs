@@ -178,18 +178,6 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ThuebaoExists(int id)
-        {
-            return _context.Thuebao.Any(e => e.MaTb == id);
-        }
-
-        public async Task<IActionResult> SearchThueBao(string searchThueBao)
-        {
-            var lstThueBao = await _context.Thuebao.Include(t => t.MaDmNavigation).Include(t => t.MaLtbNavigation)
-                            .Where(k => k.SoThueBao.Contains(searchThueBao)).ToListAsync();
-            GetInfo();
-            return View(lstThueBao);
-        }
 
         /*-----------------------đăng ký thuê bao tại quầy--------------------*/
         public async Task<IActionResult> DanhSachTB()
