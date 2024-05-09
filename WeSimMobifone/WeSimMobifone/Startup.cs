@@ -41,7 +41,7 @@ namespace WeSimMobifone
             services.AddSession(Options =>
             {
                 Options.Cookie.Name = "Mobifone";
-                Options.IdleTimeout = TimeSpan.FromMinutes(2);
+                Options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
         }
 

@@ -77,15 +77,15 @@
                                     }
                                 </td>
                                 <td>
-                                    <div class="tools ">
-                                    <a asp-action="Details" asp-route-id="@item.MaKh"><i class="fa fa-eye"></i></a>
-                                   </div>
+                                    <a class="btn btn-block btn-info" asp-action="Details" asp-route-id="@item.MaKh">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     @if(item.SlthueB < 3)
                                     {
                                         <div class="tools ">
-                                            <a class="btn btn-block btn-info" asp-action="DSThueBao" asp-route-id="@item.MaKh">Đăng ký</a>
+                                            <a class="btn btn-block btn-success" asp-action="DSThueBao" asp-route-id="@item.MaKh">Đăng ký</a>
                                         </div>
                                     }
                                 </td>

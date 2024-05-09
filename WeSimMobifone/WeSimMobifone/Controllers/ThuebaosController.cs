@@ -33,6 +33,7 @@ namespace WeSimMobifone.Controllers
             }
 
         }
+
         // tìm kiếm thuê bao
         public async Task<IActionResult> SearchThueBao(string searchThueBao)
         {
@@ -199,7 +200,9 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        /*-----------------------đăng ký thuê bao tại quầy--------------------*/
+
+
+        /*----------------------- đăng ký thuê bao tại quầy --------------------*/
         public IActionResult ThongBaoLoi404()
         {
             GetInfo();
@@ -234,6 +237,8 @@ namespace WeSimMobifone.Controllers
             return View(thuebao);
         }
         [HttpPost, ActionName("LuuDangKy")]
+
+        // hủy chọn số
         public async Task<IActionResult> HuyThueBao(int? id)
         {
             Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync( d => d.MaTb == id);

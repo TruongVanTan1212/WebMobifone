@@ -30,7 +30,7 @@
         </div>
         <div class="row ">
             <div class="col-md-7">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header text-center border-info" style="background-color: #007AFE;"><h2 class="mt-2 text-light"> Thông tin khách hàng </h2></div>
                     <div class="card-body  m-2">
                         @if (ViewBag.khachhang != null)
@@ -53,6 +53,7 @@
                                     <label>Căn cước công dân</label>
                                     @if (@ViewBag.khachhang.Cccd == null)
                                     {
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <input type="text" name="cccd" class="form-control" />
                                     }
                                     else
@@ -73,22 +74,20 @@
                                     }
                                 </div>
                                 <div class="my-3">
-                                    @foreach (Diachi dc in ViewBag.diachi)
-                                    {
-                                        string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
-                                        if (dc.MacDinh == 1)
+                                    <select class="form-select" name="madiachi">
+                                        @foreach (Diachi dc in ViewBag.diachi)
                                         {
-                                            <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc" checked="true">
-                                            <label for="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill"></i></label>
-                                            <br>
+                                            string tmp = dc.DiaChi1 + ", " + dc.PhuongXa + ", " + dc.QuanHuyen + ", " + dc.TinhThanh;
+                                            if (dc.MacDinh == 1)
+                                            {
+                                                <option value="@dc.MaDc">@tmp <i class="bi bi-check-circle-fill" style="color:springgreen;"></i></option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@dc.MaDc">@tmp</option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <input type="radio" id="@dc.MaDc" name="madiachi" value="@dc.MaDc">
-                                            <label for="@dc.MaDc">@tmp</label>
-                                            <br>
-                                        }
-                                    }
+                                    </select>
                                 </div>
                                 <div class="my-2">
                                     <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary  text-light rounded-pill py-2 px-4 ms-3" />
@@ -104,7 +103,7 @@
             </div>
           
             <div class="col-md-5 ">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header text-center text-light border-info" style="font-weight: bolder; background-color: #007AFE;">Thông tin thuê bao @Html.DisplayFor(model => model.SoThueBao)</div>
                     <div class="card-body ">
                         <table class="table ">

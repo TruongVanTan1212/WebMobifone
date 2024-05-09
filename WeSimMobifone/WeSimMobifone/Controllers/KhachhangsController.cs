@@ -28,6 +28,14 @@ namespace WeSimMobifone.Controllers
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
         }
+
+        // tìm kiếm khách hàng
+        public async Task<IActionResult> SearchKH(string searchKhachHang)
+        {
+            var lstKhachHang = await _context.Khachhang.Where(k => k.Ten.Contains(searchKhachHang)).ToListAsync();
+            GetInfo();
+            return View(lstKhachHang);
+        }
         // GET: Khachhangs
         public async Task<IActionResult> Index()
         {
@@ -54,13 +62,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(khachhang);
         }
-        // tìm kiếm khách hàng
-        public async Task<IActionResult> SearchKH(string searchKhachHang)
-        {
-            var lstKhachHang = await _context.Khachhang.Where(k => k.Ten.Contains(searchKhachHang)).ToListAsync();
-            GetInfo();
-            return View(lstKhachHang);
-        }
+        
         // huỷ thuê bao
         public async Task<IActionResult> HuyThueBao(int id)
         {
@@ -81,6 +83,28 @@ namespace WeSimMobifone.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        // khóa tài khoản
+        public async Task<IActionResult> Lock(int? id)
+        {
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 0);
+            kh.Daxoa = 1;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        // mở khóa tài khoản
+        public async Task<IActionResult> Unlock(int? id)
+        {
+            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 1);
+            kh.Daxoa = 0;
+            _context.Update(kh);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //---------------------------- đăng ký thuê bao ---------------------------
         // đăng ký thuê bao
         public async Task<IActionResult> DSThueBao(int? id)
         {
@@ -100,7 +124,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(khachhang);
         }
-
+         // from đăng thuê bao
         public async Task<IActionResult> DangKyTB(int idTB ,int? id)
         {
             if (id == null)
@@ -111,7 +135,8 @@ namespace WeSimMobifone.Controllers
             var khachhang = await _context.Khachhang
                 .FirstOrDefaultAsync(m => m.MaKh == id);
 
-            var dc = await _context.Diachi.Include(d => d.MaKhNavigation).FirstOrDefaultAsync(m => m.MaKh == id && m.MacDinh == 1);
+            var dc = await _context.Diachi.Include(d => d.MaKhNavigation)
+                .FirstOrDefaultAsync(m => m.MaKh == id && m.MacDinh == 1);
             ViewBag.diachi = dc;
 
             var thuebao = await _context.Thuebao
@@ -121,6 +146,7 @@ namespace WeSimMobifone.Controllers
             thuebao.TrangThai = 1;
             _context.Update(thuebao);
             await _context.SaveChangesAsync();
+
             ViewBag.tb = thuebao;
 
             if (thuebao == null)
@@ -130,7 +156,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(khachhang);
         }
-        // 
+        //  lưu đăng ký thuê bao
         public async Task<IActionResult> LuuDangKyTB(int id/*makh*/,int idTB ,int phihoamang)
         {
             Diachi dc = await _context.Diachi.Include(d => d.MaKhNavigation).FirstOrDefaultAsync( m => m.MaKh == id && m.MacDinh == 1) ;
@@ -177,6 +203,19 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(hd);
         }
+
+        // hủy chọn số
+        public async Task<IActionResult> HuyChonSo(int id)
+        {
+
+            Thuebao thuebao = await _context.Thuebao.FirstOrDefaultAsync(k => k.MaTb == id);
+            thuebao.TrangThai = 0;
+            _context.Update(thuebao);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        // in hóa đơn
         public IActionResult InHoaDonKH1(int? id)
         {
             List<Hoadon> lstHoaDon = _context.Hoadon
@@ -187,24 +226,6 @@ namespace WeSimMobifone.Controllers
             ViewBag.Hoadon = lstHoaDon;
             GetInfo();
             return View();
-        }
-        // khóa tài khoản
-        public async Task<IActionResult> Lock(int? id)
-        {
-            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 0);
-            kh.Daxoa = 1;
-            _context.Update(kh);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        // mở khóa tài khoản
-        public async Task<IActionResult> Unlock(int? id)
-        {
-            Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id && d.Daxoa == 1);
-            kh.Daxoa = 0;
-            _context.Update(kh);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
     }

@@ -122,7 +122,7 @@ namespace WeSimMobifone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNv,Ten,MaCv,DienThoai,Email")] Nhanvien nhanvien, string matkhau)
+        public async Task<IActionResult> Edit(int id, [Bind("MaNv,Ten,MaCv,DienThoai,Email,MatKhau")] Nhanvien nhanvien, string mk)
         {
             if (id != nhanvien.MaNv)
             {
@@ -133,9 +133,9 @@ namespace WeSimMobifone.Controllers
             {
                 try
                 {
-                    if(matkhau != null)
+                    if(mk != null)
                     {
-                        nhanvien.MatKhau = _nvpasswordHasher.HashPassword(nhanvien, matkhau);
+                        nhanvien.MatKhau = _nvpasswordHasher.HashPassword(nhanvien, mk);
                     }
                     nhanvien.Daxoa = 0;
                     _context.Update(nhanvien);
@@ -195,6 +195,7 @@ namespace WeSimMobifone.Controllers
             return _context.Nhanvien.Any(e => e.MaNv == id);
         }
 
+        // khóa tài khoản nhân viên
         public async Task<IActionResult> LockNV(int? id)
         {
             Nhanvien kh = await _context.Nhanvien.FirstOrDefaultAsync(d => d.MaNv == id && d.Daxoa == 0);

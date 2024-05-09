@@ -26,27 +26,21 @@ namespace WeSimMobifone.Controllers
             ViewBag.danhmuc = _context.Danhmuc.ToList();
             // lấy dữ liệu của hàng
             ViewBag.cuahang = _context.Cuahang.FirstOrDefault();
-            // đếm số lượng sp trong giỏ hàng
-            ViewData["solg"] = GetCartItems().Count();
+            // lấy dữ liệu bảng tin tức
+            ViewBag.tintuc = _context.Tintuc.Where(d => d.Hot == 1).ToList();
+            // số lượng mặt hàng có trong giỏ   
+
+            // ViewBag.thuebao = _context.Thuebao.FirstOrDefault(k => k.TrangThai == int.Parse(HttpContext.Session.GetString("Thuebao")));
 
             if (HttpContext.Session.GetString("khachhang") != "")
             {
-                ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("khachhang"));
+                ViewBag.khachhang = _context.Khachhang.FirstOrDefault(k => k.MaKh.ToString() == HttpContext.Session.GetString("khachhang"));
+
             }
             if (HttpContext.Session.GetString("Nhanvien") != "")
             {
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
-        }
-        List<CartItem> GetCartItems()
-        {
-            var session = HttpContext.Session;
-            string jsoncart = session.GetString("Mobifone");
-            if (jsoncart != null)
-            {
-                return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
-            }
-            return new List<CartItem>();
         }
         // GET: HomeHD
         public async Task<IActionResult> Index()

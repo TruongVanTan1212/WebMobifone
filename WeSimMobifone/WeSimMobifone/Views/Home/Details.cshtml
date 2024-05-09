@@ -42,7 +42,7 @@
                     {
                         @if (ViewBag.khachhang != null)
                         {
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-header text-center border-info" style="background-color: #007AFE;"><h2 class="mt-2 text-light"> Thông tin khách hàng </h2></div>
                             <div class="card-body  m-2">
                                 <form asp-action="CreateBill" asp-route-id="@Model.MaTb" enctype="multipart/form-data">
@@ -63,6 +63,7 @@
                                         <label>Căn cước công dân</label>
                                         @if (@ViewBag.khachhang.Cccd == null)
                                         {
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <input type="text" name="cccd" class="form-control" placeholder="Nhập Căn cước của bạn" required>
                                             <div class="invalid-feedback"> Vui lòng điền căn cước của bạn </div>
                                         }
@@ -108,13 +109,13 @@
                                         
                                     <div class="my-2">
                                         <input type="submit" value="Xác nhận đặt hàng" class="btn btn-primary  text-light rounded-pill py-2 px-4 ms-3" />
-                                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#myModal"> Thêm địa chỉ </button>
+                                        <button style="margin-left: 20px;" type="button" class="btn btn-outline-success rounded-pill py-2 px-4 ms-3" data-bs-toggle="modal" data-bs-target="#myModal"> Thêm địa chỉ </button>
                                         <a class="btn btn-outline-danger rounded-pill py-2 px-4 ms-3" asp-action="Update" asp-route-id="@Model.MaTb">Huỷ Chọn số</a>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <p>nếu muốn chọn thuê bao khác vui lòng nhấn nút "Huỷ Số"</p>
+                                <p>Nếu muốn chọn thuê bao khác vui lòng nhấn nút "Huỷ Số"</p>
                             </div>
                         </div>
                         }
@@ -122,7 +123,7 @@
                         {
                             <div class="text-center" >
                                 <h3 style=" margin-top: 150px;"> Bạn cần đăng nhập để có thể đăng ký thuê bao !</h3>
-                                <h3>Vui lòng đăng để có thể đăng ký.</h3>
+                                <h3>Vui lòng đăng nhập để có thể đăng ký.</h3>
                                 <a asp-controller="Home" asp-action="LoginKH" asp-route-id="@Model.MaTb" class="btn btn-primary text-light rounded-pill py-2 px-4 ms-3">Đăng nhập</a>
                             </div>
                         }
@@ -171,7 +172,7 @@
             </div>
             <!-- The Modal -->
             <div class="col-md-5 ">
-                <div class="card">
+                <div class="card shadow" >
                    <div class="card-header text-center text-light border-info" style="font-weight: bolder; background-color: #007AFE; font-size: 16px;">Thông tin thuê bao @Html.DisplayFor(model => model.SoThueBao)</div>
                     <div class="card-body " >
                         <table class="table ">

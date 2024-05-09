@@ -46,7 +46,7 @@ namespace WeSimMobifone.Controllers
             }
             ViewData["tongtien"] = tongtien.ToString("n0");
         }
-
+        // tìm kiếm chức vụ
         public async Task<IActionResult> SearchChucVu(string searchdanhmuc)
         {
             var lstHDan = await _context.Danhmuc.Where(k => k.TenDm.Contains(searchdanhmuc)).ToListAsync();

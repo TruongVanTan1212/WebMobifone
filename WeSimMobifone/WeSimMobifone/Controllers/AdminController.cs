@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,15 +28,45 @@ namespace WeSimMobifone.Controllers
             _passwordHasher = passwordHasher;
         }
 
-        //-------------------------------------Hoá đơn-------------------------------------------------------
+        //------------------------------------- tra cứu hóa đơn -------------------------------------------------------
         // tra cứu hoá đơn
         public async Task<IActionResult> SearchHD(string searchHoaDon)
         {
             var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
-                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDon) && k.Daxoa == 0).ToListAsync();
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDon) && k.Daxoa == 0 && k.TrangThai == 0).ToListAsync();
             GetInfo();
             return View(lstHoaDon);
         }
+        public async Task<IActionResult> SearchD(string searchHoaDonD)
+        {
+            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDonD) && k.Daxoa == 0 && k.TrangThai == 1).ToListAsync();
+            GetInfo();
+            return View(lstHoaDon);
+        }
+        public async Task<IActionResult> SearchVC(string searchHoaDonVC)
+        {
+            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDonVC) && k.Daxoa == 0 && k.TrangThai == 2).ToListAsync();
+            GetInfo();
+            return View(lstHoaDon);
+        }
+        public async Task<IActionResult> SearchN(string searchHoaDonN)
+        {
+            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDonN) && k.Daxoa == 0 && k.TrangThai == 3).ToListAsync();
+            GetInfo();
+            return View(lstHoaDon);
+        }
+        public async Task<IActionResult> SearchH(string searchHoaDonH)
+        {
+            var lstHoaDon = await _context.Hoadon.Include(h => h.MaKhNavigation).Include(h => h.MaTbNavigation).Include(h => h.MaDcNavigation)
+                            .Where(k => k.MaKhNavigation.Ten.Contains(searchHoaDonH) && k.Daxoa == 0 && k.TrangThai == 4).ToListAsync();
+            GetInfo();
+            return View(lstHoaDon);
+        }
+
+        //----------------------------- Hóa đơn ----------------------------------------------
         // lấy thông tin hoá đơn
         void GetInfo()
         {
@@ -235,12 +266,12 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(hoadon);
         }
-
+        // thông báo lỗi
         public IActionResult ThongBaoLoi(){
             GetInfo();
             return View();
         }
-        // GET: Cuahangs/Delete/5
+        // GET: show thôn tin hóa đơn xóa
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -257,8 +288,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View(hd);
         }
-
-        // POST: Cuahangs/Delete/5
+        // POST: xóa hóa đơn
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -270,6 +300,8 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
         //------------------------------------------Khách hàng--------------------------------------------------
         // Xuất thông tin khách hàng
         public IActionResult Customer()
@@ -279,51 +311,83 @@ namespace WeSimMobifone.Controllers
         }
 
         // sửa thông tin khách hàng
-        public IActionResult EditAccount()
+        public async Task<IActionResult> EditAccount(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var kh = await _context.Khachhang.FindAsync(id);
+            if (kh == null)
+            {
+                return NotFound();
+            }
             GetInfo();
-            return View();
+            return View(kh);
         }
 
         // sửa thông tin khách hàng
         [HttpPost]
-        public async Task<IActionResult> EditAccount(string email, string matkhau, string ten, string dienthoai,string cccd,IFormFile hinht, IFormFile hinhs)
+        public async Task<IActionResult> EditAccount(int id, [Bind("MaKh,Ten,DienThoai,Email,MatKhau,HinhT,HinhS")] Khachhang kh, string mk, IFormFile hinht, IFormFile hinhs, string cccd)
         {
-            // kiểm tra email đã đk tài khoản chưa && không phải khách hàng hiện tại && mật khẩu không bỏ trống
-            int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
-
-            Khachhang khCheck = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != matkhau && k.MatKhau != null);
-           
-            if (khCheck == null)
+            if (id != kh.MaKh)
             {
-                GetInfo();
-                return RedirectToAction(nameof(EditAccount));
+                return NotFound();
             }
-
-            Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.MaKh == makh);
-            kh.Email = email;
-            kh.Ten = ten;
-            kh.DienThoai = dienthoai;
-            kh.Cccd = cccd;
-            if(hinht != null)
+            if (ModelState.IsValid)
             {
-                kh.HinhT = Upload(hinht);
+                if (string.IsNullOrEmpty(cccd))
+                {
+                    ModelState.AddModelError("IDCardNumber", "Căn cước không được để trống");
+                    GetInfo();
+                    return View(kh);
+                }
+                else if (!cccd.StartsWith("0") || cccd.Length != 12)
+                {
+                    ModelState.AddModelError("IDCardNumber", "Căn cước phải có đủ 12 số và số đầu tiên phải là số 0");
+                    GetInfo();
+                    return View(kh);
+                }
+                try
+                {
+                    if (mk != null)
+                    {
+                        kh.MatKhau = _passwordHasher.HashPassword(kh, mk);
+                    }
+                    if (hinht != null)
+                    {
+                        kh.HinhT = Upload(hinht);
+                    }
+                    if (hinhs != null)
+                    {
+                        kh.HinhS = Upload1(hinhs);
+                    }
+                    kh.Cccd = cccd;
+                    _context.Update(kh);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!KhachHangExists(kh.MaKh))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Customer));
             }
-            if(hinhs != null)
-            {
-                kh.HinhS = Upload1(hinhs);
-            }
-            if (matkhau != null)
-            {
-                kh.MatKhau = _passwordHasher.HashPassword(kh, matkhau);
-            }
-            _context.Update(kh);
-            await _context.SaveChangesAsync();
-
             GetInfo();
-            return RedirectToAction(nameof(Customer));
+            return View(kh);
         }
-        // hiển thịu khêu bao đã đăng ký 
+        private bool KhachHangExists(int id)
+        {
+            return _context.Nhanvien.Any(e => e.MaNv == id);
+        }
+        // hiển thị thêu bao đã đăng ký 
         public IActionResult ShowThueBaoKhach()
         {
             int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
@@ -601,8 +665,11 @@ namespace WeSimMobifone.Controllers
             return View(tb.ToList());
         }
 
+
+
         //-----------------------EXCEL------------------------------
         [HttpGet]
+        // xuất ex tất cả hóa đơn
         public async Task<FileResult> DowloadEx()
         {
             var hoadon = await _context.Hoadon
@@ -613,6 +680,7 @@ namespace WeSimMobifone.Controllers
             var fil = "Hoa_Don.xlsx";
             return Excel(fil, hoadon);
         }
+        // xuất ex tất cả thuê bao 
         public async Task<FileResult> DowloadEx3()
         {
             var tb = await _context.Qlthuebao
@@ -621,6 +689,7 @@ namespace WeSimMobifone.Controllers
             var fil = "ThueBao.xlsx";
             return Excel1(fil, tb);
         }
+        // xuất ex hóa đơn theo ngày
         public async Task<FileResult> DowloadEx1(DateTime  BD, DateTime KT)
         {
             var hoadon = await _context.Hoadon
@@ -631,6 +700,7 @@ namespace WeSimMobifone.Controllers
             var fil = "Hoa_Don.xlsx";
             return Excel(fil, hoadon);
         } 
+        // xuất ex thuê bao theo ngày
         public async Task<FileResult> DowloadEx2(DateTime  BD, DateTime KT)
         {
             var tb = await _context.Qlthuebao
@@ -639,7 +709,7 @@ namespace WeSimMobifone.Controllers
             var fil1 = "Thue_Bao.xlsx";
             return Excel1(fil1, tb);
         }
-
+        // xuất ra ex hóa đơn
         private FileResult Excel(string fil, IEnumerable<Hoadon> hoadon)
         {
             DataTable data = new DataTable("hoadon");
@@ -668,6 +738,7 @@ namespace WeSimMobifone.Controllers
                 }
             }
         }
+        // xuất ra ex thuê bao
         private FileResult Excel1(string fil1, IEnumerable<Qlthuebao> qltb)
             {
                 DataTable data = new DataTable("thuebao");

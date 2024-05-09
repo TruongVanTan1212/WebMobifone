@@ -21,7 +21,7 @@ namespace WeSimMobifone.Models
         public int MaTb { get; set; }
         [Column(TypeName = "datetime")]
         [Display(Name = "Ngày đặt hàng")]
-        public DateTime? Ngay { get; set; }
+        public DateTime Ngay { get; set; }
         [Display(Name = "Tổng tiền")]
         public int TongTien { get; set; }
         [Column("MaKH")]

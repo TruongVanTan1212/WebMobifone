@@ -62,6 +62,7 @@ namespace WeSimMobifone.Controllers
                 .Where(h => h.TrangThai == 0 && h.Daxoa == 0);
             return View(await applicationDbContext.ToListAsync());
         }
+        // tìm kiếm thuê bao
         public async Task<IActionResult> SearchTB(string timkiemTB, int id)
         {
             GetInfo();  
@@ -160,7 +161,9 @@ namespace WeSimMobifone.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //------------------------ đăng nhập --- đăng ký --------------------
+
+
+        //------------------------ đăng nhập ------- đăng ký ----------------------------------
         // đăng nhập
         public IActionResult Login()
         {
@@ -187,6 +190,7 @@ namespace WeSimMobifone.Controllers
         [HttpPost]
         public IActionResult Login(string email, string matkhau)
         {
+
             var nv = _context.Nhanvien.FirstOrDefault(k => k.Email == email && k.Daxoa == 0);
 
             Khachhang kh = _context.Khachhang.FirstOrDefault(k => k.Email == email && k.MatKhau != null && k.Daxoa == 0);
@@ -203,8 +207,12 @@ namespace WeSimMobifone.Controllers
                     HttpContext.Session.SetString("Nhanvien", email);
                     return RedirectToAction("Index", "Admin");
                 }
+                else
+                {
+                    return RedirectToAction(nameof(LoginInAgain));
+                }
+
             }
-            return RedirectToAction(nameof(LoginInAgain));
 
         }
         // đăng ký
@@ -215,11 +223,11 @@ namespace WeSimMobifone.Controllers
         }
         // đăng ký
         [HttpPost]
-        public async Task<IActionResult> Register([Bind("MaNv,Ten,MaCv,DienThoai,Email")] Khachhang kh, string MatKhau)
+        public async Task<IActionResult> Register([Bind("MaKh,Ten,DienThoai,Email")] Khachhang kh, string MatKhau)
         {
             if (ModelState.IsValid)
             {
-                if (_context.Khachhang.Any(h => (h.Email == kh.Email || h.DienThoai == kh.DienThoai) && h.Daxoa == 0))
+                if (_context.Khachhang.Any(h => (h.Email == kh.Email || h.DienThoai == kh.DienThoai) && (h.Daxoa == 0 || h.Daxoa == 1)))
                 {
                     ModelState.AddModelError(string.Empty, "Email hoặc số điện thoại đã tồn tại");
                     GetInfo();
@@ -254,8 +262,11 @@ namespace WeSimMobifone.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        //---------------------- khách hàng đăng ký thuê bao -----------------------
-        // Giữ số khi khách hàng chọn thuê bao
+
+
+
+        //---------------------- khách hàng đăng ký thuê bao -----------------------------------
+        // khách hàng hủy thuê bao đang chọn
         public async Task<IActionResult> Update(int? id)
         {
             //int makh = int.Parse(HttpContext.Session.GetString("khachhang"));
@@ -306,7 +317,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
-        // đăng ký thuê bao
+        // đăng ký thuê bao 
         public async Task<IActionResult> CreateBill(int id, int madiachi, int phihoamang,string cccd, IFormFile hinht, IFormFile hinhs)
         {
             Khachhang kh;
@@ -400,7 +411,6 @@ namespace WeSimMobifone.Controllers
             {
                 return RedirectToAction(nameof(KiemTraSL));
             }
-
             Diachi dc = new Diachi();
             dc.MaKh = makh;
             dc.DiaChi1 = diachicuthe;
@@ -431,7 +441,7 @@ namespace WeSimMobifone.Controllers
             GetInfo();
             return View();
         }
-
+        // xóa tài khoản khách hàng
         public async Task<IActionResult> XoaTaiKhoan(int? id)
         {
             Khachhang kh = await _context.Khachhang.FirstOrDefaultAsync(d => d.MaKh == id);

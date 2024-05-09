@@ -203,6 +203,7 @@ namespace WeSimMobifone.Controllers
             return View(lstTinTuc);
         }
 
+        // tin hot
         public async Task<IActionResult> HOT(int? id)
         {
             Tintuc tintuc = await _context.Tintuc.FirstOrDefaultAsync(d => d.MaTin == id);
@@ -211,6 +212,7 @@ namespace WeSimMobifone.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // không hot
         public async Task<IActionResult> UnHOT(int? id)
         {
             Tintuc tintuc = await _context.Tintuc.FirstOrDefaultAsync(d => d.MaTin == id);

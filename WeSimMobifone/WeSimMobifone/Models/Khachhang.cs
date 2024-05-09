@@ -25,7 +25,7 @@ namespace WeSimMobifone.Models
         public int MaKh { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên.")]
-        [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage = "Tên chỉ được chứa ký tự chữ cái.")]
+        [RegularExpression(@"^[^\d]+$", ErrorMessage = "Tên không được chứa chữ số.")]
         [Display(Name = "Tên khách hàng")]
         [StringLength(100)]
         public string Ten { get; set; }

@@ -29,6 +29,13 @@ namespace WeSimMobifone.Controllers
                 ViewBag.Nhanvien = _context.Nhanvien.FirstOrDefault(k => k.Email == HttpContext.Session.GetString("Nhanvien"));
             }
         }
+
+        public async Task<IActionResult> SearchHDan(string searchHuongDan)
+        {
+            var lstHDan = await _context.Huongdan.Where(k => k.CauHoi.Contains(searchHuongDan)).ToListAsync();
+            GetInfo();
+            return View(lstHDan);
+        }
         // GET: Huongdans
         public async Task<IActionResult> Index()
         {
@@ -165,11 +172,6 @@ namespace WeSimMobifone.Controllers
             return _context.Huongdan.Any(e => e.MaHdan == id);
         }
 
-        public async Task<IActionResult> SearchHDan(string searchHuongDan)
-        {
-            var lstHDan = await _context.Huongdan.Where(k => k.CauHoi.Contains(searchHuongDan)).ToListAsync();
-            GetInfo();
-            return View(lstHDan);
-        }
+      
     }
 }

@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeSimMobifone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf349cd39b7b8a6f896f00b6e53d3e784a075840")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1647ab400e1591b6b8da4e97da128127de5276d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeSimMobifone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeSimMobifone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1968,6 +1968,38 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Gruntfile.js))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\2d66b50a-8597-45a9-810c-07b650fce3ab_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WeSimMobifone</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WeSimMobifone</BasePath>
+      <RelativePath>img\2d66b50a-8597-45a9-810c-07b650fce3ab_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png</RelativePath>
+      <AssetKind></AssetKind>
+      <AssetMode></AssetMode>
+      <AssetRole></AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\2d66b50a-8597-45a9-810c-07b650fce3ab_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\3af7199b-1e59-4b83-86f7-f466e9afd784_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WeSimMobifone</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WeSimMobifone</BasePath>
+      <RelativePath>img\3af7199b-1e59-4b83-86f7-f466e9afd784_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png</RelativePath>
+      <AssetKind></AssetKind>
+      <AssetMode></AssetMode>
+      <AssetRole></AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\3af7199b-1e59-4b83-86f7-f466e9afd784_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\3d1a6033-c680-4ff9-9963-a1a635464912_84f40ace-9e19-4a42-aa3b-b92f54aaf3a1_tin2.png))">
       <SourceType>Package</SourceType>
       <SourceId>WeSimMobifone</SourceId>
@@ -1983,6 +2015,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\3d1a6033-c680-4ff9-9963-a1a635464912_84f40ace-9e19-4a42-aa3b-b92f54aaf3a1_tin2.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\5307bc04-d704-44ae-9451-2396c851f583_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WeSimMobifone</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WeSimMobifone</BasePath>
+      <RelativePath>img\5307bc04-d704-44ae-9451-2396c851f583_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png</RelativePath>
+      <AssetKind></AssetKind>
+      <AssetMode></AssetMode>
+      <AssetRole></AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\5307bc04-d704-44ae-9451-2396c851f583_2a34f80f-6a4f-41a0-b848-1f45b5ec80b1_cccdT.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\6c650aa2-8bfc-44a0-a8a5-cd4bdd09d7c5_anhSau.jpg))">
       <SourceType>Package</SourceType>
@@ -2319,6 +2367,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\d58b6b43-7c46-4d8b-b316-e8f1efb0c799_3d1a6033-c680-4ff9-9963-a1a635464912_84f40ace-9e19-4a42-aa3b-b92f54aaf3a1_tin2.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\dc656fe3-4752-4c1d-bec5-60524b0c5171_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WeSimMobifone</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WeSimMobifone</BasePath>
+      <RelativePath>img\dc656fe3-4752-4c1d-bec5-60524b0c5171_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png</RelativePath>
+      <AssetKind></AssetKind>
+      <AssetMode></AssetMode>
+      <AssetRole></AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\dc656fe3-4752-4c1d-bec5-60524b0c5171_2e03c2aa-6a3c-40bd-a5bd-4efa29383a0a_ccccS.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\dd9fe081-5fba-442d-985d-e12c2116df67_84f40ace-9e19-4a42-aa3b-b92f54aaf3a1_tin2.png))">
       <SourceType>Package</SourceType>

@@ -71,9 +71,12 @@
                                     <td style="width: 10%"></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <a class="btn btn-block btn-success" asp-action="Edit" asp-route-id="@Model.MaTb">Sửa</a>
-                                    </td>
+                                    @if(Model.TrangThai == 0)
+                                    {
+                                        <td>
+                                            <a class="btn btn-block btn-success" asp-action="Edit" asp-route-id="@Model.MaTb">Sửa</a>
+                                        </td>
+                                    }
                                     <td>
                                         <a class="btn btn-block btn-primary" asp-action="Index">Trở về</a>
                                     </td>
